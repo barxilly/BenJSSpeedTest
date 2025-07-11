@@ -51,9 +51,11 @@ function App() {
   const [down, setDown] = useState(0);
   const [up, setUp] = useState(0);
   const [ping, setPing] = useState(0);
-  
-  // State for tracking test completion
-  const [previousValues, setPreviousValues] = useState({ down: 0, up: 0, ping: 0 });
+  const [previousValues, setPreviousValues] = useState({
+    down: 0,
+    up: 0,
+    ping: 0,
+  });
   const [unchangedCount, setUnchangedCount] = useState(0);
   const [intervalId, setIntervalId] = useState<number | null>(null);
 
@@ -89,9 +91,45 @@ function App() {
                     position: "relative",
                   }}
                   radius="100%"
+                  id={speed > 0 && !isTesting ? "dc" : ""}
+                  onClick={
+                    speed > 0 && !isTesting
+                      ? () => {
+                          document
+                            .getElementById("dc")
+                            ?.classList.add("becomewhitesquircle");
+                        }
+                      : () => {}
+                  }
                 >
-                  <Text size="1.4em" style={{ position:"absolute", top: "0", left: "50%", transform: "translateX(-50%)", display: up > 0 ? "":"none", color:isTesting? "grey":"black", animation: isTesting ? "textpulse 1s infinite" :""}} >⇡</Text>
-                  <Text size="0.7em" style={{ position:"absolute", top: "3em", left: "50%", transform: "translateX(-50%)", display: up > 0 ? "":"none", color:isTesting? "grey":"black", animation: isTesting ? "textpulse 1s infinite" :""}} >{frmbts(up,true)}</Text>
+                  <Text
+                    size="1.4em"
+                    style={{
+                      position: "absolute",
+                      top: "0",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      display: up > 0 ? "" : "none",
+                      color: isTesting ? "grey" : "black",
+                      animation: isTesting ? "textpulse 1s infinite" : "",
+                    }}
+                  >
+                    ⇡
+                  </Text>
+                  <Text
+                    size="0.7em"
+                    style={{
+                      position: "absolute",
+                      top: "3em",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      display: up > 0 ? "" : "none",
+                      color: isTesting ? "grey" : "black",
+                      animation: isTesting ? "textpulse 1s infinite" : "",
+                    }}
+                  >
+                    {frmbts(up, true)}
+                  </Text>
                   <Title
                     order={1}
                     style={{
@@ -99,35 +137,59 @@ function App() {
                       display: speed > 0 ? "block" : "none",
                       color: isTesting ? "grey" : "black",
                       fontSize: "3rem",
-                      
-                      animation: isTesting ? "textpulse 1s infinite" : "",
-                    }}
-                    id="speed-display"
-                  ><Title
-                    order={1}
-                    style={{
-                      textAlign: "center",
-                      display: speed > 0 ? "block" : "none",
-                      color: isTesting ? "grey" : "black",
-                      fontSize: "3rem",padding: "1em 1em 0em 0.7em",
+
                       animation: isTesting ? "textpulse 1s infinite" : "",
                     }}
                     id="speed-display"
                   >
-                    {speed > 0
-                      ? speed > 1000
-                        ? `${speed / 1000}`
-                        : speed > 10
-                        ? `${speed}`
-                        : speed > 1
-                        ? `${speed.toFixed(2)}`
-                        : `${Math.round(speed * 1000)}`
-                      : ""}</Title>
+                    <Title
+                      order={1}
+                      style={{
+                        textAlign: "center",
+                        display: speed > 0 ? "block" : "none",
+                        color: isTesting ? "grey" : "black",
+                        fontSize: "3rem",
+                        width: "100%",
+                        paddingTop: "1em",
+                        height: "fit-content",
+                        animation: isTesting ? "textpulse 1s infinite" : "",
+                      }}
+                      id="speed-display"
+                    >
+                      {speed > 0
+                        ? speed > 1000
+                          ? `${speed / 1000}`
+                          : speed > 10
+                          ? `${Math.round(speed)}`
+                          : speed > 1
+                          ? `${speed.toFixed(2)}`
+                          : `${Math.round(speed * 1000)}`
+                        : ""}
+                    </Title>
                     <Text style={{ fontSize: "1.2rem" }}>
                       {speed > 1000 ? "Gbps" : speed > 1 ? "Mbps" : "Kbps"}
                     </Text>
                   </Title>
-                  <Text size="1.4em" style={{ position:"absolute", bottom: "0", left: "50%", transform: "translateX(-50%)", color: up > 0 ? "black" : "grey", animation: up>0 ? "":"textpulse 1s infinite" }} >⇣</Text>
+                  <Text
+                    size="1.4em"
+                    style={{
+                      position: "absolute",
+                      top: "7.8em",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      color: up > 0 ? "black" : "grey",
+                      animation: up > 0 ? "" : "textpulse 1s infinite",
+                    }}
+                  >
+                    ⇣
+                  </Text>
+                  <Stack
+                    style={{ position: "absolute", top: "14em", left: "2em" }}
+                  >
+                    <Text>Download Speed: {frmbts(down)}</Text>
+                    <Text>Upload Speed: {frmbts(up)}</Text>
+                    <Text>Ping: {ping.toFixed(2)}ms</Text>
+                  </Stack>
                 </Card>
               </Stack>
             </Center>
@@ -147,7 +209,7 @@ function App() {
                   setSpeed(0);
                   setUnchangedCount(0);
                   setPreviousValues({ down: 0, up: 0, ping: 0 });
-                  
+
                   const banana = new SpeedTest();
                   banana.onFinish = (results) =>
                     console.log(
@@ -173,33 +235,40 @@ function App() {
                         document.getElementById("speed-display") as HTMLElement
                       )?.classList?.add("growappear");
                     }
-                    
-                    const newDown = banana.results.getSummary().download as number;
+
+                    const newDown = banana.results.getSummary()
+                      .download as number;
                     const newUp = banana.results.getSummary().upload as number;
-                    const newPing = banana.results.getSummary().latency as number;
-                    
+                    const newPing = banana.results.getSummary()
+                      .latency as number;
+
                     setDown(newDown);
                     setUp(newUp);
                     setPing(newPing);
-                    setSpeed(
-                      Math.round(
-                        (newDown / 1000000) * 1000
-                      ) / 1000
-                    );
-                    
+                    setSpeed(Math.round((newDown / 1000000) * 1000) / 1000);
+
                     if (speed > 0) {
                       setNobutt(true);
                     }
-                    
+
                     // Check if values have remained the same
-                    setPreviousValues(prev => {
-                      if (prev.down === newDown && prev.up === newUp && prev.ping === newPing && newDown > 0 && newUp > 0 && newPing > 0) {
-                        setUnchangedCount(count => {
+                    setPreviousValues((prev) => {
+                      if (
+                        prev.down === newDown &&
+                        prev.up === newUp &&
+                        prev.ping === newPing &&
+                        newDown > 0 &&
+                        newUp > 0 &&
+                        newPing > 0
+                      ) {
+                        setUnchangedCount((count) => {
                           const newCount = count + 1;
                           console.log(`Unchanged count: ${newCount}/20`);
                           if (newCount >= 20) {
                             // Values have been the same for 3 intervals, test is complete
-                            console.log("Test completed - values unchanged for 3 intervals");
+                            console.log(
+                              "Test completed - values unchanged for 3 intervals"
+                            );
                             setIsTesting(false);
                             clearInterval(id);
                             setIntervalId(null);
@@ -208,24 +277,29 @@ function App() {
                         });
                       } else {
                         setUnchangedCount(0);
-                        console.log("Values changed, resetting unchanged count");
+                        console.log(
+                          "Values changed, resetting unchanged count"
+                        );
                       }
                       return { down: newDown, up: newUp, ping: newPing };
                     });
-                    
+
                     console.log(`Speed: ${banana.results.getSummary()} Mbps`);
                   }, 500);
-                  
+
                   setIntervalId(id);
                 }}
                 style={{
                   display: speed > 0 ? "none" : "block",
                   width: "204px",
                   position: "relative",
+                  backgroundColor:"white",
+                  color:" #333"
                 }}
                 fullWidth
                 size="xl"
                 radius="md"
+                
               >
                 Test
                 <Loader
@@ -234,6 +308,7 @@ function App() {
                   size="lg"
                   style={{
                     display: isTesting ? "block" : "none",
+                    animation: isTesting ? "fadein 0.7s linear" : "",
                     position: "absolute",
                     top: "50%",
                     left: "50%",
@@ -244,11 +319,6 @@ function App() {
               </Button>
             </Center>
           </Stack>
-          <Card style={{ display: speed > 0 && !isTesting ? "" : "none" }}>
-            <Text>Download Speed: {frmbts(down)}</Text>
-            <Text>Upload Speed: {frmbts(up)}</Text>
-            <Text>Ping: {ping}ms</Text>
-          </Card>
         </Stack>
       </Center>
     </MantineProvider>

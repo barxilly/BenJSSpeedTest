@@ -1,5 +1,5 @@
 body{
-  background: linear-gradient(to top, color-mix(in srgb, var(--mantine-primary-color-filled) 50%, transparent),  #00000000) !important;
+  background: #eee9dc !important;
 }
 .title {
   font-size: 4rem !important;
@@ -46,6 +46,27 @@ body{
   
 }
 
+#dc:hover{
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  }
+
+  .becomewhitesquircle {
+    animation: becomewhitesquircle 0.5s forwards;
+    width: 100%;
+    height: 100%;
+  }
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+  
+}
+
 @keyframes textpulse {
   0% {
     color: #808080;
@@ -59,6 +80,9 @@ body{
   0% {
     
   }
+  30%{
+    color:white;
+  }
   100% {
     width: 204px;
     height: 204px;
@@ -68,5 +92,20 @@ body{
     background-color: white;
     user-select: none;
     pointer-events: none;
+    color:white;
+  }
+}
+
+@keyframes becomewhitesquircle {
+  0% {
+    
+  }
+  100% {
+    width: 70vw;
+    height: 40vh;
+    border-radius: 20px;
+    opacity: 1;
+    background-color: white;
+    margin:3em;
   }
 }
