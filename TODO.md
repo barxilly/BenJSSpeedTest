@@ -1,6 +1,7 @@
-- [ ] Speedtest
-- [ ] Sexiness
-- [ ] Animations
+- [x] Speedtest
+- [x] Sexiness
+- [ ] Move end info somewhere nicer
+- [ ] Testing Animations
 - [ ] Title
 - [ ] Embed
 - [ ] PWA
