@@ -1,0 +1,72 @@
+body{
+  background: linear-gradient(to top, color-mix(in srgb, var(--mantine-primary-color-filled) 50%, transparent),  #00000000) !important;
+}
+.title {
+  font-size: 4rem !important;
+  font-weight: 900 !important;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.shrinkaway {
+  animation: becomewhitecircle 0.5s forwards;
+}
+
+.growappear {
+  animation: growappear 0.5s forwards;
+  text-wrap: nowrap;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@keyframes shrinkaway {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+    opacity: 0;
+  }
+  
+}
+
+@keyframes growappear {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  80% {
+    width: 80%;
+    opacity: 0;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+  
+}
+
+@keyframes textpulse {
+  0% {
+    color: #808080;
+  }
+  50% {
+    color: #80808080;
+  }
+}
+
+@keyframes becomewhitecircle {
+  0% {
+    
+  }
+  100% {
+    width: 204px;
+    height: 204px;
+    aspect-ratio: 1/1 !important;
+    border-radius: 50%;
+    opacity: 1;
+    background-color: white;
+    user-select: none;
+    pointer-events: none;
+  }
+}

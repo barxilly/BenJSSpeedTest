@@ -1,0 +1,8 @@
+- [ ] Speedtest
+- [ ] Sexiness
+- [ ] Animations
+- [ ] Title
+- [ ] Embed
+- [ ] PWA
+- [ ] Icon
+- [ ] Theme colours
