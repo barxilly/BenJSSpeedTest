@@ -1,4 +1,4 @@
-body{
+body {
   background: #eee9dc !important;
 }
 .title {
@@ -27,7 +27,6 @@ body{
     width: 0;
     opacity: 0;
   }
-  
 }
 
 @keyframes growappear {
@@ -43,19 +42,18 @@ body{
     width: 100%;
     opacity: 1;
   }
-  
 }
 
-#dc:hover{
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+.dc {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   cursor: pointer;
-  }
+}
 
-  .becomewhitesquircle {
-    animation: becomewhitesquircle 0.5s forwards;
-    width: 100%;
-    height: 100%;
-  }
+.becomewhitesquircle {
+  animation: becomewhitesquircle 0.5s forwards;
+  width: 100%;
+  height: 100%;
+}
 
 @keyframes fadein {
   0% {
@@ -64,7 +62,6 @@ body{
   100% {
     opacity: 1;
   }
-  
 }
 
 @keyframes textpulse {
@@ -78,10 +75,9 @@ body{
 
 @keyframes becomewhitecircle {
   0% {
-    
   }
-  30%{
-    color:white;
+  30% {
+    color: white;
   }
   100% {
     width: 204px;
@@ -92,13 +88,12 @@ body{
     background-color: white;
     user-select: none;
     pointer-events: none;
-    color:white;
+    color: white;
   }
 }
 
 @keyframes becomewhitesquircle {
   0% {
-    
   }
   100% {
     width: 70vw;
@@ -106,6 +101,5 @@ body{
     border-radius: 20px;
     opacity: 1;
     background-color: white;
-    margin:3em;
   }
 }

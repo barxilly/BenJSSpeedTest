@@ -2,6 +2,7 @@
 - [x] Sexiness
 - [ ] Move end info somewhere nicer
 - [ ] Testing Animations
+- [ ] Advanced Stats
 - [ ] Title
 - [ ] Embed
 - [ ] PWA

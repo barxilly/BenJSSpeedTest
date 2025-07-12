@@ -15,8 +15,6 @@ import {
 import "@mantine/core/styles.css";
 import { SiSpeedtest } from "react-icons/si";
 import SpeedTest from "@cloudflare/speedtest";
-import { BiSolidUpArrow, BiUpArrow, BiUpload } from "react-icons/bi";
-import { FaUpload } from "react-icons/fa6";
 
 function App() {
   const theme = createTheme({
@@ -68,12 +66,17 @@ function App() {
     };
   }, [intervalId]);
 
+  console.log(previousValues)
+console.log(unchangedCount)
   return (
-    <MantineProvider defaultColorScheme="auto" theme={theme}>
+    <MantineProvider defaultColorScheme="light" theme={theme}>
       <Center style={{ height: "100vh", width: "100vw" }}>
         <Stack style={{ width: "80vw" }}>
           <Title className="title" style={{ textAlign: "center", display: "" }}>
-            Speed Test
+            BenJS Speed Test
+          </Title>
+          <Title order={2} style={{ textAlign: "center", display: "" }}>
+            A simple speed test. Powered by <a href="https://cloudflare.com" target="_blank"><img src="/cloudflare.png" alt="Cloudflare" style={{ width: "auto", height: "0.6em", marginBottom:"0.07em" }} /></a>
           </Title>
           <Space h="md" />
           <Stack style={{ height: "40vh" }}>
@@ -89,15 +92,21 @@ function App() {
                     width: "204px",
                     height: "204px",
                     position: "relative",
+                    userSelect: "none",
                   }}
+                  bg="var(--mantine-color-white)"
                   radius="100%"
                   id={speed > 0 && !isTesting ? "dc" : ""}
+                  className={speed > 0 && !isTesting ? "dc" : ""}
                   onClick={
                     speed > 0 && !isTesting
                       ? () => {
                           document
                             .getElementById("dc")
                             ?.classList.add("becomewhitesquircle");
+                            document
+                            .getElementById("dc")
+                            ?.classList.remove("dc");
                         }
                       : () => {}
                   }
@@ -177,8 +186,8 @@ function App() {
                       top: "7.8em",
                       left: "50%",
                       transform: "translateX(-50%)",
-                      color: up > 0 ? "black" : "grey",
-                      animation: up > 0 ? "" : "textpulse 1s infinite",
+                      color: !isTesting ? "black" : "grey",
+                      animation: !isTesting ? "" : "textpulse 1s infinite",
                     }}
                   >
                     ⇣
@@ -196,6 +205,7 @@ function App() {
             <Center
               style={{
                 display: speed > 0 ? "none" : "",
+                height: "204px",
               }}
             >
               <Button
