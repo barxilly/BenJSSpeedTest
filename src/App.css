@@ -75,6 +75,11 @@ body {
   }
 }
 
+a {
+  color: #76561a;
+  text-decoration: none;
+}
+
 /* Synchronized animation class */
 .sync-pulse {
   animation: textpulse 1s infinite;

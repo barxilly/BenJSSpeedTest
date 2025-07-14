@@ -19,13 +19,13 @@ import {
 import "@mantine/core/styles.css";
 import SpeedTest from "@cloudflare/speedtest";
 import { RxCross2 } from "react-icons/rx";
-import { CgMore } from "react-icons/cg";
 import { PiGameControllerFill } from "react-icons/pi";
 import { FaGlobe as FaRedditAlien } from "react-icons/fa";
 import { GoDot, GoDotFill } from "react-icons/go";
 import { TbTransfer } from "react-icons/tb";
 import { BiVideo } from "react-icons/bi";
 import { FaGun } from "react-icons/fa6";
+import { FaInfoCircle } from "react-icons/fa";
 import { RiNetflixFill as SiNetflix } from "react-icons/ri";
 import { MdExpandMore } from "react-icons/md";
 
@@ -101,9 +101,9 @@ function App() {
       }
 
       if (nearestServer) {
-        return `${nearestServer.city}, ${nearestServer.cca2} (${Math.round(
-          shortestDistance
-        )}km away)`;
+        const distanceKm = Math.round(shortestDistance);
+        const distanceMiles = Math.round(shortestDistance * 0.621371);
+        return `${nearestServer.city}, ${nearestServer.cca2} (${distanceKm}km / ${distanceMiles}mi away)`;
       } else {
         return "Unable to determine nearest server";
       }
@@ -123,6 +123,8 @@ function App() {
   const [userLocation, setUserLocation] = useState<string>("Detecting...");
   const [nearestCloudflareServer, setNearestCloudflareServer] =
     useState<string>("Detecting...");
+    const [ints, setInts] = useState(0);
+    console.log(ints)
   const [previousValues, setPreviousValues] = useState({
     down: 0,
     up: 0,
@@ -134,6 +136,7 @@ function App() {
   const [showUses, setShowUses] = useState(false);
   const [showAllGames, setShowAllGames] = useState(false);
   const [showDebug, setShowDebug] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -159,29 +162,58 @@ function App() {
   useEffect(() => {
     const getUserLocation = async () => {
       try {
-        const response = await fetch("https://ipapi.co/json/");
+        // Try ipify first (supports CORS)
+        let response = await fetch("https://api.ipify.org?format=json");
+        const ipData = await response.json();
+        
+        // Then get location data from ip-api.com (supports CORS)
+        response = await fetch(`http://ip-api.com/json/${ipData.ip}`);
         const data = await response.json();
-        if (data.city && data.region && data.country) {
-          setUserLocation(`${data.city}, ${data.region}, ${data.country}`);
-        } else if (data.city && data.country) {
-          setUserLocation(`${data.city}, ${data.country}`);
-        } else {
-          setUserLocation("Location unavailable");
-        }
+        
+        if (data.status === "success") {
+          if (data.city && data.regionName && data.country) {
+            setUserLocation(`${data.city}, ${data.regionName}, ${data.country}`);
+          } else if (data.city && data.country) {
+            setUserLocation(`${data.city}, ${data.country}`);
+          } else {
+            setUserLocation("Location unavailable");
+          }
 
-        if (data.latitude && data.longitude) {
-          const nearestServer = await findNearestCloudflareServer(
-            data.latitude,
-            data.longitude
-          );
-          setNearestCloudflareServer(nearestServer);
+          if (data.lat && data.lon) {
+            const nearestServer = await findNearestCloudflareServer(
+              data.lat,
+              data.lon
+            );
+            setNearestCloudflareServer(nearestServer);
+          } else {
+            setNearestCloudflareServer("ERR");
+          }
         } else {
-          setNearestCloudflareServer("ERR");
+          throw new Error("Location service failed");
         }
       } catch (error) {
         console.error("Failed to get location:", error);
-        setUserLocation("Location unavailable");
-        setNearestCloudflareServer("ERR");
+        // Fallback to browser geolocation API
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            async (position) => {
+              const { latitude, longitude } = position.coords;
+              setUserLocation("Location detected via GPS");
+              const nearestServer = await findNearestCloudflareServer(
+                latitude,
+                longitude
+              );
+              setNearestCloudflareServer(nearestServer);
+            },
+            () => {
+              setUserLocation("Location unavailable");
+              setNearestCloudflareServer("Unable to determine nearest server");
+            }
+          );
+        } else {
+          setUserLocation("Location unavailable");
+          setNearestCloudflareServer("Unable to determine nearest server");
+        }
       }
     };
 
@@ -190,12 +222,22 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("https://ipapi.co/json/");
-      const data = await response.json();
-      if (data.latitude && data.longitude) {
-        const lat = data.latitude;
-        const lon = data.longitude;
-        setNearestCloudflareServer(await findNearestCloudflareServer(lat, lon));
+      try {
+        // Try ipify first (supports CORS)
+        let response = await fetch("https://api.ipify.org?format=json");
+        const ipData = await response.json();
+        
+        // Then get location data from ip-api.com (supports CORS)
+        response = await fetch(`http://ip-api.com/json/${ipData.ip}`);
+        const data = await response.json();
+        
+        if (data.status === "success" && data.lat && data.lon) {
+          const lat = data.lat;
+          const lon = data.lon;
+          setNearestCloudflareServer(await findNearestCloudflareServer(lat, lon));
+        }
+      } catch (error) {
+        console.error("Failed to fetch location data:", error);
       }
     };
 
@@ -365,8 +407,9 @@ function App() {
                         />
                       </Center>
                       <Rating
-                        emptySymbol={<GoDot size="1.5em" color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} />}
-                        fullSymbol={<GoDotFill size="1.5em" color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} />}
+                        emptySymbol={<GoDot size="1.5em" />}
+                        fullSymbol={<GoDotFill size="1.5em"/>}
+                        color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} 
                         value={
                           speed >= 100
                             ? 5
@@ -392,8 +435,9 @@ function App() {
                         />
                       </Center>
                       <Rating
-                        emptySymbol={<GoDot color="lightgrey" className={isTesting ? "sync-pulse" : ""} size="1.5em" />}
-                        fullSymbol={<GoDotFill size="1.5em" color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} />}
+                        emptySymbol={<GoDot size="1.5em" />}
+                        fullSymbol={<GoDotFill size="1.5em"/>}
+                        color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} 
                         value={
                           speed >= 50
                             ? 5
@@ -419,8 +463,9 @@ function App() {
                         />
                       </Center>
                       <Rating
-                        emptySymbol={<GoDot size="1.5em" color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} />}
-                        fullSymbol={<GoDotFill size="1.5em" color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} />}
+                        emptySymbol={<GoDot size="1.5em" />}
+                        fullSymbol={<GoDotFill size="1.5em"/>}
+                        color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} 
                         value={
                           speed >= 30
                             ? 5
@@ -486,6 +531,7 @@ function App() {
                   setSpeed(0);
                   setUnchangedCount(0);
                   setPreviousValues({ down: 0, up: 0, ping: 0 });
+                  setInts(0); // Reset interval counter
 
                   const banana = new SpeedTest();
                   banana.onFinish = (results) =>
@@ -529,6 +575,23 @@ function App() {
                     if (speed > 0) {
                       setNobutt(true);
                     }
+
+                    setInts(ints => {
+                      let newInts = ints + 1;
+                      console.log(`Interval ${newInts}`);
+                      
+                      // Check if we've reached 5 intervals here where we have access to the current value
+                      if (newInts >= 15 && newUp > 0) {
+                        console.log("Reached 5 intervals, stopping test");
+                        setIsTesting(false);
+                        clearInterval(id);
+                        setIntervalId(null);
+                      } else if (!(newUp > 0)) {
+                        newInts = 0; // Reset if upload speed is 0
+                      }
+                      
+                      return newInts;
+                    });
 
                     setPreviousValues((prev) => {
                       if (
@@ -677,6 +740,28 @@ function App() {
             >
               Detailed insights into your network performance
             </Text>
+
+            <Title
+                  order={3}
+                  style={{
+                    color: "#333",
+                    marginBottom: "0.5em",
+                    textAlign: "center",
+                    fontWeight: 600,
+                  }}
+                >
+                  My Speed Seems Off?
+                </Title>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: "#666",
+                    fontSize: "1rem",
+                    marginBottom: "1.5em",
+                  }}
+                >
+                  QwkSpd will likely give different speeds than other tests like Speedtest or Fast. This is because QwkSpd uses Cloudflare's servers rather than dedicated speed test servers. While those other tests are more speed-accurate, this test will be more accurate to IRL usage, as most of the web goes through Cloudflare's servers.<br/> <br/> Also, see the distance of your nearest Cloudflare server below, as that can affect your speed.
+                </Text>
 
             <Stack gap="xl">
               {/* Speed Metrics */}
@@ -1732,6 +1817,216 @@ function App() {
             </Button>
           </Stack>
         </Stack>
+      </Card>
+
+      {/* Info Button - Bottom Right Corner */}
+  
+        <FaInfoCircle style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          opacity: 0.4,
+          cursor: "pointer"}} onClick={() => setShowInfo(true)}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.opacity = "0.7";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.opacity = "0.4";
+        }}/>
+
+      {/* Info Modal */}
+      <Card
+        style={{
+          position: "absolute",
+          top: "5%",
+          left: "5%",
+          width: "90vw",
+          height: "90vh",
+          overflowY: "auto",
+          display: showInfo ? "block" : "none",
+          backgroundColor: "white",
+          border: "1px solid #e9ecef",
+          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+        }}
+        radius="lg"
+      >
+        <Card
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "relative",
+            background: "transparent",
+            border: "none",
+            boxShadow: "none",
+            overflowY: "auto",
+          }}
+        >
+          <div
+            style={{
+              position: "fixed",
+              top: "6.5%",
+              left: "6.5%",
+              cursor: "pointer",
+              backgroundColor: "#f8f9fa",
+              color: "#666",
+              borderRadius: "50%",
+              width: "40px",
+              height: "40px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "1.2em",
+              transition: "all 0.2s ease",
+              border: "1px solid #e9ecef",
+              zIndex: 1000,
+            }}
+            onClick={() => setShowInfo(false)}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "#e9ecef";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "#f8f9fa";
+            }}
+          >
+            <RxCross2 />
+          </div>
+          <Stack style={{ padding: "2em" }} gap="0">
+            <Title
+              order={1}
+              style={{
+                textAlign: "center",
+                fontSize: "2.5rem",
+                fontWeight: 800,
+                color: "#333",
+              }}
+            >
+              QwkSpd
+            </Title>
+            <Text
+              style={{
+                textAlign: "center",
+                color: "#ada07dff",
+                fontSize: "1.1rem",
+                marginBottom: "2em",
+              }}
+            >
+              By <a href="https://benjs.uk">BenJS</a>
+            </Text>
+
+            <Grid gutter="xl">
+              {/* About Section */}
+              <Grid.Col span={{ base: 12, md: 6 }}>
+                <Card
+                  style={{
+                    backgroundColor: "white",
+                    border: "1px solid #e9ecef",
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                    height: "100%",
+                  }}
+                  radius="lg"
+                  p="xl"
+                >
+                  <Title
+                    order={3}
+                    style={{
+                      color: "#333",
+                      marginBottom: "1.5em",
+                      textAlign: "center",
+                      fontWeight: 600,
+                    }}
+                  >
+                    About This Project
+                  </Title>
+                  <Stack gap="lg">
+                    <Text style={{ color: "#666", fontSize: "1rem", lineHeight: 1.6 }}>
+                      QwkSpd is my attempt at a speedtest that's fast, accurate to everyday use, and provides information you can actually use.
+                    </Text>
+                    <Text style={{ color: "#666", fontSize: "1rem", lineHeight: 1.6 }}>
+                      If you have any issues feel free to contact me on Slack at @Barxilly or email me at <a href="mailto:barxilly@barxsmith.sbs" style={{ color: "#007bff" }}>barxilly@barxsmith.sbs</a>.
+                    </Text>
+                  </Stack>
+                </Card>
+              </Grid.Col>
+
+              {/* Credits Section */}
+              <Grid.Col span={{ base: 12, md: 6 }}>
+                <Card
+                  style={{
+                    backgroundColor: "white",
+                    border: "1px solid #e9ecef",
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                    height: "100%",
+                  }}
+                  radius="lg"
+                  p="xl"
+                >
+                  <Title
+                    order={3}
+                    style={{
+                      color: "#333",
+                      marginBottom: "1.5em",
+                      textAlign: "center",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Credits & Acknowledgments
+                  </Title>
+                  <Stack gap="lg">
+                    <div>
+                      <Text style={{ color: "#333", fontWeight: 600, marginBottom: "0.5em" }}>
+                        Powered by Cloudflare
+                      </Text>
+                      <Text style={{ color: "#666", fontSize: "0.9rem", lineHeight: 1.6 }}>
+                        Speed testing infrastructure provided by Cloudflare's global network, ensuring accurate and reliable measurements from servers closest to you.
+                      </Text>
+                    </div>
+                    
+                    <div>
+                      <Text style={{ color: "#333", fontWeight: 600, marginBottom: "0.5em" }}>
+                        Built With
+                      </Text>
+                      <Text style={{ color: "#666", fontSize: "0.9rem", lineHeight: 1.6 }}>
+                        • React + Vite
+                        <br />
+                        • Mantine
+                        <br />
+                        • Cloudflare Speed Test API
+                      </Text>
+                    </div>
+                    <div>
+                      <Text style={{ color: "#333", fontWeight: 600, marginBottom: "0.5em" }}>
+                        Open Source
+                      </Text>
+                      <Text style={{ color: "#666", fontSize: "0.9rem", lineHeight: 1.6 }}>
+                        This project is open source, and made using other open source libraries and technologies.
+                      </Text>
+                    </div>
+                  </Stack>
+                </Card>
+              </Grid.Col>
+
+              {/* Version Info */}
+              <Grid.Col span={12}>
+                <Card
+                  style={{
+                    backgroundColor: "#f8f9fa",
+                    border: "1px solid #e9ecef",
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                  }}
+                  radius="lg"
+                  p="lg"
+                >
+                  <Text style={{ textAlign: "center", color: "#666", fontSize: "0.9rem" }}>
+                    QwkSpd • Made with ❤️ by BenJS • Version 1.0.0
+                  </Text>
+                  <Text style={{ textAlign: "center", color: "#ada07dff", fontSize: "0.8rem", marginTop: "0.5em" }}>
+                    Built in 2025 • <a href="https://github.com/barxilly/BenJSSpeedTest" >Open Source</a>
+                  </Text>
+                </Card>
+              </Grid.Col>
+            </Grid>
+          </Stack>
+        </Card>
       </Card>
     </MantineProvider>
   );
