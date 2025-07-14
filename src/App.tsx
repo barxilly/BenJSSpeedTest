@@ -28,14 +28,12 @@ import { FaGun } from "react-icons/fa6";
 import { FaInfoCircle } from "react-icons/fa";
 import { RiNetflixFill as SiNetflix } from "react-icons/ri";
 import { MdExpandMore } from "react-icons/md";
-
 function App() {
   const theme = createTheme({
     fontFamily: '"Rubik", sans-serif',
     headings: { fontFamily: '"M PLUS Rounded 1c", sans-serif' },
     primaryColor: localStorage.getItem("primaryColor") || "blue",
   });
-
   function frmbts(bps: number, round = false) {
     if (bps === 0) {
       return "0 Kbps";
@@ -55,7 +53,6 @@ function App() {
       return "0bps";
     }
   }
-
   function calculateDistance(
     lat1: number,
     lon1: number,
@@ -75,7 +72,6 @@ function App() {
     const distance = R * c;
     return distance;
   }
-
   async function findNearestCloudflareServer(
     userLat: number,
     userLon: number
@@ -83,10 +79,8 @@ function App() {
     try {
       const response = await fetch("https://speed.cloudflare.com/locations");
       const locations = await response.json();
-
       let nearestServer = null;
       let shortestDistance = Infinity;
-
       for (const location of locations) {
         const distance = calculateDistance(
           userLat,
@@ -99,7 +93,6 @@ function App() {
           nearestServer = location;
         }
       }
-
       if (nearestServer) {
         const distanceKm = Math.round(shortestDistance);
         const distanceMiles = Math.round(shortestDistance * 0.621371);
@@ -112,7 +105,6 @@ function App() {
       return "Unable to determine nearest server";
     }
   }
-
   const [speed, setSpeed] = useState(0);
   const [isTesting, setIsTesting] = useState(false);
   const [nobutt, setNobutt] = useState(false);
@@ -137,7 +129,6 @@ function App() {
   const [showAllGames, setShowAllGames] = useState(false);
   const [showDebug, setShowDebug] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
-
   useEffect(() => {
     return () => {
       if (intervalId) {
@@ -145,8 +136,6 @@ function App() {
       }
     };
   }, [intervalId]);
-
-  // Debug menu keyboard shortcut (Cmd+G)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.metaKey && event.key === "g") {
@@ -154,22 +143,16 @@ function App() {
         setShowDebug((prev) => !prev);
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
-
   useEffect(() => {
     const getUserLocation = async () => {
       try {
-        // Try ipify first (supports CORS)
         let response = await fetch("https://api.ipify.org?format=json");
         const ipData = await response.json();
-
-        // Then get location data from ip-api.com (supports CORS)
         response = await fetch(`http://ip-api.com/json/${ipData.ip}`);
         const data = await response.json();
-
         if (data.status === "success") {
           if (data.city && data.regionName && data.country) {
             setUserLocation(
@@ -180,7 +163,6 @@ function App() {
           } else {
             setUserLocation("Location unavailable");
           }
-
           if (data.lat && data.lon) {
             const nearestServer = await findNearestCloudflareServer(
               data.lat,
@@ -195,7 +177,6 @@ function App() {
         }
       } catch (error) {
         console.error("Failed to get location:", error);
-        // Fallback to browser geolocation API
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(
             async (position) => {
@@ -218,21 +199,15 @@ function App() {
         }
       }
     };
-
     getUserLocation();
   }, []);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Try ipify first (supports CORS)
         let response = await fetch("https://api.ipify.org?format=json");
         const ipData = await response.json();
-
-        // Then get location data from ip-api.com (supports CORS)
         response = await fetch(`http://ip-api.com/json/${ipData.ip}`);
         const data = await response.json();
-
         if (data.status === "success" && data.lat && data.lon) {
           const lat = data.lat;
           const lon = data.lon;
@@ -244,14 +219,11 @@ function App() {
         console.error("Failed to fetch location data:", error);
       }
     };
-
     fetchData();
   }, [userLocation]);
-
   function isSmolPhone() {
     return window.innerWidth < 550;
   }
-
   console.log(previousValues);
   console.log(unchangedCount);
   return (
@@ -568,8 +540,7 @@ function App() {
                   setSpeed(0);
                   setUnchangedCount(0);
                   setPreviousValues({ down: 0, up: 0, ping: 0 });
-                  setInts(0); // Reset interval counter
-
+                  setInts(0);
                   const banana = new SpeedTest();
                   banana.onFinish = (results) =>
                     console.log(
@@ -587,20 +558,17 @@ function App() {
                     }
                   };
                   setIsTesting(await banana.isRunning);
-
                   const id = setInterval(() => {
                     if (!nobutt) {
                       (
                         document.getElementById("speed-display") as HTMLElement
                       )?.classList?.add("growappear");
                     }
-
                     const newDown = banana.results.getSummary()
                       .download as number;
                     const newUp = banana.results.getSummary().upload as number;
                     const newPing = banana.results.getSummary()
                       .latency as number;
-
                     setDown(newDown);
                     setUp(newUp);
                     setPing(newPing);
@@ -608,28 +576,22 @@ function App() {
                     setJitter(
                       (banana.results.getSummary().jitter as number) || 0
                     );
-
                     if (speed > 0) {
                       setNobutt(true);
                     }
-
                     setInts((ints) => {
                       let newInts = ints + 1;
                       console.log(`Interval ${newInts}`);
-
-                      // Check if we've reached 5 intervals here where we have access to the current value
                       if (newInts >= 15 && newUp > 0) {
                         console.log("Reached 5 intervals, stopping test");
                         setIsTesting(false);
                         clearInterval(id);
                         setIntervalId(null);
                       } else if (!(newUp > 0)) {
-                        newInts = 0; // Reset if upload speed is 0
+                        newInts = 0;
                       }
-
                       return newInts;
                     });
-
                     setPreviousValues((prev) => {
                       if (
                         prev.down === newDown &&
@@ -660,11 +622,9 @@ function App() {
                       }
                       return { down: newDown, up: newUp, ping: newPing };
                     });
-
                     console.log(banana.results.getSummary());
                     console.log(banana.results);
                   }, 500);
-
                   setIntervalId(id);
                 }}
                 style={{
@@ -776,8 +736,7 @@ function App() {
               }}
             >
               Detailed insights into your network performance
-            </Text>
-
+            </Text>{" "}
             <Title
               order={3}
               style={{
@@ -805,10 +764,8 @@ function App() {
               Cloudflare's servers.
               <br /> <br /> Also, see the distance of your nearest Cloudflare
               server below, as that can affect your speed.
-            </Text>
-
+            </Text>{" "}
             <Stack gap="xl">
-              {/* Speed Metrics */}
               <Card
                 style={{
                   backgroundColor: "white",
@@ -872,9 +829,7 @@ function App() {
                     </div>
                   </div>
                 </Stack>
-              </Card>
-
-              {/* Network Performance */}
+              </Card>{" "}
               <Card
                 style={{
                   backgroundColor: "white",
@@ -928,9 +883,7 @@ function App() {
                     </Text>
                   </div>
                 </Stack>
-              </Card>
-
-              {/* Location Information */}
+              </Card>{" "}
               <Card
                 style={{
                   backgroundColor: "white",
@@ -1004,9 +957,7 @@ function App() {
             </Stack>
           </Stack>
         </Card>
-      </Card>
-
-      {/* Uses Page Modal */}
+      </Card>{" "}
       <Card
         style={{
           position: "absolute",
@@ -1086,10 +1037,8 @@ function App() {
               }}
             >
               Estimated download times for popular content
-            </Text>
-
+            </Text>{" "}
             <Grid gutter={isSmolPhone() ? "0" : "xs"}>
-              {/* Gaming Downloads */}
               <Grid.Col span={{ base: 12, md: 6 }}>
                 <Card
                   style={{
@@ -1135,7 +1084,6 @@ function App() {
                     ]
                       .slice(0, showAllGames ? undefined : 5)
                       .map((game, index, array) => {
-                        // Convert GB to bits, then divide by bits per second to get seconds
                         const downloadTimeSeconds =
                           (game.size * 8 * 1000000000) / down;
                         const displayTime =
@@ -1148,7 +1096,6 @@ function App() {
                             : `${(downloadTimeSeconds / 86400).toFixed(
                                 1
                               )} days`;
-
                         return (
                           <div
                             key={index}
@@ -1179,9 +1126,7 @@ function App() {
                             </Text>
                           </div>
                         );
-                      })}
-
-                    {/* Show more/less button */}
+                      })}{" "}
                     <Center style={{ paddingTop: "1em" }}>
                       <Button
                         variant="subtle"
@@ -1194,9 +1139,7 @@ function App() {
                     </Center>
                   </Stack>
                 </Card>
-              </Grid.Col>
-
-              {/* Streaming Quality */}
+              </Grid.Col>{" "}
               <Grid.Col span={{ base: 12, md: 6 }}>
                 <Card
                   style={{
@@ -1253,7 +1196,6 @@ function App() {
                     ].map((stream, index) => {
                       const canStream = down / 1000000 >= stream.requirement;
                       const qualityColor = canStream ? "#28a745" : "#f59e0b";
-
                       return (
                         <div
                           key={index}
@@ -1294,9 +1236,7 @@ function App() {
                     })}
                   </Stack>
                 </Card>
-              </Grid.Col>
-
-              {/* Social Media & Content Creation */}
+              </Grid.Col>{" "}
               <Grid.Col span={{ base: 12, md: 6 }}>
                 <Card
                   style={{
@@ -1363,7 +1303,6 @@ function App() {
                     ].map((activity, index) => {
                       const canDo = down / 1000000 >= activity.requirement;
                       const statusColor = canDo ? "#28a745" : "#f59e0b";
-
                       return (
                         <div
                           key={index}
@@ -1404,9 +1343,7 @@ function App() {
                     })}
                   </Stack>
                 </Card>
-              </Grid.Col>
-
-              {/* Content Creation & Upload */}
+              </Grid.Col>{" "}
               <Grid.Col span={{ base: 12, md: 6 }}>
                 <Card
                   style={{
@@ -1473,7 +1410,6 @@ function App() {
                     ].map((activity, index) => {
                       const canDo = up / 1000000 >= activity.requirement;
                       const statusColor = canDo ? "#28a745" : "#f59e0b";
-
                       return (
                         <div
                           key={index}
@@ -1514,9 +1450,7 @@ function App() {
                     })}
                   </Stack>
                 </Card>
-              </Grid.Col>
-
-              {/* File Transfer Times */}
+              </Grid.Col>{" "}
               <Grid.Col span={{ base: 12, md: 6 }}>
                 <Card
                   style={{
@@ -1551,7 +1485,6 @@ function App() {
                       { name: "High-res Photo (10 MB)", size: 0.01 },
                       { name: "Document (1 MB)", size: 0.001 },
                     ].map((file, index) => {
-                      // Convert GB to bits, then divide by bits per second to get seconds
                       const downloadTimeSeconds =
                         (file.size * 8 * 1000000000) / down;
                       const displayTime =
@@ -1560,7 +1493,6 @@ function App() {
                           : downloadTimeSeconds < 3600
                           ? `${Math.round(downloadTimeSeconds / 60)} minutes`
                           : `${(downloadTimeSeconds / 3600).toFixed(1)} hours`;
-
                       return (
                         <div
                           key={index}
@@ -1589,9 +1521,7 @@ function App() {
                     })}
                   </Stack>
                 </Card>
-              </Grid.Col>
-
-              {/* Online Gaming Performance */}
+              </Grid.Col>{" "}
               <Grid.Col span={{ base: 12, md: 6 }}>
                 <Card
                   style={{
@@ -1662,7 +1592,6 @@ function App() {
                         : ping > gameType.requirement
                         ? "#f59e0b"
                         : "#666";
-
                       return (
                         <div
                           key={index}
@@ -1711,9 +1640,7 @@ function App() {
             </Grid>
           </Stack>
         </Card>
-      </Card>
-
-      {/* Debug Menu Modal */}
+      </Card>{" "}
       <Card
         style={{
           position: "fixed",
@@ -1758,8 +1685,7 @@ function App() {
           }}
         >
           <RxCross2 />
-        </div>
-
+        </div>{" "}
         <Stack style={{ padding: "2em" }}>
           <Title
             order={2}
@@ -1780,8 +1706,7 @@ function App() {
             }}
           >
             Manually set speed test values (Cmd+G to toggle)
-          </Text>
-
+          </Text>{" "}
           <Stack gap="md">
             <div>
               <Text size="sm" fw={500} style={{ marginBottom: "0.5em" }}>
@@ -1797,8 +1722,7 @@ function App() {
                   setSpeed(Math.round((value / 1000000) * 1000) / 1000);
                 }}
               />
-            </div>
-
+            </div>{" "}
             <div>
               <Text size="sm" fw={500} style={{ marginBottom: "0.5em" }}>
                 Upload Speed (bps)
@@ -1809,8 +1733,7 @@ function App() {
                 value={up || ""}
                 onChange={(e) => setUp(parseFloat(e.target.value) || 0)}
               />
-            </div>
-
+            </div>{" "}
             <div>
               <Text size="sm" fw={500} style={{ marginBottom: "0.5em" }}>
                 Ping (ms)
@@ -1821,8 +1744,7 @@ function App() {
                 value={ping || ""}
                 onChange={(e) => setPing(parseFloat(e.target.value) || 0)}
               />
-            </div>
-
+            </div>{" "}
             <div>
               <Text size="sm" fw={500} style={{ marginBottom: "0.5em" }}>
                 Jitter (ms)
@@ -1833,8 +1755,7 @@ function App() {
                 value={jitter || ""}
                 onChange={(e) => setJitter(parseFloat(e.target.value) || 0)}
               />
-            </div>
-
+            </div>{" "}
             <Button
               variant={isTesting ? "filled" : "outline"}
               color={isTesting ? "red" : "blue"}
@@ -1842,8 +1763,7 @@ function App() {
               style={{ marginTop: "1em" }}
             >
               {isTesting ? "Stop Testing Animation" : "Start Testing Animation"}
-            </Button>
-
+            </Button>{" "}
             <Button
               variant="light"
               color="gray"
@@ -1861,10 +1781,7 @@ function App() {
             </Button>
           </Stack>
         </Stack>
-      </Card>
-
-      {/* Info Button - Bottom Right Corner */}
-
+      </Card>{" "}
       <FaInfoCircle
         style={{
           position: "fixed",
@@ -1881,9 +1798,7 @@ function App() {
           e.currentTarget.style.opacity = "0.4";
         }}
         size="2em"
-      />
-
-      {/* Info Modal */}
+      />{" "}
       <Card
         style={{
           position: "absolute",
@@ -1960,10 +1875,8 @@ function App() {
               }}
             >
               By <a href="https://benjs.uk">BenJS</a>
-            </Text>
-
+            </Text>{" "}
             <Grid gutter="xl">
-              {/* About Section */}
               <Grid.Col span={{ base: 12, md: 6 }}>
                 <Card
                   style={{
@@ -2017,9 +1930,7 @@ function App() {
                     </Text>
                   </Stack>
                 </Card>
-              </Grid.Col>
-
-              {/* Credits Section */}
+              </Grid.Col>{" "}
               <Grid.Col span={{ base: 12, md: 6 }}>
                 <Card
                   style={{
@@ -2064,8 +1975,7 @@ function App() {
                         global network, ensuring accurate and reliable
                         measurements from servers closest to you.
                       </Text>
-                    </div>
-
+                    </div>{" "}
                     <div>
                       <Text
                         style={{
@@ -2112,9 +2022,7 @@ function App() {
                     </div>
                   </Stack>
                 </Card>
-              </Grid.Col>
-
-              {/* Version Info */}
+              </Grid.Col>{" "}
               <Grid.Col span={12}>
                 <Card
                   style={{
@@ -2156,5 +2064,4 @@ function App() {
     </MantineProvider>
   );
 }
-
 export default App;
