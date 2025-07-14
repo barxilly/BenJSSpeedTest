@@ -244,16 +244,20 @@ function App() {
     fetchData();
   }, [userLocation]);
 
+  function isSmolPhone(){
+    return window.innerWidth < 550;
+  }
+
   console.log(previousValues);
   console.log(unchangedCount);
   return (
     <MantineProvider defaultColorScheme="light" theme={theme}>
-      <Center style={{ height: "100vh", width: "100vw" }}>
+      <Center style={{ height: isSmolPhone() ? "80vh": "100vh", width: "100vw" }}>
         <Stack style={{ width: "80vw" }}>
           <Title className="title" style={{ textAlign: "center", display: "" }}>
             QwkSpd
           </Title>
-          <Title order={2} style={{ textAlign: "center", display: "" }}>
+          {isSmolPhone() ?<> </>:<Title order={2} style={{ textAlign: "center", display: "" }}>
             Powered by{" "}
             <a href="https://cloudflare.com" target="_blank">
               <img
@@ -266,7 +270,7 @@ function App() {
                 }}
               />
             </a>
-          </Title>
+          </Title>}
           <Space h="md" />
           <Stack style={{ height: "40vh" }}>
             <Center
@@ -399,16 +403,16 @@ function App() {
                       animation: isTesting ? "borderpulse 3s infinite" : "", }} radius="lg">
                   <Flex gap="md">
                     <Stack>
-                      <Center>
+                      <Center h={isSmolPhone() ? "2.5em":"3em"}>
                         <PiGameControllerFill 
-                          size="3em" 
+                          size={isSmolPhone() ? "2.25em":"3em"}
                           color={isTesting ? "grey" : "black"} 
                           className={isTesting ? "sync-pulse" : ""}
                         />
                       </Center>
                       <Rating
-                        emptySymbol={<GoDot size="1.5em" />}
-                        fullSymbol={<GoDotFill size="1.5em"/>}
+                        emptySymbol={<GoDot size={isSmolPhone() ? "1em":"1.5em"} />}
+                        fullSymbol={<GoDotFill size={isSmolPhone() ? "1em":"1.5em"}/>}
                         color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} 
                         value={
                           speed >= 100
@@ -427,16 +431,16 @@ function App() {
                       />
                     </Stack>
                     <Stack>
-                      <Center h="3em">
+                      <Center h={isSmolPhone() ? "2.5em":"3em"}>
                         <SiNetflix 
-                          size="2.5em" 
+                          size={isSmolPhone() ? "2em":"2.5em"}
                           color={isTesting ? "grey" : "black"} 
                           className={isTesting ? "sync-pulse" : ""}
                         />
                       </Center>
                       <Rating
-                        emptySymbol={<GoDot size="1.5em" />}
-                        fullSymbol={<GoDotFill size="1.5em"/>}
+                        emptySymbol={<GoDot size={isSmolPhone() ? "1em":"1.5em"} />}
+                        fullSymbol={<GoDotFill size={isSmolPhone() ? "1em":"1.5em"}/>}
                         color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} 
                         value={
                           speed >= 50
@@ -455,16 +459,16 @@ function App() {
                       />
                     </Stack>
                     <Stack>
-                      <Center h="3em">
+                      <Center h={isSmolPhone() ? "2.5em":"3em"}>
                         <FaRedditAlien 
-                          size="2.5em" 
+                         size={isSmolPhone() ? "2em":"2.5em"}
                           color={isTesting ? "grey" : "black"} 
                           className={isTesting ? "sync-pulse" : ""}
                         />
                       </Center>
                       <Rating
-                        emptySymbol={<GoDot size="1.5em" />}
-                        fullSymbol={<GoDotFill size="1.5em"/>}
+                        emptySymbol={<GoDot size={isSmolPhone() ? "1em":"1.5em"} />}
+                        fullSymbol={<GoDotFill size={isSmolPhone() ? "1em":"1.5em"}/>}
                         color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} 
                         value={
                           speed >= 30
@@ -717,7 +721,7 @@ function App() {
           >
             <RxCross2 />
           </div>
-          <Stack style={{ padding: "2em" }}>
+          <Stack style={{ padding: isSmolPhone()?"0em" :"2em" }}>
             <Title
               order={1}
               style={{
@@ -1020,7 +1024,7 @@ function App() {
           >
             <RxCross2 />
           </div>
-          <Stack style={{ padding: "1em" }}>
+          <Stack style={{ padding: isSmolPhone()?"0em":"1em" }}>
             <Title
               order={1}
               style={{
@@ -1044,7 +1048,7 @@ function App() {
               Estimated download times for popular content
             </Text>
 
-            <Grid gutter="xs">
+            <Grid gutter={isSmolPhone()?"0":"xs"}>
               {/* Gaming Downloads */}
               <Grid.Col span={{ base: 12, md: 6 }}>
                 <Card
@@ -1832,7 +1836,9 @@ function App() {
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.opacity = "0.4";
-        }}/>
+        }}
+        size="2em"
+        />
 
       {/* Info Modal */}
       <Card
@@ -1890,7 +1896,7 @@ function App() {
           >
             <RxCross2 />
           </div>
-          <Stack style={{ padding: "2em" }} gap="0">
+          <Stack style={{ padding: isSmolPhone()? "0em":"2em" }} gap="0">
             <Title
               order={1}
               style={{
