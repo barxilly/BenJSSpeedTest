@@ -123,8 +123,8 @@ function App() {
   const [userLocation, setUserLocation] = useState<string>("Detecting...");
   const [nearestCloudflareServer, setNearestCloudflareServer] =
     useState<string>("Detecting...");
-    const [ints, setInts] = useState(0);
-    console.log(ints)
+  const [ints, setInts] = useState(0);
+  console.log(ints);
   const [previousValues, setPreviousValues] = useState({
     down: 0,
     up: 0,
@@ -165,14 +165,16 @@ function App() {
         // Try ipify first (supports CORS)
         let response = await fetch("https://api.ipify.org?format=json");
         const ipData = await response.json();
-        
+
         // Then get location data from ip-api.com (supports CORS)
         response = await fetch(`http://ip-api.com/json/${ipData.ip}`);
         const data = await response.json();
-        
+
         if (data.status === "success") {
           if (data.city && data.regionName && data.country) {
-            setUserLocation(`${data.city}, ${data.regionName}, ${data.country}`);
+            setUserLocation(
+              `${data.city}, ${data.regionName}, ${data.country}`
+            );
           } else if (data.city && data.country) {
             setUserLocation(`${data.city}, ${data.country}`);
           } else {
@@ -226,15 +228,17 @@ function App() {
         // Try ipify first (supports CORS)
         let response = await fetch("https://api.ipify.org?format=json");
         const ipData = await response.json();
-        
+
         // Then get location data from ip-api.com (supports CORS)
         response = await fetch(`http://ip-api.com/json/${ipData.ip}`);
         const data = await response.json();
-        
+
         if (data.status === "success" && data.lat && data.lon) {
           const lat = data.lat;
           const lon = data.lon;
-          setNearestCloudflareServer(await findNearestCloudflareServer(lat, lon));
+          setNearestCloudflareServer(
+            await findNearestCloudflareServer(lat, lon)
+          );
         }
       } catch (error) {
         console.error("Failed to fetch location data:", error);
@@ -244,7 +248,7 @@ function App() {
     fetchData();
   }, [userLocation]);
 
-  function isSmolPhone(){
+  function isSmolPhone() {
     return window.innerWidth < 550;
   }
 
@@ -252,25 +256,31 @@ function App() {
   console.log(unchangedCount);
   return (
     <MantineProvider defaultColorScheme="light" theme={theme}>
-      <Center style={{ height: isSmolPhone() ? "80vh": "100vh", width: "100vw" }}>
+      <Center
+        style={{ height: isSmolPhone() ? "80vh" : "100vh", width: "100vw" }}
+      >
         <Stack style={{ width: "80vw" }}>
           <Title className="title" style={{ textAlign: "center", display: "" }}>
             QwkSpd
           </Title>
-          {isSmolPhone() ?<> </>:<Title order={2} style={{ textAlign: "center", display: "" }}>
-            Powered by{" "}
-            <a href="https://cloudflare.com" target="_blank">
-              <img
-                src="/cloudflare.png"
-                alt="Cloudflare"
-                style={{
-                  width: "auto",
-                  height: "0.6em",
-                  marginBottom: "0.07em",
-                }}
-              />
-            </a>
-          </Title>}
+          {isSmolPhone() ? (
+            <> </>
+          ) : (
+            <Title order={2} style={{ textAlign: "center", display: "" }}>
+              Powered by{" "}
+              <a href="https://cloudflare.com" target="_blank">
+                <img
+                  src="/cloudflare.png"
+                  alt="Cloudflare"
+                  style={{
+                    width: "auto",
+                    height: "0.6em",
+                    marginBottom: "0.07em",
+                  }}
+                />
+              </a>
+            </Title>
+          )}
           <Space h="md" />
           <Stack style={{ height: "40vh" }}>
             <Center
@@ -288,7 +298,8 @@ function App() {
                       position: "relative",
                       userSelect: "none",
                       justifySelf: "center",
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1), 0px 20px 10px -5px rgba(255,255,255,1) inset",
+                      boxShadow:
+                        "0 2px 4px rgba(0, 0, 0, 0.1), 0px 20px 10px -5px rgba(255,255,255,1) inset",
                       background: "#fbf8f5ff",
                       animation: isTesting ? "borderpulse 3s infinite" : "",
                     }}
@@ -335,18 +346,18 @@ function App() {
                       className={isTesting ? "sync-pulse" : ""}
                     >
                       {frmbts(up, true)}
-                    </Text>                      <Title
-                        order={1}
-                        style={{
-                          textAlign: "center",
-                          display: speed > 0 ? "block" : "none",
-                          color: isTesting ? "grey" : "black",
-                          fontSize: "3rem",
-
-                        }}
-                        className={isTesting ? "sync-pulse" : ""}
-                        id="speed-display"
-                      >
+                    </Text>{" "}
+                    <Title
+                      order={1}
+                      style={{
+                        textAlign: "center",
+                        display: speed > 0 ? "block" : "none",
+                        color: isTesting ? "grey" : "black",
+                        fontSize: "3rem",
+                      }}
+                      className={isTesting ? "sync-pulse" : ""}
+                      id="speed-display"
+                    >
                       <Title
                         order={1}
                         style={{
@@ -398,22 +409,34 @@ function App() {
                   </Card>
                 </Center>
                 <Space h="sm" />
-                <Card style={{ width: "fit-content",boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1), 0px 20px 10px -5px rgba(255,255,255,1) inset",
-                      background: "#fbf8f5ff",
-                      animation: isTesting ? "borderpulse 3s infinite" : "", }} radius="lg">
+                <Card
+                  style={{
+                    width: "fit-content",
+                    boxShadow:
+                      "0 2px 4px rgba(0, 0, 0, 0.1), 0px 20px 10px -5px rgba(255,255,255,1) inset",
+                    background: "#fbf8f5ff",
+                    animation: isTesting ? "borderpulse 3s infinite" : "",
+                  }}
+                  radius="lg"
+                >
                   <Flex gap="md">
                     <Stack>
-                      <Center h={isSmolPhone() ? "2.5em":"3em"}>
-                        <PiGameControllerFill 
-                          size={isSmolPhone() ? "2.25em":"3em"}
-                          color={isTesting ? "grey" : "black"} 
+                      <Center h={isSmolPhone() ? "2.5em" : "3em"}>
+                        <PiGameControllerFill
+                          size={isSmolPhone() ? "2.25em" : "3em"}
+                          color={isTesting ? "grey" : "black"}
                           className={isTesting ? "sync-pulse" : ""}
                         />
                       </Center>
                       <Rating
-                        emptySymbol={<GoDot size={isSmolPhone() ? "1em":"1.5em"} />}
-                        fullSymbol={<GoDotFill size={isSmolPhone() ? "1em":"1.5em"}/>}
-                        color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} 
+                        emptySymbol={
+                          <GoDot size={isSmolPhone() ? "1em" : "1.5em"} />
+                        }
+                        fullSymbol={
+                          <GoDotFill size={isSmolPhone() ? "1em" : "1.5em"} />
+                        }
+                        color={isTesting ? "grey" : "black"}
+                        className={isTesting ? "sync-pulse" : ""}
                         value={
                           speed >= 100
                             ? 5
@@ -431,17 +454,22 @@ function App() {
                       />
                     </Stack>
                     <Stack>
-                      <Center h={isSmolPhone() ? "2.5em":"3em"}>
-                        <SiNetflix 
-                          size={isSmolPhone() ? "2em":"2.5em"}
-                          color={isTesting ? "grey" : "black"} 
+                      <Center h={isSmolPhone() ? "2.5em" : "3em"}>
+                        <SiNetflix
+                          size={isSmolPhone() ? "2em" : "2.5em"}
+                          color={isTesting ? "grey" : "black"}
                           className={isTesting ? "sync-pulse" : ""}
                         />
                       </Center>
                       <Rating
-                        emptySymbol={<GoDot size={isSmolPhone() ? "1em":"1.5em"} />}
-                        fullSymbol={<GoDotFill size={isSmolPhone() ? "1em":"1.5em"}/>}
-                        color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} 
+                        emptySymbol={
+                          <GoDot size={isSmolPhone() ? "1em" : "1.5em"} />
+                        }
+                        fullSymbol={
+                          <GoDotFill size={isSmolPhone() ? "1em" : "1.5em"} />
+                        }
+                        color={isTesting ? "grey" : "black"}
+                        className={isTesting ? "sync-pulse" : ""}
                         value={
                           speed >= 50
                             ? 5
@@ -459,17 +487,22 @@ function App() {
                       />
                     </Stack>
                     <Stack>
-                      <Center h={isSmolPhone() ? "2.5em":"3em"}>
-                        <FaRedditAlien 
-                         size={isSmolPhone() ? "2em":"2.5em"}
-                          color={isTesting ? "grey" : "black"} 
+                      <Center h={isSmolPhone() ? "2.5em" : "3em"}>
+                        <FaRedditAlien
+                          size={isSmolPhone() ? "2em" : "2.5em"}
+                          color={isTesting ? "grey" : "black"}
                           className={isTesting ? "sync-pulse" : ""}
                         />
                       </Center>
                       <Rating
-                        emptySymbol={<GoDot size={isSmolPhone() ? "1em":"1.5em"} />}
-                        fullSymbol={<GoDotFill size={isSmolPhone() ? "1em":"1.5em"}/>}
-                        color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} 
+                        emptySymbol={
+                          <GoDot size={isSmolPhone() ? "1em" : "1.5em"} />
+                        }
+                        fullSymbol={
+                          <GoDotFill size={isSmolPhone() ? "1em" : "1.5em"} />
+                        }
+                        color={isTesting ? "grey" : "black"}
+                        className={isTesting ? "sync-pulse" : ""}
                         value={
                           speed >= 30
                             ? 5
@@ -580,10 +613,10 @@ function App() {
                       setNobutt(true);
                     }
 
-                    setInts(ints => {
+                    setInts((ints) => {
                       let newInts = ints + 1;
                       console.log(`Interval ${newInts}`);
-                      
+
                       // Check if we've reached 5 intervals here where we have access to the current value
                       if (newInts >= 15 && newUp > 0) {
                         console.log("Reached 5 intervals, stopping test");
@@ -593,7 +626,7 @@ function App() {
                       } else if (!(newUp > 0)) {
                         newInts = 0; // Reset if upload speed is 0
                       }
-                      
+
                       return newInts;
                     });
 
@@ -721,7 +754,7 @@ function App() {
           >
             <RxCross2 />
           </div>
-          <Stack style={{ padding: isSmolPhone()?"0em" :"2em" }}>
+          <Stack style={{ padding: isSmolPhone() ? "0em" : "2em" }}>
             <Title
               order={1}
               style={{
@@ -746,26 +779,33 @@ function App() {
             </Text>
 
             <Title
-                  order={3}
-                  style={{
-                    color: "#333",
-                    marginBottom: "0.5em",
-                    textAlign: "center",
-                    fontWeight: 600,
-                  }}
-                >
-                  My Speed Seems Off?
-                </Title>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    color: "#666",
-                    fontSize: "1rem",
-                    marginBottom: "1.5em",
-                  }}
-                >
-                  QwkSpd will likely give different speeds than other tests like Speedtest or Fast. This is because QwkSpd uses Cloudflare's servers rather than dedicated speed test servers. While those other tests are more speed-accurate, this test will be more accurate to IRL usage, as most of the web goes through Cloudflare's servers.<br/> <br/> Also, see the distance of your nearest Cloudflare server below, as that can affect your speed.
-                </Text>
+              order={3}
+              style={{
+                color: "#333",
+                marginBottom: "0.5em",
+                textAlign: "center",
+                fontWeight: 600,
+              }}
+            >
+              My Speed Seems Off?
+            </Title>
+            <Text
+              style={{
+                textAlign: "center",
+                color: "#666",
+                fontSize: "1rem",
+                marginBottom: "1.5em",
+              }}
+            >
+              QwkSpd will likely give different speeds than other tests like
+              Speedtest or Fast. This is because QwkSpd uses Cloudflare's
+              servers rather than dedicated speed test servers. While those
+              other tests are more speed-accurate, this test will be more
+              accurate to IRL usage, as most of the web goes through
+              Cloudflare's servers.
+              <br /> <br /> Also, see the distance of your nearest Cloudflare
+              server below, as that can affect your speed.
+            </Text>
 
             <Stack gap="xl">
               {/* Speed Metrics */}
@@ -1024,7 +1064,7 @@ function App() {
           >
             <RxCross2 />
           </div>
-          <Stack style={{ padding: isSmolPhone()?"0em":"1em" }}>
+          <Stack style={{ padding: isSmolPhone() ? "0em" : "1em" }}>
             <Title
               order={1}
               style={{
@@ -1048,7 +1088,7 @@ function App() {
               Estimated download times for popular content
             </Text>
 
-            <Grid gutter={isSmolPhone()?"0":"xs"}>
+            <Grid gutter={isSmolPhone() ? "0" : "xs"}>
               {/* Gaming Downloads */}
               <Grid.Col span={{ base: 12, md: 6 }}>
                 <Card
@@ -1824,13 +1864,16 @@ function App() {
       </Card>
 
       {/* Info Button - Bottom Right Corner */}
-  
-        <FaInfoCircle style={{
+
+      <FaInfoCircle
+        style={{
           position: "fixed",
           bottom: "20px",
           right: "20px",
           opacity: 0.4,
-          cursor: "pointer"}} onClick={() => setShowInfo(true)}
+          cursor: "pointer",
+        }}
+        onClick={() => setShowInfo(true)}
         onMouseEnter={(e) => {
           e.currentTarget.style.opacity = "0.7";
         }}
@@ -1838,7 +1881,7 @@ function App() {
           e.currentTarget.style.opacity = "0.4";
         }}
         size="2em"
-        />
+      />
 
       {/* Info Modal */}
       <Card
@@ -1896,7 +1939,7 @@ function App() {
           >
             <RxCross2 />
           </div>
-          <Stack style={{ padding: isSmolPhone()? "0em":"2em" }} gap="0">
+          <Stack style={{ padding: isSmolPhone() ? "0em" : "2em" }} gap="0">
             <Title
               order={1}
               style={{
@@ -1944,11 +1987,33 @@ function App() {
                     About This Project
                   </Title>
                   <Stack gap="lg">
-                    <Text style={{ color: "#666", fontSize: "1rem", lineHeight: 1.6 }}>
-                      QwkSpd is my attempt at a speedtest that's fast, accurate to everyday use, and provides information you can actually use.
+                    <Text
+                      style={{
+                        color: "#666",
+                        fontSize: "1rem",
+                        lineHeight: 1.6,
+                      }}
+                    >
+                      QwkSpd is my attempt at a speedtest that's fast, accurate
+                      to everyday use, and provides information you can actually
+                      use.
                     </Text>
-                    <Text style={{ color: "#666", fontSize: "1rem", lineHeight: 1.6 }}>
-                      If you have any issues feel free to contact me on Slack at @Barxilly or email me at <a href="mailto:barxilly@barxsmith.sbs" style={{ color: "#007bff" }}>barxilly@barxsmith.sbs</a>.
+                    <Text
+                      style={{
+                        color: "#666",
+                        fontSize: "1rem",
+                        lineHeight: 1.6,
+                      }}
+                    >
+                      If you have any issues feel free to contact me on Slack at
+                      @Barxilly or email me at{" "}
+                      <a
+                        href="mailto:barxilly@barxsmith.sbs"
+                        style={{ color: "#007bff" }}
+                      >
+                        barxilly@barxsmith.sbs
+                      </a>
+                      .
                     </Text>
                   </Stack>
                 </Card>
@@ -1979,32 +2044,70 @@ function App() {
                   </Title>
                   <Stack gap="lg">
                     <div>
-                      <Text style={{ color: "#333", fontWeight: 600, marginBottom: "0.5em" }}>
+                      <Text
+                        style={{
+                          color: "#333",
+                          fontWeight: 600,
+                          marginBottom: "0.5em",
+                        }}
+                      >
                         Powered by Cloudflare
                       </Text>
-                      <Text style={{ color: "#666", fontSize: "0.9rem", lineHeight: 1.6 }}>
-                        Speed testing infrastructure provided by Cloudflare's global network, ensuring accurate and reliable measurements from servers closest to you.
+                      <Text
+                        style={{
+                          color: "#666",
+                          fontSize: "0.9rem",
+                          lineHeight: 1.6,
+                        }}
+                      >
+                        Speed testing infrastructure provided by Cloudflare's
+                        global network, ensuring accurate and reliable
+                        measurements from servers closest to you.
                       </Text>
                     </div>
-                    
+
                     <div>
-                      <Text style={{ color: "#333", fontWeight: 600, marginBottom: "0.5em" }}>
+                      <Text
+                        style={{
+                          color: "#333",
+                          fontWeight: 600,
+                          marginBottom: "0.5em",
+                        }}
+                      >
                         Built With
                       </Text>
-                      <Text style={{ color: "#666", fontSize: "0.9rem", lineHeight: 1.6 }}>
+                      <Text
+                        style={{
+                          color: "#666",
+                          fontSize: "0.9rem",
+                          lineHeight: 1.6,
+                        }}
+                      >
                         • React + Vite
                         <br />
                         • Mantine
-                        <br />
-                        • Cloudflare Speed Test API
+                        <br />• Cloudflare Speed Test API
                       </Text>
                     </div>
                     <div>
-                      <Text style={{ color: "#333", fontWeight: 600, marginBottom: "0.5em" }}>
+                      <Text
+                        style={{
+                          color: "#333",
+                          fontWeight: 600,
+                          marginBottom: "0.5em",
+                        }}
+                      >
                         Open Source
                       </Text>
-                      <Text style={{ color: "#666", fontSize: "0.9rem", lineHeight: 1.6 }}>
-                        This project is open source, and made using other open source libraries and technologies.
+                      <Text
+                        style={{
+                          color: "#666",
+                          fontSize: "0.9rem",
+                          lineHeight: 1.6,
+                        }}
+                      >
+                        This project is open source, and made using other open
+                        source libraries and technologies.
                       </Text>
                     </div>
                   </Stack>
@@ -2022,11 +2125,27 @@ function App() {
                   radius="lg"
                   p="lg"
                 >
-                  <Text style={{ textAlign: "center", color: "#666", fontSize: "0.9rem" }}>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "#666",
+                      fontSize: "0.9rem",
+                    }}
+                  >
                     QwkSpd • Made with ❤️ by BenJS • Version 1.0.0
                   </Text>
-                  <Text style={{ textAlign: "center", color: "#ada07dff", fontSize: "0.8rem", marginTop: "0.5em" }}>
-                    Built in 2025 • <a href="https://github.com/barxilly/BenJSSpeedTest" >Open Source</a>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "#ada07dff",
+                      fontSize: "0.8rem",
+                      marginTop: "0.5em",
+                    }}
+                  >
+                    Built in 2025 •{" "}
+                    <a href="https://github.com/barxilly/BenJSSpeedTest">
+                      Open Source
+                    </a>
                   </Text>
                 </Card>
               </Grid.Col>
