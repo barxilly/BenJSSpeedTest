@@ -19,15 +19,11 @@ import {
 import "@mantine/core/styles.css";
 import SpeedTest from "@cloudflare/speedtest";
 import { RxCross2 } from "react-icons/rx";
-import { CgController, CgMore } from "react-icons/cg";
-import { IoGameController } from "react-icons/io5";
-import { SiGstreamer, SiNetflix } from "react-icons/si";
-import { PiGameController, PiGameControllerDuotone, PiGameControllerFill } from "react-icons/pi";
+import { CgMore } from "react-icons/cg";
+import { SiNetflix } from "react-icons/si";
+import { PiGameControllerFill } from "react-icons/pi";
 import { FaRedditAlien } from "react-icons/fa";
 import { GoDot, GoDotFill } from "react-icons/go";
-import { BsThreeDots } from "react-icons/bs";
-import { MdMore } from "react-icons/md";
-import { FiFile } from "react-icons/fi";
 import { TbTransfer } from "react-icons/tb";
 import { BiVideo } from "react-icons/bi";
 import { FaGun } from "react-icons/fa6";
@@ -1417,7 +1413,7 @@ function App() {
         style={{
           position: "fixed",
           top: "50%",
-          left: "50%",
+          left: "20%",
           transform: "translate(-50%, -50%)",
           width: "400px",
           maxHeight: "80vh",
