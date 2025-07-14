@@ -224,20 +224,24 @@ function App() {
     fetchData();
   }, [userLocation]);
   function isSmolPhone() {
-    return window.innerWidth < 550;
-  }
-  console.log(previousValues);
+    return (
+      window.innerWidth < 550 ||
+      window.innerHeight < 550 ||
+      /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent)
+    );
+    }
+    console.log(previousValues);
   console.log(unchangedCount);
-  return (
+  return (<div style={{background: "linear-gradient(rgb(254, 243, 234), rgb(245, 241, 238))", height:"100vh", width:"100vw", maxHeight: "100vh", maxWidth:"100vw", overflow: "hidden"}}>
     <MantineProvider defaultColorScheme="light" theme={theme}>
       <Center
-        style={{ height: isSmolPhone() ? "80vh" : "100vh", width: "100vw" }}
+        style={{ height: (window.innerWidth < 520 && isSmolPhone()) ? "70vh" : isSmolPhone()? "85vh":"100vh", width: "100vw" }}
       >
         <Stack style={{ width: "80vw" }}>
-          <Title className="title" style={{ textAlign: "center", display: "" }}>
+          <Title className="title" style={{ textAlign: "center", display: "",fontSize: (window.innerWidth < 520 && isSmolPhone())?"3rem":"4rem" }}>
             QwkSpd
           </Title>
-          {isSmolPhone() ? (
+          {(window.innerWidth < 520 && isSmolPhone()) ? (
             <> </>
           ) : (
             <Title order={2} style={{ textAlign: "center", display: "" }}>
@@ -255,7 +259,7 @@ function App() {
               </a>
             </Title>
           )}
-          <Space h="md" />
+          <Space h={(window.innerWidth < 520 && isSmolPhone())?"0":"md"} />
           <Stack style={{ height: "40vh" }}>
             <Center
               style={{
@@ -391,23 +395,23 @@ function App() {
                     background: "#fbf8f5ff",
                     animation: isTesting ? "borderpulse 3s infinite" : "",
                   }}
-                  radius="lg"
+                  radius="xl"
                 >
                   <Flex gap="md">
                     <Stack>
-                      <Center h={isSmolPhone() ? "2.5em" : "3em"}>
+                      <Center h={(window.innerWidth < 520 && isSmolPhone())? "2.5em" : "3em"}>
                         <PiGameControllerFill
-                          size={isSmolPhone() ? "2.25em" : "3em"}
+                          size={(window.innerWidth < 520 && isSmolPhone())? "2.25em" : "3em"}
                           color={isTesting ? "grey" : "black"}
                           className={isTesting ? "sync-pulse" : ""}
                         />
                       </Center>
                       <Rating
                         emptySymbol={
-                          <GoDot size={isSmolPhone() ? "1em" : "1.5em"} />
+                          <GoDot size={(window.innerWidth < 520 && isSmolPhone())? "1em" : isSmolPhone()?"1.2em": "1.5em"}  />
                         }
                         fullSymbol={
-                          <GoDotFill size={isSmolPhone() ? "1em" : "1.5em"} />
+                          <GoDotFill size={(window.innerWidth < 520 && isSmolPhone())? "1em" : isSmolPhone()?"1.2em": "1.5em"}  />
                         }
                         color={isTesting ? "grey" : "black"}
                         className={isTesting ? "sync-pulse" : ""}
@@ -428,19 +432,19 @@ function App() {
                       />
                     </Stack>
                     <Stack>
-                      <Center h={isSmolPhone() ? "2.5em" : "3em"}>
+                      <Center h={(window.innerWidth < 520 && isSmolPhone())? "2.5em" : "3em"}>
                         <SiNetflix
-                          size={isSmolPhone() ? "2em" : "2.5em"}
+                          size={(window.innerWidth < 520 && isSmolPhone())? "2em" : "2.5em"}
                           color={isTesting ? "grey" : "black"}
                           className={isTesting ? "sync-pulse" : ""}
                         />
                       </Center>
                       <Rating
-                        emptySymbol={
-                          <GoDot size={isSmolPhone() ? "1em" : "1.5em"} />
+                         emptySymbol={
+                          <GoDot size={(window.innerWidth < 520 && isSmolPhone())? "1em" : isSmolPhone()?"1.2em": "1.5em"}  />
                         }
                         fullSymbol={
-                          <GoDotFill size={isSmolPhone() ? "1em" : "1.5em"} />
+                          <GoDotFill size={(window.innerWidth < 520 && isSmolPhone())? "1em" : isSmolPhone()?"1.2em": "1.5em"}  />
                         }
                         color={isTesting ? "grey" : "black"}
                         className={isTesting ? "sync-pulse" : ""}
@@ -461,19 +465,19 @@ function App() {
                       />
                     </Stack>
                     <Stack>
-                      <Center h={isSmolPhone() ? "2.5em" : "3em"}>
+                      <Center h={(window.innerWidth < 520 && isSmolPhone())? "2.5em" : "3em"}>
                         <FaRedditAlien
-                          size={isSmolPhone() ? "2em" : "2.5em"}
+                          size={(window.innerWidth < 520 && isSmolPhone())? "2em" : "2.5em"}
                           color={isTesting ? "grey" : "black"}
                           className={isTesting ? "sync-pulse" : ""}
                         />
                       </Center>
                       <Rating
                         emptySymbol={
-                          <GoDot size={isSmolPhone() ? "1em" : "1.5em"} />
+                          <GoDot size={(window.innerWidth < 520 && isSmolPhone())? "1em" : isSmolPhone()?"1.2em": "1.5em"}  />
                         }
                         fullSymbol={
-                          <GoDotFill size={isSmolPhone() ? "1em" : "1.5em"} />
+                          <GoDotFill size={(window.innerWidth < 520 && isSmolPhone())? "1em" : isSmolPhone()?"1.2em": "1.5em"}  />
                         }
                         color={isTesting ? "grey" : "black"}
                         className={isTesting ? "sync-pulse" : ""}
@@ -1787,8 +1791,8 @@ function App() {
       <FaInfoCircle
         style={{
           position: "fixed",
-          bottom: "20px",
-          right: "20px",
+          bottom: "15px",
+          right: "15px",
           opacity: 0.4,
           cursor: "pointer",
         }}
@@ -2045,7 +2049,7 @@ function App() {
                         display: "inline-block",
                       }}
                     >
-                      QwkSpd • Made with <BsFillHeartFill style={{ color:"#d00", verticalAlign: "middle" }}/> + <BiSolidCoffeeTogo style={{ color:"#d00", verticalAlign: "middle" }} /> by BenJS • Version 1.0.0
+                      QwkSpd • Made with <BsFillHeartFill style={{ color:"#d00", verticalAlign: "middle" }}/> + <BiSolidCoffeeTogo style={{ color:"#d00", verticalAlign: "middle" }} /> by BenJS • Version 0.0.14-beta
                     </Text>
                   </Center>
                   <Text
@@ -2067,7 +2071,7 @@ function App() {
           </Stack>
         </Card>
       </Card>
-    </MantineProvider>
+    </MantineProvider></div>
   );
 }
 export default App;
