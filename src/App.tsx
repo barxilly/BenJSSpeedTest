@@ -7,6 +7,7 @@ import {
   createTheme,
   Flex,
   Grid,
+  Image,
   Input,
   Loader,
   MantineProvider,
@@ -23,11 +24,12 @@ import { PiGameControllerFill } from "react-icons/pi";
 import { FaGlobe as FaRedditAlien } from "react-icons/fa";
 import { GoDot, GoDotFill } from "react-icons/go";
 import { TbTransfer } from "react-icons/tb";
-import { BiVideo } from "react-icons/bi";
+import { BiSolidCoffeeTogo, BiVideo } from "react-icons/bi";
 import { FaGun } from "react-icons/fa6";
 import { FaInfoCircle } from "react-icons/fa";
 import { RiNetflixFill as SiNetflix } from "react-icons/ri";
 import { MdExpandMore } from "react-icons/md";
+import { BsFillHeartFill } from "react-icons/bs";
 function App() {
   const theme = createTheme({
     fontFamily: '"Rubik", sans-serif',
@@ -582,7 +584,7 @@ function App() {
                     setInts((ints) => {
                       let newInts = ints + 1;
                       console.log(`Interval ${newInts}`);
-                      if (newInts >= 15 && newUp > 0) {
+                      if (newInts >= 150 && newUp > 0) {
                         console.log("Reached 5 intervals, stopping test");
                         setIsTesting(false);
                         clearInterval(id);
@@ -603,8 +605,8 @@ function App() {
                       ) {
                         setUnchangedCount((count) => {
                           const newCount = count + 1;
-                          console.log(`Unchanged count: ${newCount}/20`);
-                          if (newCount >= 20) {
+                          console.log(`Unchanged count: ${newCount}/14`);
+                          if (newCount >= 14) {
                             console.log(
                               "Test completed - values unchanged for 3 intervals"
                             );
@@ -1921,10 +1923,10 @@ function App() {
                       If you have any issues feel free to contact me on Slack at
                       @Barxilly or email me at{" "}
                       <a
-                        href="mailto:barxilly@barxsmith.sbs"
+                        href="mailto:qwkspd@benjs.uk?subject=QwkSpd%20Support%20-%20Issue%20Report"
                         style={{ color: "#007bff" }}
                       >
-                        barxilly@barxsmith.sbs
+                        qwkspd@benjs.uk
                       </a>
                       .
                     </Text>
@@ -2032,16 +2034,20 @@ function App() {
                   }}
                   radius="lg"
                   p="lg"
-                >
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      color: "#666",
-                      fontSize: "0.9rem",
-                    }}
-                  >
-                    QwkSpd • Made with ❤️ by BenJS • Version 1.0.0
-                  </Text>
+                ><Center mb="md"><a href="https://ko-fi.com/sillysbs" target="_blank" rel="noopener noreferrer">
+                  <Image src="https://storage.ko-fi.com/cdn/brandasset/v2/support_me_on_kofi_dark.png" w="10em" alt="Support me on Ko-fi" /></a></Center>
+                  <Center>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "#666",
+                        fontSize: "0.9rem",
+                        display: "inline-block",
+                      }}
+                    >
+                      QwkSpd • Made with <BsFillHeartFill style={{ color:"#d00", verticalAlign: "middle" }}/> + <BiSolidCoffeeTogo style={{ color:"#d00", verticalAlign: "middle" }} /> by BenJS • Version 1.0.0
+                    </Text>
+                  </Center>
                   <Text
                     style={{
                       textAlign: "center",
