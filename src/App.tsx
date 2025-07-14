@@ -1194,12 +1194,12 @@ function App() {
                       {
                         quality: "1080p HD",
                         requirement: 5,
-                        description: "Standard HD streaming",
+                        description: "Full HD streaming",
                       },
                       {
                         quality: "720p",
                         requirement: 3,
-                        description: "Basic HD streaming",
+                        description: "HD streaming",
                       },
                       {
                         quality: "480p",
