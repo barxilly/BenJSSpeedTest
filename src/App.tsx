@@ -20,13 +20,14 @@ import "@mantine/core/styles.css";
 import SpeedTest from "@cloudflare/speedtest";
 import { RxCross2 } from "react-icons/rx";
 import { CgMore } from "react-icons/cg";
-import { SiNetflix } from "react-icons/si";
 import { PiGameControllerFill } from "react-icons/pi";
-import { FaRedditAlien } from "react-icons/fa";
+import { FaGlobe as FaRedditAlien } from "react-icons/fa";
 import { GoDot, GoDotFill } from "react-icons/go";
 import { TbTransfer } from "react-icons/tb";
 import { BiVideo } from "react-icons/bi";
 import { FaGun } from "react-icons/fa6";
+import { RiNetflixFill as SiNetflix } from "react-icons/ri";
+import { MdExpandMore } from "react-icons/md";
 
 function App() {
   const theme = createTheme({
@@ -55,14 +56,13 @@ function App() {
     }
   }
 
-  
   function calculateDistance(
     lat1: number,
     lon1: number,
     lat2: number,
     lon2: number
   ): number {
-    const R = 6371; 
+    const R = 6371;
     const dLat = ((lat2 - lat1) * Math.PI) / 180;
     const dLon = ((lon2 - lon1) * Math.PI) / 180;
     const a =
@@ -72,11 +72,10 @@ function App() {
         Math.sin(dLon / 2) *
         Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = R * c; 
+    const distance = R * c;
     return distance;
   }
 
-  
   async function findNearestCloudflareServer(
     userLat: number,
     userLon: number
@@ -136,7 +135,6 @@ function App() {
   const [showAllGames, setShowAllGames] = useState(false);
   const [showDebug, setShowDebug] = useState(false);
 
-  
   useEffect(() => {
     return () => {
       if (intervalId) {
@@ -148,21 +146,19 @@ function App() {
   // Debug menu keyboard shortcut (Cmd+G)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.metaKey && event.key === 'g') {
+      if (event.metaKey && event.key === "g") {
         event.preventDefault();
-        setShowDebug(prev => !prev);
+        setShowDebug((prev) => !prev);
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  
   useEffect(() => {
     const getUserLocation = async () => {
       try {
-        
         const response = await fetch("https://ipapi.co/json/");
         const data = await response.json();
         if (data.city && data.region && data.country) {
@@ -173,7 +169,6 @@ function App() {
           setUserLocation("Location unavailable");
         }
 
-        
         if (data.latitude && data.longitude) {
           const nearestServer = await findNearestCloudflareServer(
             data.latitude,
@@ -237,175 +232,195 @@ function App() {
                 display: speed > 0 ? "" : "none",
               }}
             >
-              <Stack><Center>
-                <Card
-                  style={{
-                    display: speed > 0 ? "" : "none",
-                    width: "204px",
-                    height: "204px",
-                    position: "relative",
-                    userSelect: "none",
-                    justifySelf: "center",
-                  }}
-                  bg="var(--mantine-color-white)"
-                  radius="100%"
-                  id={speed > 0 && !isTesting ? "dc" : ""}
-                  className={speed > 0 && !isTesting ? "dc" : ""}
-                  onClick={
-                    speed > 0 && !isTesting
-                      ? () => {
-                          /*document
+              <Stack>
+                <Center>
+                  <Card
+                    style={{
+                      display: speed > 0 ? "" : "none",
+                      width: "204px",
+                      height: "204px",
+                      position: "relative",
+                      userSelect: "none",
+                      justifySelf: "center",
+                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1), 0px 20px 10px -5px rgba(255,255,255,1) inset",
+                      background: "#fbf8f5ff",
+                      animation: isTesting ? "borderpulse 3s infinite" : "",
+                    }}
+                    radius="100%"
+                    id={speed > 0 && !isTesting ? "dc" : ""}
+                    className={speed > 0 && !isTesting ? "dc" : ""}
+                    onClick={
+                      speed > 0 && !isTesting
+                        ? () => {
+                            /*document
                             .getElementById("dc")
                             ?.classList.add("becomewhitesquircle");
                             document
                             .getElementById("dc")
                             ?.classList.remove("dc");*/
-                        }
-                      : () => {}
-                  }
-                >
-                  <Text
-                    size="1.4em"
-                    style={{
-                      position: "absolute",
-                      top: "0",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      display: up > 0 ? "" : "none",
-                      color: isTesting ? "grey" : "black",
-                      animation: isTesting ? "textpulse 1s infinite" : "",
-                    }}
+                          }
+                        : () => {}
+                    }
                   >
-                    ⇡
-                  </Text>
-                  <Text
-                    size="0.7em"
-                    style={{
-                      position: "absolute",
-                      top: "3em",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      display: up > 0 ? "" : "none",
-                      color: isTesting ? "grey" : "black",
-                      animation: isTesting ? "textpulse 1s infinite" : "",
-                    }}
-                  >
-                    {frmbts(up, true)}
-                  </Text>
-                  <Title
-                    order={1}
-                    style={{
-                      textAlign: "center",
-                      display: speed > 0 ? "block" : "none",
-                      color: isTesting ? "grey" : "black",
-                      fontSize: "3rem",
-
-                      animation: isTesting ? "textpulse 1s infinite" : "",
-                    }}
-                    id="speed-display"
-                  >
-                    <Title
-                      order={1}
+                    <Text
+                      size="1.4em"
                       style={{
-                        textAlign: "center",
-                        display: speed > 0 ? "block" : "none",
+                        position: "absolute",
+                        top: "0",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        display: up > 0 ? "" : "none",
                         color: isTesting ? "grey" : "black",
-                        fontSize: "3rem",
-                        width: "100%",
-                        paddingTop: "1em",
-                        height: "fit-content",
-                        animation: isTesting ? "textpulse 1s infinite" : "",
                       }}
-                      id="speed-display"
+                      className={isTesting ? "sync-pulse" : ""}
                     >
-                      {speed > 0
-                        ? speed > 1000
-                          ? `${speed / 1000}`
-                          : speed > 10
-                          ? `${Math.round(speed)}`
-                          : speed > 1
-                          ? `${speed.toFixed(2)}`
-                          : `${Math.round(speed * 1000)}`
-                        : ""}
-                    </Title>
-                    <Text style={{ fontSize: "1.2rem" }}>
-                      {speed > 1000 ? "Gbps" : speed > 1 ? "Mbps" : "Kbps"}
+                      ⇡
                     </Text>
-                  </Title>
-                  <Text
-                    size="1.4em"
-                    style={{
-                      position: "absolute",
-                      top: "7.8em",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      color: !isTesting ? "black" : "grey",
-                      animation: !isTesting ? "" : "textpulse 1s infinite",
-                    }}
-                  >
-                    ⇣
-                  </Text>
-                  <Stack
-                    style={{ position: "absolute", top: "14em", left: "2em" }}
-                  >
-                    <Text>Download Speed: {frmbts(down)}</Text>
-                    <Text>Upload Speed: {frmbts(up)}</Text>
-                    <Text>Ping: {ping.toFixed(2)}ms</Text>
-                  </Stack>
-                </Card></Center>
+                    <Text
+                      size="0.7em"
+                      style={{
+                        position: "absolute",
+                        top: "3em",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        display: up > 0 ? "" : "none",
+                        color: isTesting ? "grey" : "black",
+                      }}
+                      className={isTesting ? "sync-pulse" : ""}
+                    >
+                      {frmbts(up, true)}
+                    </Text>                      <Title
+                        order={1}
+                        style={{
+                          textAlign: "center",
+                          display: speed > 0 ? "block" : "none",
+                          color: isTesting ? "grey" : "black",
+                          fontSize: "3rem",
+
+                        }}
+                        className={isTesting ? "sync-pulse" : ""}
+                        id="speed-display"
+                      >
+                      <Title
+                        order={1}
+                        style={{
+                          textAlign: "center",
+                          display: speed > 0 ? "block" : "none",
+                          color: isTesting ? "grey" : "black",
+                          fontSize: "3rem",
+                          width: "100%",
+                          paddingTop: "1em",
+                          height: "fit-content",
+                        }}
+                        className={isTesting ? "sync-pulse" : ""}
+                        id="speed-display"
+                      >
+                        {speed > 0
+                          ? speed > 1000
+                            ? `${speed / 1000}`
+                            : speed > 10
+                            ? `${Math.round(speed)}`
+                            : speed > 1
+                            ? `${speed.toFixed(2)}`
+                            : `${Math.round(speed * 1000)}`
+                          : ""}
+                      </Title>
+                      <Text style={{ fontSize: "1.2rem" }}>
+                        {speed > 1000 ? "Gbps" : speed > 1 ? "Mbps" : "Kbps"}
+                      </Text>
+                    </Title>
+                    <Text
+                      size="1.4em"
+                      style={{
+                        position: "absolute",
+                        top: "7.8em",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        color: !isTesting ? "black" : "grey",
+                      }}
+                      className={isTesting ? "sync-pulse" : ""}
+                    >
+                      ⇣
+                    </Text>
+                    <Stack
+                      style={{ position: "absolute", top: "14em", left: "2em" }}
+                    >
+                      <Text>Download Speed: {frmbts(down)}</Text>
+                      <Text>Upload Speed: {frmbts(up)}</Text>
+                      <Text>Ping: {ping.toFixed(2)}ms</Text>
+                    </Stack>
+                  </Card>
+                </Center>
                 <Space h="sm" />
-                <Card style={{ width: "fit-content" }} radius="lg">
+                <Card style={{ width: "fit-content",boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1), 0px 20px 10px -5px rgba(255,255,255,1) inset",
+                      background: "#fbf8f5ff",
+                      animation: isTesting ? "borderpulse 3s infinite" : "", }} radius="lg">
                   <Flex gap="md">
                     <Stack>
-                      <Center><PiGameControllerFill size="3em" color="grey"/></Center>
-                      <Rating emptySymbol={<GoDot size="1.5em"  color="grey"/>}
-                        fullSymbol={<GoDotFill size="1.5em"  color="grey"/>}
+                      <Center>
+                        <PiGameControllerFill 
+                          size="3em" 
+                          color={isTesting ? "grey" : "black"} 
+                          className={isTesting ? "sync-pulse" : ""}
+                        />
+                      </Center>
+                      <Rating
+                        emptySymbol={<GoDot size="1.5em" color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} />}
+                        fullSymbol={<GoDotFill size="1.5em" color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} />}
                         value={
                           speed >= 100
-                            ? 5 
+                            ? 5
                             : speed >= 50
-                            ? 4 
+                            ? 4
                             : speed >= 20
-                            ? 3 
+                            ? 3
                             : speed >= 10
-                            ? 2 
+                            ? 2
                             : speed >= 5
-                            ? 1 
-                            : 0 
+                            ? 1
+                            : 0
                         }
                         readOnly
                       />
                     </Stack>
                     <Stack>
                       <Center h="3em">
-                      <SiNetflix size="2.5em" color="grey" />
+                        <SiNetflix 
+                          size="2.5em" 
+                          color={isTesting ? "grey" : "black"} 
+                          className={isTesting ? "sync-pulse" : ""}
+                        />
                       </Center>
-                      <Rating emptySymbol={<GoDot color="grey" size="1.5em" />}
-                        fullSymbol={<GoDotFill size="1.5em" color="grey" />}
-                      value={
-                        speed >= 50
-                        ? 5
-                        : speed >= 30
-                        ? 4
-                        : speed >= 10
-                        ? 3
-                        : speed >= 6
-                        ? 2
-                        : speed >= 1.5
-                        ? 1
-                        : 0
-                      }
-                      readOnly
+                      <Rating
+                        emptySymbol={<GoDot color="lightgrey" className={isTesting ? "sync-pulse" : ""} size="1.5em" />}
+                        fullSymbol={<GoDotFill size="1.5em" color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} />}
+                        value={
+                          speed >= 50
+                            ? 5
+                            : speed >= 30
+                            ? 4
+                            : speed >= 10
+                            ? 3
+                            : speed >= 6
+                            ? 2
+                            : speed >= 1.5
+                            ? 1
+                            : 0
+                        }
+                        readOnly
                       />
                     </Stack>
                     <Stack>
                       <Center h="3em">
-                        <FaRedditAlien size="2.5em" color="grey" />
+                        <FaRedditAlien 
+                          size="2.5em" 
+                          color={isTesting ? "grey" : "black"} 
+                          className={isTesting ? "sync-pulse" : ""}
+                        />
                       </Center>
                       <Rating
-                      emptySymbol={<GoDot size="1.5em"  color="grey"/>}
-                        fullSymbol={<GoDotFill size="1.5em"  color="grey"/>}
-                      
+                        emptySymbol={<GoDot size="1.5em" color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} />}
+                        fullSymbol={<GoDotFill size="1.5em" color={isTesting ? "grey" : "black"} className={isTesting ? "sync-pulse" : ""} />}
                         value={
                           speed >= 30
                             ? 5
@@ -422,12 +437,20 @@ function App() {
                         readOnly
                       />
                     </Stack>
-                  </Flex><Center>
-                  <CgMore 
-                    style={{display: (speed > 0 && !isTesting) ? "" : "none", cursor:"pointer"}} 
-                    size="1.7em"
-                    onClick={() => setShowUses(true)}
-                  /></Center>
+                  </Flex>
+                  <Center>
+                    <MdExpandMore
+                      style={{
+                        display: speed > 0 && !isTesting ? "" : "none",
+                        cursor: "pointer",
+                        backgroundColor: "#cccccc44",
+                        borderRadius: "50%",
+                        padding: "0.3em",
+                      }}
+                      size="1.7em"
+                      onClick={() => setShowUses(true)}
+                    />
+                  </Center>
                 </Card>
                 <Space h="sm" />
                 <Text
@@ -454,6 +477,7 @@ function App() {
             >
               <Button
                 id="test-button"
+                className="boo"
                 onClick={async () => {
                   if (isTesting) return;
                   (
@@ -472,7 +496,6 @@ function App() {
                     console.log(`Running: ${running}`);
                     setIsTesting(running);
                     if (!running) {
-                      
                       console.log("Test ended, clearing interval");
                       if (intervalId) {
                         clearInterval(intervalId);
@@ -507,7 +530,6 @@ function App() {
                       setNobutt(true);
                     }
 
-                    
                     setPreviousValues((prev) => {
                       if (
                         prev.down === newDown &&
@@ -521,7 +543,6 @@ function App() {
                           const newCount = count + 1;
                           console.log(`Unchanged count: ${newCount}/20`);
                           if (newCount >= 20) {
-                            
                             console.log(
                               "Test completed - values unchanged for 3 intervals"
                             );
@@ -550,7 +571,6 @@ function App() {
                   display: speed > 0 ? "none" : "block",
                   width: "170px",
                   position: "relative",
-                  backgroundColor: "white",
                   color: " #333",
                 }}
                 fullWidth
@@ -952,456 +972,612 @@ function App() {
                   radius="lg"
                   p="xl"
                 >
-                <Title
-                  order={3}
-                  style={{
-                    color: "#333",
-                    marginBottom: "1.5em",
-                    textAlign: "center",
-                    fontWeight: 600,
-                  }}
-                >
-                  <PiGameControllerFill size="1.2em" style={{ marginRight: "0.5em", verticalAlign: "middle" }} />
-                  Game Downloads
-                </Title>
-                <Stack gap="lg">
-                  {[
-  { name: "Starfield", size: 125 },
-  { name: "Baldur's Gate 3", size: 120 },
-  { name: "Red Dead Redemption 2", size: 120 },
-  { name: "Cyberpunk 2077", size: 110 },
-  { name: "GTA V", size: 95 },
-  { name: "Call of Duty: MW3 (2023)", size: 90 },
-  { name: "Diablo 4", size: 85 },
-  { name: "Hogwarts Legacy", size: 80 },
-  { name: "The Witcher 3 (Next Gen)", size: 55 },
-  { name: "Elden Ring", size: 50 },
-  { name: "Fortnite", size: 40 },
-  { name: "CS2", size: 35 },
-  { name: "Valorant", size: 30 },
-  { name: "Minecraft (Java)", size: 1 }
-].slice(0, showAllGames ? undefined : 5).map((game, index, array) => {
-                    // Convert GB to bits, then divide by bits per second to get seconds
-                    const downloadTimeSeconds = (game.size * 8 * 1000000000) / down;
-                    const displayTime = downloadTimeSeconds < 60 
-                      ? `${Math.round(downloadTimeSeconds)} seconds`
-                      : downloadTimeSeconds < 3600
-                      ? `${Math.round(downloadTimeSeconds / 60)} minutes`
-                      : downloadTimeSeconds < 86400
-                      ? `${(downloadTimeSeconds / 3600).toFixed(1)} hours`
-                      : `${(downloadTimeSeconds / 86400).toFixed(1)} days`;
-                    
-                    return (
-                      <div
-                        key={index}
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          padding: "1em 0",
-                          borderBottom: index < array.length - 1 ? "1px solid #f1f3f4" : "none",
-                        }}
+                  <Title
+                    order={3}
+                    style={{
+                      color: "#333",
+                      marginBottom: "1.5em",
+                      textAlign: "center",
+                      fontWeight: 600,
+                    }}
+                  >
+                    <PiGameControllerFill
+                      size="1.2em"
+                      style={{ marginRight: "0.5em", verticalAlign: "middle" }}
+                    />
+                    Game Downloads
+                  </Title>
+                  <Stack gap="lg">
+                    {[
+                      { name: "Starfield", size: 125 },
+                      { name: "Baldur's Gate 3", size: 120 },
+                      { name: "Red Dead Redemption 2", size: 120 },
+                      { name: "Cyberpunk 2077", size: 110 },
+                      { name: "GTA V", size: 95 },
+                      { name: "Call of Duty: MW3 (2023)", size: 90 },
+                      { name: "Diablo 4", size: 85 },
+                      { name: "Hogwarts Legacy", size: 80 },
+                      { name: "The Witcher 3 (Next Gen)", size: 55 },
+                      { name: "Elden Ring", size: 50 },
+                      { name: "Fortnite", size: 40 },
+                      { name: "CS2", size: 35 },
+                      { name: "Valorant", size: 30 },
+                      { name: "Minecraft (Java)", size: 1 },
+                    ]
+                      .slice(0, showAllGames ? undefined : 5)
+                      .map((game, index, array) => {
+                        // Convert GB to bits, then divide by bits per second to get seconds
+                        const downloadTimeSeconds =
+                          (game.size * 8 * 1000000000) / down;
+                        const displayTime =
+                          downloadTimeSeconds < 60
+                            ? `${Math.round(downloadTimeSeconds)} seconds`
+                            : downloadTimeSeconds < 3600
+                            ? `${Math.round(downloadTimeSeconds / 60)} minutes`
+                            : downloadTimeSeconds < 86400
+                            ? `${(downloadTimeSeconds / 3600).toFixed(1)} hours`
+                            : `${(downloadTimeSeconds / 86400).toFixed(
+                                1
+                              )} days`;
+
+                        return (
+                          <div
+                            key={index}
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              padding: "1em 0",
+                              borderBottom:
+                                index < array.length - 1
+                                  ? "1px solid #f1f3f4"
+                                  : "none",
+                            }}
+                          >
+                            <div>
+                              <Text
+                                size="lg"
+                                style={{ color: "#333", fontWeight: 500 }}
+                              >
+                                {game.name}
+                              </Text>
+                              <Text size="sm" style={{ color: "#ada07dff" }}>
+                                {game.size} GB
+                              </Text>
+                            </div>
+                            <Text size="lg" fw={600} style={{ color: "#333" }}>
+                              {down > 0 ? displayTime : "Test your speed first"}
+                            </Text>
+                          </div>
+                        );
+                      })}
+
+                    {/* Show more/less button */}
+                    <Center style={{ paddingTop: "1em" }}>
+                      <Button
+                        variant="subtle"
+                        size="sm"
+                        onClick={() => setShowAllGames(!showAllGames)}
+                        style={{ color: "#ada07dff" }}
                       >
-                        <div>
-                          <Text size="lg" style={{ color: "#333", fontWeight: 500 }}>
-                            {game.name}
-                          </Text>
-                          <Text size="sm" style={{ color: "#ada07dff" }}>
-                            {game.size} GB
-                          </Text>
-                        </div>
-                        <Text size="lg" fw={600} style={{ color: "#333" }}>
-                          {down > 0 ? displayTime : "Test your speed first"}
-                        </Text>
-                      </div>
-                    );
-                  })}
-                  
-                  {/* Show more/less button */}
-                  <Center style={{ paddingTop: "1em" }}>
-                    <Button
-                      variant="subtle"
-                      size="sm"
-                      onClick={() => setShowAllGames(!showAllGames)}
-                      style={{ color: "#ada07dff" }}
-                    >
-                      {showAllGames ? "Show less" : "Show more games"}
-                    </Button>
-                  </Center>
-                </Stack>
-              </Card>
+                        {showAllGames ? "Show less" : "Show more games"}
+                      </Button>
+                    </Center>
+                  </Stack>
+                </Card>
               </Grid.Col>
 
               {/* Streaming Quality */}
               <Grid.Col span={{ base: 12, md: 6 }}>
-              <Card
-                style={{
-                  backgroundColor: "white",
-                  border: "1px solid #e9ecef",
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-                  height: "100%",
-                }}
-                radius="lg"
-                p="xl"
-              >
-                <Title
-                  order={3}
+                <Card
                   style={{
-                    color: "#333",
-                    marginBottom: "1.5em",
-                    textAlign: "center",
-                    fontWeight: 600,
+                    backgroundColor: "white",
+                    border: "1px solid #e9ecef",
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                    height: "100%",
                   }}
+                  radius="lg"
+                  p="xl"
                 >
-                  <SiNetflix size="1.2em" style={{ marginRight: "0.5em", verticalAlign: "middle" }} />
-                  Streaming Performance
-                </Title>
-                <Stack gap="lg">
-                  {[
-                    { quality: "4K Ultra HD", requirement: 25, description: "Netflix, Disney+, Prime Video" },
-                    { quality: "4K HDR", requirement: 50, description: "Apple TV+, Premium streaming" },
-                    { quality: "1080p HD", requirement: 5, description: "Standard HD streaming" },
-                    { quality: "720p", requirement: 3, description: "Basic HD streaming" },
-                    { quality: "480p", requirement: 1.5, description: "Standard definition" },
-                  ].map((stream, index) => {
-                    const canStream = (down / 1000000) >= stream.requirement;
-                    const qualityColor = canStream ? "#28a745" : "#f59e0b";
-                    
-                    return (
-                      <div
-                        key={index}
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          padding: "1em 0",
-                          borderBottom: index < 4 ? "1px solid #f1f3f4" : "none",
-                        }}
-                      >
-                        <div>
-                          <Text size="lg" style={{ color: "#333", fontWeight: 500 }}>
-                            {stream.quality}
-                          </Text>
-                          <Text size="sm" style={{ color: "#ada07dff" }}>
-                            {stream.description}
-                          </Text>
+                  <Title
+                    order={3}
+                    style={{
+                      color: "#333",
+                      marginBottom: "1.5em",
+                      textAlign: "center",
+                      fontWeight: 600,
+                    }}
+                  >
+                    <SiNetflix
+                      size="1.2em"
+                      style={{ marginRight: "0.5em", verticalAlign: "middle" }}
+                    />
+                    Streaming Performance
+                  </Title>
+                  <Stack gap="lg">
+                    {[
+                      {
+                        quality: "4K Ultra HD",
+                        requirement: 25,
+                        description: "Netflix, Disney+, Prime Video",
+                      },
+                      {
+                        quality: "4K HDR",
+                        requirement: 50,
+                        description: "Apple TV+, Premium streaming",
+                      },
+                      {
+                        quality: "1080p HD",
+                        requirement: 5,
+                        description: "Standard HD streaming",
+                      },
+                      {
+                        quality: "720p",
+                        requirement: 3,
+                        description: "Basic HD streaming",
+                      },
+                      {
+                        quality: "480p",
+                        requirement: 1.5,
+                        description: "Standard definition",
+                      },
+                    ].map((stream, index) => {
+                      const canStream = down / 1000000 >= stream.requirement;
+                      const qualityColor = canStream ? "#28a745" : "#f59e0b";
+
+                      return (
+                        <div
+                          key={index}
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            padding: "1em 0",
+                            borderBottom:
+                              index < 4 ? "1px solid #f1f3f4" : "none",
+                          }}
+                        >
+                          <div>
+                            <Text
+                              size="lg"
+                              style={{ color: "#333", fontWeight: 500 }}
+                            >
+                              {stream.quality}
+                            </Text>
+                            <Text size="sm" style={{ color: "#ada07dff" }}>
+                              {stream.description}
+                            </Text>
+                          </div>
+                          <div style={{ textAlign: "right" }}>
+                            <Text
+                              size="lg"
+                              fw={600}
+                              style={{ color: qualityColor }}
+                            >
+                              {canStream ? "✓ Smooth" : "⚠ May buffer"}
+                            </Text>
+                            <Text size="sm" style={{ color: "#ada07dff" }}>
+                              Optimal: {stream.requirement} Mbps
+                            </Text>
+                          </div>
                         </div>
-                        <div style={{ textAlign: "right" }}>
-                          <Text size="lg" fw={600} style={{ color: qualityColor }}>
-                            {canStream ? "✓ Smooth" : "⚠ May buffer"}
-                          </Text>
-                          <Text size="sm" style={{ color: "#ada07dff" }}>
-                            Optimal: {stream.requirement} Mbps
-                          </Text>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </Stack>
-              </Card>
+                      );
+                    })}
+                  </Stack>
+                </Card>
               </Grid.Col>
 
               {/* Social Media & Content Creation */}
               <Grid.Col span={{ base: 12, md: 6 }}>
-              <Card
-                style={{
-                  backgroundColor: "white",
-                  border: "1px solid #e9ecef",
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-                  height: "100%",
-                }}
-                radius="lg"
-                p="xl"
-              >
-                <Title
-                  order={3}
+                <Card
                   style={{
-                    color: "#333",
-                    marginBottom: "1.5em",
-                    textAlign: "center",
-                    fontWeight: 600,
+                    backgroundColor: "white",
+                    border: "1px solid #e9ecef",
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                    height: "100%",
                   }}
+                  radius="lg"
+                  p="xl"
                 >
-                  <FaRedditAlien size="1.2em" style={{ marginRight: "0.5em", verticalAlign: "middle" }} />
-                  Social Media Browsing
-                </Title>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    color: "#ada07dff",
-                    fontSize: "0.9rem",
-                    marginBottom: "1em",
-                  }}
-                >
-                  These activities primarily depend on your download speed
-                </Text>
-                <Stack gap="lg">
-                  {[
-                    { activity: "4K Video Streaming", requirement: 25, description: "YouTube, TikTok, Instagram Reels" },
-                    { activity: "1080p Video Streaming", requirement: 5, description: "Social media videos" },
-                    { activity: "Image-Heavy Browsing", requirement: 3, description: "Instagram, Pinterest feeds" },
-                    { activity: "Social Media Browsing", requirement: 1, description: "Twitter, Facebook, Reddit" },
-                    { activity: "Web Browsing", requirement: 0.5, description: "General internet use" },
-                  ].map((activity, index) => {
-                    const canDo = (down / 1000000) >= activity.requirement;
-                    const statusColor = canDo ? "#28a745" : "#f59e0b";
-                    
-                    return (
-                      <div
-                        key={index}
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          padding: "1em 0",
-                          borderBottom: index < 4 ? "1px solid #f1f3f4" : "none",
-                        }}
-                      >
-                        <div>
-                          <Text size="lg" style={{ color: "#333", fontWeight: 500 }}>
-                            {activity.activity}
-                          </Text>
-                          <Text size="sm" style={{ color: "#ada07dff" }}>
-                            {activity.description}
-                          </Text>
+                  <Title
+                    order={3}
+                    style={{
+                      color: "#333",
+                      marginBottom: "1.5em",
+                      textAlign: "center",
+                      fontWeight: 600,
+                    }}
+                  >
+                    <FaRedditAlien
+                      size="1.2em"
+                      style={{ marginRight: "0.5em", verticalAlign: "middle" }}
+                    />
+                    Social Media Browsing
+                  </Title>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "#ada07dff",
+                      fontSize: "0.9rem",
+                      marginBottom: "1em",
+                    }}
+                  >
+                    These activities primarily depend on your download speed
+                  </Text>
+                  <Stack gap="lg">
+                    {[
+                      {
+                        activity: "4K Video Streaming",
+                        requirement: 25,
+                        description: "YouTube, TikTok, Instagram Reels",
+                      },
+                      {
+                        activity: "1080p Video Streaming",
+                        requirement: 5,
+                        description: "Social media videos",
+                      },
+                      {
+                        activity: "Image-Heavy Browsing",
+                        requirement: 3,
+                        description: "Instagram, Pinterest feeds",
+                      },
+                      {
+                        activity: "Social Media Browsing",
+                        requirement: 1,
+                        description: "Twitter, Facebook, Reddit",
+                      },
+                      {
+                        activity: "Web Browsing",
+                        requirement: 0.5,
+                        description: "General internet use",
+                      },
+                    ].map((activity, index) => {
+                      const canDo = down / 1000000 >= activity.requirement;
+                      const statusColor = canDo ? "#28a745" : "#f59e0b";
+
+                      return (
+                        <div
+                          key={index}
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            padding: "1em 0",
+                            borderBottom:
+                              index < 4 ? "1px solid #f1f3f4" : "none",
+                          }}
+                        >
+                          <div>
+                            <Text
+                              size="lg"
+                              style={{ color: "#333", fontWeight: 500 }}
+                            >
+                              {activity.activity}
+                            </Text>
+                            <Text size="sm" style={{ color: "#ada07dff" }}>
+                              {activity.description}
+                            </Text>
+                          </div>
+                          <div style={{ textAlign: "right" }}>
+                            <Text
+                              size="lg"
+                              fw={600}
+                              style={{ color: statusColor }}
+                            >
+                              {canDo ? "✓ Smooth" : "⚠ May buffer"}
+                            </Text>
+                            <Text size="sm" style={{ color: "#ada07dff" }}>
+                              Optimal: {activity.requirement} Mbps
+                            </Text>
+                          </div>
                         </div>
-                        <div style={{ textAlign: "right" }}>
-                          <Text size="lg" fw={600} style={{ color: statusColor }}>
-                            {canDo ? "✓ Smooth" : "⚠ May buffer"}
-                          </Text>
-                          <Text size="sm" style={{ color: "#ada07dff" }}>
-                            Optimal: {activity.requirement} Mbps
-                          </Text>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </Stack>
-              </Card>
+                      );
+                    })}
+                  </Stack>
+                </Card>
               </Grid.Col>
 
               {/* Content Creation & Upload */}
               <Grid.Col span={{ base: 12, md: 6 }}>
-              <Card
-                style={{
-                  backgroundColor: "white",
-                  border: "1px solid #e9ecef",
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-                  height: "100%",
-                }}
-                radius="lg"
-                p="xl"
-              >
-                <Title
-                  order={3}
+                <Card
                   style={{
-                    color: "#333",
-                    marginBottom: "1.5em",
-                    textAlign: "center",
-                    fontWeight: 600,
+                    backgroundColor: "white",
+                    border: "1px solid #e9ecef",
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                    height: "100%",
                   }}
+                  radius="lg"
+                  p="xl"
                 >
-                  <BiVideo size="1.2em" style={{ marginRight: "0.5em", verticalAlign: "middle" }} />
-                  Content Creation & Upload
-                </Title>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    color: "#ada07dff",
-                    fontSize: "0.9rem",
-                    marginBottom: "1em",
-                  }}
-                >
-                  These activities primarily depend on your upload speed
-                </Text>
-                <Stack gap="lg">
-                  {[
-                    { activity: "4K Video Upload", requirement: 40, description: "YouTube, TikTok content creation" },
-                    { activity: "1080p Video Upload", requirement: 10, description: "Instagram, Facebook videos" },
-                    { activity: "HD Video Calls", requirement: 2, description: "Zoom, Teams, Discord" },
-                    { activity: "Photo Upload", requirement: 1, description: "Instagram posts, cloud backup" },
-                    { activity: "Live Streaming", requirement: 5, description: "Twitch, YouTube Live" },
-                  ].map((activity, index) => {
-                    const canDo = (up / 1000000) >= activity.requirement;
-                    const statusColor = canDo ? "#28a745" : "#f59e0b";
-                    
-                    return (
-                      <div
-                        key={index}
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          padding: "1em 0",
-                          borderBottom: index < 4 ? "1px solid #f1f3f4" : "none",
-                        }}
-                      >
-                        <div>
-                          <Text size="lg" style={{ color: "#333", fontWeight: 500 }}>
-                            {activity.activity}
-                          </Text>
-                          <Text size="sm" style={{ color: "#ada07dff" }}>
-                            {activity.description}
-                          </Text>
+                  <Title
+                    order={3}
+                    style={{
+                      color: "#333",
+                      marginBottom: "1.5em",
+                      textAlign: "center",
+                      fontWeight: 600,
+                    }}
+                  >
+                    <BiVideo
+                      size="1.2em"
+                      style={{ marginRight: "0.5em", verticalAlign: "middle" }}
+                    />
+                    Content Creation & Upload
+                  </Title>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "#ada07dff",
+                      fontSize: "0.9rem",
+                      marginBottom: "1em",
+                    }}
+                  >
+                    These activities primarily depend on your upload speed
+                  </Text>
+                  <Stack gap="lg">
+                    {[
+                      {
+                        activity: "4K Video Upload",
+                        requirement: 40,
+                        description: "YouTube, TikTok content creation",
+                      },
+                      {
+                        activity: "1080p Video Upload",
+                        requirement: 10,
+                        description: "Instagram, Facebook videos",
+                      },
+                      {
+                        activity: "HD Video Calls",
+                        requirement: 2,
+                        description: "Zoom, Teams, Discord",
+                      },
+                      {
+                        activity: "Photo Upload",
+                        requirement: 1,
+                        description: "Instagram posts, cloud backup",
+                      },
+                      {
+                        activity: "Live Streaming",
+                        requirement: 5,
+                        description: "Twitch, YouTube Live",
+                      },
+                    ].map((activity, index) => {
+                      const canDo = up / 1000000 >= activity.requirement;
+                      const statusColor = canDo ? "#28a745" : "#f59e0b";
+
+                      return (
+                        <div
+                          key={index}
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            padding: "1em 0",
+                            borderBottom:
+                              index < 4 ? "1px solid #f1f3f4" : "none",
+                          }}
+                        >
+                          <div>
+                            <Text
+                              size="lg"
+                              style={{ color: "#333", fontWeight: 500 }}
+                            >
+                              {activity.activity}
+                            </Text>
+                            <Text size="sm" style={{ color: "#ada07dff" }}>
+                              {activity.description}
+                            </Text>
+                          </div>
+                          <div style={{ textAlign: "right" }}>
+                            <Text
+                              size="lg"
+                              fw={600}
+                              style={{ color: statusColor }}
+                            >
+                              {canDo ? "✓ Smooth" : "⚠ May lag"}
+                            </Text>
+                            <Text size="sm" style={{ color: "#ada07dff" }}>
+                              Optimal: {activity.requirement} Mbps upload
+                            </Text>
+                          </div>
                         </div>
-                        <div style={{ textAlign: "right" }}>
-                          <Text size="lg" fw={600} style={{ color: statusColor }}>
-                            {canDo ? "✓ Smooth" : "⚠ May lag"}
-                          </Text>
-                          <Text size="sm" style={{ color: "#ada07dff" }}>
-                            Optimal: {activity.requirement} Mbps upload
-                          </Text>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </Stack>
-              </Card>
+                      );
+                    })}
+                  </Stack>
+                </Card>
               </Grid.Col>
 
               {/* File Transfer Times */}
               <Grid.Col span={{ base: 12, md: 6 }}>
-              <Card
-                style={{
-                  backgroundColor: "white",
-                  border: "1px solid #e9ecef",
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-                  height: "100%",
-                }}
-                radius="lg"
-                p="xl"
-              >
-                <Title
-                  order={3}
+                <Card
                   style={{
-                    color: "#333",
-                    marginBottom: "1.5em",
-                    textAlign: "center",
-                    fontWeight: 600,
+                    backgroundColor: "white",
+                    border: "1px solid #e9ecef",
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                    height: "100%",
                   }}
+                  radius="lg"
+                  p="xl"
                 >
-                  <TbTransfer size="1.2em" style={{ marginRight: "0.5em", verticalAlign: "middle" }} />
-                  File Transfer Times
-                </Title>
-                <Stack gap="lg">
-                  {[
-                    { name: "4K Movie (25 GB)", size: 25 },
-                    { name: "HD Movie (8 GB)", size: 8 },
-                    { name: "Music Album (100 MB)", size: 0.1 },
-                    { name: "High-res Photo (10 MB)", size: 0.01 },
-                    { name: "Document (1 MB)", size: 0.001 },
-                  ].map((file, index) => {
-                    // Convert GB to bits, then divide by bits per second to get seconds
-                    const downloadTimeSeconds = (file.size * 8 * 1000000000) / down;
-                    const displayTime = downloadTimeSeconds < 60 
-                      ? `${Math.round(downloadTimeSeconds)} seconds`
-                      : downloadTimeSeconds < 3600
-                      ? `${Math.round(downloadTimeSeconds / 60)} minutes`
-                      : `${(downloadTimeSeconds / 3600).toFixed(1)} hours`;
-                    
-                    return (
-                      <div
-                        key={index}
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          padding: "1em 0",
-                          borderBottom: index < 4 ? "1px solid #f1f3f4" : "none",
-                        }}
-                      >
-                        <div>
-                          <Text size="lg" style={{ color: "#333", fontWeight: 500 }}>
-                            {file.name}
+                  <Title
+                    order={3}
+                    style={{
+                      color: "#333",
+                      marginBottom: "1.5em",
+                      textAlign: "center",
+                      fontWeight: 600,
+                    }}
+                  >
+                    <TbTransfer
+                      size="1.2em"
+                      style={{ marginRight: "0.5em", verticalAlign: "middle" }}
+                    />
+                    File Transfer Times
+                  </Title>
+                  <Stack gap="lg">
+                    {[
+                      { name: "4K Movie (25 GB)", size: 25 },
+                      { name: "HD Movie (8 GB)", size: 8 },
+                      { name: "Music Album (100 MB)", size: 0.1 },
+                      { name: "High-res Photo (10 MB)", size: 0.01 },
+                      { name: "Document (1 MB)", size: 0.001 },
+                    ].map((file, index) => {
+                      // Convert GB to bits, then divide by bits per second to get seconds
+                      const downloadTimeSeconds =
+                        (file.size * 8 * 1000000000) / down;
+                      const displayTime =
+                        downloadTimeSeconds < 60
+                          ? `${Math.round(downloadTimeSeconds)} seconds`
+                          : downloadTimeSeconds < 3600
+                          ? `${Math.round(downloadTimeSeconds / 60)} minutes`
+                          : `${(downloadTimeSeconds / 3600).toFixed(1)} hours`;
+
+                      return (
+                        <div
+                          key={index}
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            padding: "1em 0",
+                            borderBottom:
+                              index < 4 ? "1px solid #f1f3f4" : "none",
+                          }}
+                        >
+                          <div>
+                            <Text
+                              size="lg"
+                              style={{ color: "#333", fontWeight: 500 }}
+                            >
+                              {file.name}
+                            </Text>
+                          </div>
+                          <Text size="lg" fw={600} style={{ color: "#333" }}>
+                            {down > 0 ? displayTime : "Test your speed first"}
                           </Text>
                         </div>
-                        <Text size="lg" fw={600} style={{ color: "#333" }}>
-                          {down > 0 ? displayTime : "Test your speed first"}
-                        </Text>
-                      </div>
-                    );
-                  })}
-                </Stack>
-              </Card>
+                      );
+                    })}
+                  </Stack>
+                </Card>
               </Grid.Col>
 
               {/* Online Gaming Performance */}
               <Grid.Col span={{ base: 12, md: 6 }}>
-              <Card
-                style={{
-                  backgroundColor: "white",
-                  border: "1px solid #e9ecef",
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-                  height: "100%",
-                }}
-                radius="lg"
-                p="xl"
-              >
-                <Title
-                  order={3}
+                <Card
                   style={{
-                    color: "#333",
-                    marginBottom: "1.5em",
-                    textAlign: "center",
-                    fontWeight: 600,
+                    backgroundColor: "white",
+                    border: "1px solid #e9ecef",
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                    height: "100%",
                   }}
+                  radius="lg"
+                  p="xl"
                 >
-                  <FaGun size="1.2em" style={{ marginRight: "0.5em", verticalAlign: "middle" }} />
-                  Online Gaming
-                </Title>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    color: "#ada07dff",
-                    fontSize: "0.9rem",
-                    marginBottom: "1em",
-                  }}
-                >
-                  These activities primarily depend on your ping/latency
-                </Text>
-                <Stack gap="lg">
-                  {[
-                    { game: "Competitive FPS", requirement: 20, description: "CS2, Valorant, Overwatch" },
-                    { game: "MOBA Games", requirement: 30, description: "League of Legends, Dota 2" },
-                    { game: "Battle Royale", requirement: 50, description: "Fortnite, PUBG, Apex Legends" },
-                    { game: "MMORPGs", requirement: 100, description: "World of Warcraft, Final Fantasy XIV" },
-                    { game: "Turn-based Games", requirement: 200, description: "Chess, card games, strategy" },
-                  ].map((gameType, index) => {
-                    const canPlay = ping <= gameType.requirement && ping > 0;
-                    const statusColor = canPlay ? "#28a745" : ping > gameType.requirement ? "#f59e0b" : "#666";
-                    
-                    return (
-                      <div
-                        key={index}
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          padding: "1em 0",
-                          borderBottom: index < 4 ? "1px solid #f1f3f4" : "none",
-                        }}
-                      >
-                        <div>
-                          <Text size="lg" style={{ color: "#333", fontWeight: 500 }}>
-                            {gameType.game}
-                          </Text>
-                          <Text size="sm" style={{ color: "#ada07dff" }}>
-                            {gameType.description}
-                          </Text>
+                  <Title
+                    order={3}
+                    style={{
+                      color: "#333",
+                      marginBottom: "1.5em",
+                      textAlign: "center",
+                      fontWeight: 600,
+                    }}
+                  >
+                    <FaGun
+                      size="1.2em"
+                      style={{ marginRight: "0.5em", verticalAlign: "middle" }}
+                    />
+                    Online Gaming
+                  </Title>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "#ada07dff",
+                      fontSize: "0.9rem",
+                      marginBottom: "1em",
+                    }}
+                  >
+                    These activities primarily depend on your ping/latency
+                  </Text>
+                  <Stack gap="lg">
+                    {[
+                      {
+                        game: "Competitive FPS",
+                        requirement: 20,
+                        description: "CS2, Valorant, Overwatch",
+                      },
+                      {
+                        game: "MOBA Games",
+                        requirement: 30,
+                        description: "League of Legends, Dota 2",
+                      },
+                      {
+                        game: "Battle Royale",
+                        requirement: 50,
+                        description: "Fortnite, PUBG, Apex Legends",
+                      },
+                      {
+                        game: "MMORPGs",
+                        requirement: 100,
+                        description: "World of Warcraft, Final Fantasy XIV",
+                      },
+                      {
+                        game: "Turn-based Games",
+                        requirement: 200,
+                        description: "Chess, card games, strategy",
+                      },
+                    ].map((gameType, index) => {
+                      const canPlay = ping <= gameType.requirement && ping > 0;
+                      const statusColor = canPlay
+                        ? "#28a745"
+                        : ping > gameType.requirement
+                        ? "#f59e0b"
+                        : "#666";
+
+                      return (
+                        <div
+                          key={index}
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            padding: "1em 0",
+                            borderBottom:
+                              index < 4 ? "1px solid #f1f3f4" : "none",
+                          }}
+                        >
+                          <div>
+                            <Text
+                              size="lg"
+                              style={{ color: "#333", fontWeight: 500 }}
+                            >
+                              {gameType.game}
+                            </Text>
+                            <Text size="sm" style={{ color: "#ada07dff" }}>
+                              {gameType.description}
+                            </Text>
+                          </div>
+                          <div style={{ textAlign: "right" }}>
+                            <Text
+                              size="lg"
+                              fw={600}
+                              style={{ color: statusColor }}
+                            >
+                              {ping === 0
+                                ? "Test ping first"
+                                : canPlay
+                                ? "✓ Excellent"
+                                : "⚠ High latency"}
+                            </Text>
+                            <Text size="sm" style={{ color: "#ada07dff" }}>
+                              Target: &lt;{gameType.requirement}ms
+                            </Text>
+                          </div>
                         </div>
-                        <div style={{ textAlign: "right" }}>
-                          <Text size="lg" fw={600} style={{ color: statusColor }}>
-                            {ping === 0 ? "Test ping first" : canPlay ? "✓ Excellent" : "⚠ High latency"}
-                          </Text>
-                          <Text size="sm" style={{ color: "#ada07dff" }}>
-                            Target: &lt;{gameType.requirement}ms
-                          </Text>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </Stack>
-              </Card>
+                      );
+                    })}
+                  </Stack>
+                </Card>
               </Grid.Col>
             </Grid>
           </Stack>
@@ -1454,7 +1630,7 @@ function App() {
         >
           <RxCross2 />
         </div>
-        
+
         <Stack style={{ padding: "2em" }}>
           <Title
             order={2}
@@ -1485,7 +1661,7 @@ function App() {
               <Input
                 type="number"
                 placeholder="e.g., 100000000 (100 Mbps)"
-                value={down || ''}
+                value={down || ""}
                 onChange={(e) => {
                   const value = parseFloat(e.target.value) || 0;
                   setDown(value);
@@ -1501,7 +1677,7 @@ function App() {
               <Input
                 type="number"
                 placeholder="e.g., 50000000 (50 Mbps)"
-                value={up || ''}
+                value={up || ""}
                 onChange={(e) => setUp(parseFloat(e.target.value) || 0)}
               />
             </div>
@@ -1513,7 +1689,7 @@ function App() {
               <Input
                 type="number"
                 placeholder="e.g., 15"
-                value={ping || ''}
+                value={ping || ""}
                 onChange={(e) => setPing(parseFloat(e.target.value) || 0)}
               />
             </div>
@@ -1525,7 +1701,7 @@ function App() {
               <Input
                 type="number"
                 placeholder="e.g., 2"
-                value={jitter || ''}
+                value={jitter || ""}
                 onChange={(e) => setJitter(parseFloat(e.target.value) || 0)}
               />
             </div>
