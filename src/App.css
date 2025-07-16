@@ -63,17 +63,7 @@ body {
   }
 }
 
-@keyframes textpulse {
-  0% {
-    color: #808080;
-  }
-  50% {
-    color: #80808080;
-  }
-  100% {
-    color: #808080;
-  }
-}
+
 
 
 

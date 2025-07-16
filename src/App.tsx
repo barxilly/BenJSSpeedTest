@@ -247,7 +247,7 @@ function App() {
     <div
       style={{
         background: isDarkMode()
-          ? "linear-gradient(160deg,rgba(226, 102, 1, 1), rgba(0, 0, 0, 1))"
+          ? "#482f2fff"
           : "linear-gradient(rgb(254, 243, 234), rgb(245, 241, 238))",
         height: "100vh",
         width: "100vw",
@@ -271,18 +271,18 @@ function App() {
     user-select: none;
     pointer-events: none;
     color: ${isDarkMode() ? "#fff" : "#000"};
-   background: ${isDarkMode() ? "#8b3100ff" : "#fbf8f5ff"} !important;
+   background: ${isDarkMode() ? "#683747ff" : "#fbf8f5ff"} !important;
   }
 }
 
 .boo {
    box-shadow: ${
      isDarkMode()
-       ? "0 2px 4px rgba(0, 0, 0, 0.1), 0px 5px 10px -5px rgba(255,255,255,1) inset"
+       ? "0 2px 4px rgba(0, 0, 0, 0.1), 0px 5px 10px -5px rgba(255,255,255,0.4) inset"
        : "0 2px 4px rgba(0, 0, 0, 0.1), 0px 20px 10px -5px rgba(255,255,255,1) inset"
    } !important;
                       background: ${
-                        isDarkMode() ? "#8b3100ff" : "#fbf8f5ff"
+                        isDarkMode() ? "#683747ff" : "#fbf8f5ff"
                       } !important;
 }
 
@@ -299,9 +299,22 @@ function App() {
 }
 
 a {
-  color: ${!isDarkMode() ? "#76561a" : "#ada07dff"};
+  color: ${!isDarkMode() ? "#76561a" : "#ad7d7dff"};
   text-decoration: none;
 }
+
+@keyframes textpulse {
+  0% {
+    color: ${isDarkMode() ? "#c0c0c0" : "#808080"};
+  }
+  50% {
+    color: ${isDarkMode() ? "#c0c0c0a0" : "#80808080"};
+  }
+  100% {
+   color: ${isDarkMode() ? "#c0c0c0" : "#808080"};
+  }
+}
+
 `}
         </style>
         <Center
@@ -373,9 +386,9 @@ a {
                         userSelect: "none",
                         justifySelf: "center",
                         boxShadow: isDarkMode()
-                          ? "0 2px 4px rgba(0, 0, 0, 0.1), 0px 5px 10px -5px rgba(255,255,255,1) inset"
+                          ? "0 2px 4px rgba(0, 0, 0, 0.1), 0px 5px 10px -5px rgba(255,255,255,0.4) inset"
                           : "0 2px 4px rgba(0, 0, 0, 0.1), 0px 20px 10px -5px rgba(255,255,255,1) inset",
-                        background: isDarkMode() ? "#8b3100ff" : "#fbf8f5ff",
+                        background: isDarkMode() ? "#683747ff" : "#fbf8f5ff",
                         animation: isTesting ? "borderpulse 3s infinite" : "",
                       }}
                       radius="100%"
@@ -522,9 +535,9 @@ a {
                     style={{
                       width: "fit-content",
                       boxShadow: isDarkMode()
-                        ? "0 2px 4px rgba(0, 0, 0, 0.1), 0px 5px 10px -5px rgba(255,255,255,1) inset"
+                        ? "0 2px 4px rgba(0, 0, 0, 0.1), 0px 5px 10px -5px rgba(255,255,255,0.4) inset"
                         : "0 2px 4px rgba(0, 0, 0, 0.1), 0px 20px 10px -5px rgba(255,255,255,1) inset",
-                      background: isDarkMode() ? "#8b3100ff" : "#fbf8f5ff",
+                      background: isDarkMode() ? "#683747ff" : "#fbf8f5ff",
                       animation: isTesting ? "borderpulse 3s infinite" : "",
                     }}
                     radius="xl"
@@ -773,7 +786,7 @@ a {
                   <Space h="sm" />
                   <Text
                     style={{
-                      color: "#ada07dff",
+                      color: "#ad7d7dff",
                       textAlign: "center",
                       cursor: "pointer",
                       userSelect: "none",
@@ -934,8 +947,8 @@ a {
             height: "90vh",
             overflowY: "auto",
             display: showAdv ? "block" : "none",
-            backgroundColor: isDarkMode() ? "#403b34ff" : "white",
-            border: isDarkMode() ? "1px solid #423110ff" : "1px solid #e9ecef",
+            backgroundColor: isDarkMode() ? "#403437ff" : "white",
+            border: isDarkMode() ? "1px solid #421017ff" : "1px solid #e9ecef",
             boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
           }}
           radius="lg"
@@ -957,7 +970,7 @@ a {
                 top: "6.5%",
                 left: "6.5%",
                 cursor: "pointer",
-                backgroundColor: isDarkMode() ? "#69573eff" : "#f8f9fa",
+                backgroundColor: isDarkMode() ? "#40292cff" : "#f8f9fa",
                 color: isDarkMode() ? "#adb5bd" : "#666",
                 borderRadius: "50%",
                 width: "40px",
@@ -968,7 +981,7 @@ a {
                 fontSize: "1.2em",
                 transition: "all 0.2s ease",
                 border: isDarkMode()
-                  ? "1px solid #423110ff"
+                  ? "1px solid #421017ff"
                   : "1px solid #e9ecef",
                 zIndex: 1000,
               }}
@@ -977,12 +990,12 @@ a {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = isDarkMode()
-                  ? "#5f4e38ff"
+                  ? "#5f383dff"
                   : "#e9ecef";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = isDarkMode()
-                  ? "#69573eff"
+                  ? "#40292cff"
                   : "#f8f9fa";
               }}
             >
@@ -1004,7 +1017,7 @@ a {
               <Text
                 style={{
                   textAlign: "center",
-                  color: isDarkMode() ? "#adb5bd" : "#ada07dff",
+                  color: isDarkMode() ? "#adb5bd" : "#ad7d7dff",
                   fontSize: "1.1rem",
                   marginBottom: "2em",
                 }}
@@ -1042,9 +1055,9 @@ a {
               <Stack gap="xl">
                 <Card
                   style={{
-                    backgroundColor: isDarkMode() ? "#5f4e38ff" : "white",
+                    backgroundColor: isDarkMode() ? "#5f383dff" : "white",
                     border: isDarkMode()
-                      ? "1px solid #423110ff"
+                      ? "1px solid #421017ff"
                       : "1px solid #e9ecef",
                     boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                   }}
@@ -1074,15 +1087,16 @@ a {
                     >
                       <Text
                         size="lg"
-                        style={{ color: "#666", fontWeight: 500 }}
+                        style={{ color:  isDarkMode() ? "#adb5bd" : "#666",
+                          fontWeight: 500 }}
                       >
                         Download Speed
                       </Text>
                       <div style={{ textAlign: "right" }}>
-                        <Text size="xl" fw={600} style={{ color: "#333" }}>
+                        <Text size="xl" fw={600} style={{ color: isDarkMode() ? "#fff" : "#333" }}>
                           {frmbts(down)}
                         </Text>
-                        <Text size="sm" style={{ color: "#ada07dff" }}>
+                        <Text size="sm" style={{ color: "#ad7d7dff" }}>
                           ({(down / 1000).toFixed(2)} Kbps)
                         </Text>
                       </div>
@@ -1097,15 +1111,16 @@ a {
                     >
                       <Text
                         size="lg"
-                        style={{ color: "#666", fontWeight: 500 }}
+                        style={{ color: isDarkMode() ? "#adb5bd" : "#666",
+                          fontWeight: 500 }}
                       >
                         Upload Speed
                       </Text>
                       <div style={{ textAlign: "right" }}>
-                        <Text size="xl" fw={600} style={{ color: "#333" }}>
+                        <Text size="xl" fw={600} style={{ color: isDarkMode() ? "#fff" : "#333" }}>
                           {frmbts(up)}
                         </Text>
-                        <Text size="sm" style={{ color: "#ada07dff" }}>
+                        <Text size="sm" style={{ color: "#ad7d7dff" }}>
                           ({(up / 1000).toFixed(2)} Kbps)
                         </Text>
                       </div>
@@ -1114,9 +1129,9 @@ a {
                 </Card>{" "}
                 <Card
                   style={{
-                    backgroundColor: isDarkMode() ? "#5f4e38ff" : "white",
+                    backgroundColor: isDarkMode() ? "#5f383dff" : "white",
                     border: isDarkMode()
-                      ? "1px solid #423110ff"
+                      ? "1px solid #421017ff"
                       : "1px solid #e9ecef",
                     boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                   }}
@@ -1190,9 +1205,9 @@ a {
                 </Card>{" "}
                 <Card
                   style={{
-                    backgroundColor: isDarkMode() ? "#5f4e38ff" : "white",
+                    backgroundColor: isDarkMode() ? "#5f383dff" : "white",
                     border: isDarkMode()
-                      ? "1px solid #423110ff"
+                      ? "1px solid #421017ff"
                       : "1px solid #e9ecef",
                     boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                   }}
@@ -1286,8 +1301,8 @@ a {
             height: "90vh",
             overflowY: "auto",
             display: showUses ? "block" : "none",
-            backgroundColor: isDarkMode() ? "#403b34ff" : "white",
-            border: isDarkMode() ? "1px solid #423110ff" : "1px solid #e9ecef",
+            backgroundColor: isDarkMode() ? "#403437ff" : "white",
+            border: isDarkMode() ? "1px solid #421017ff" : "1px solid #e9ecef",
             boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
           }}
           radius="lg"
@@ -1309,7 +1324,7 @@ a {
                 top: "6.5%",
                 left: "6.5%",
                 cursor: "pointer",
-                backgroundColor: isDarkMode() ? "#69573eff" : "#f8f9fa",
+                backgroundColor: isDarkMode() ? "#40292cff" : "#f8f9fa",
                 color: isDarkMode() ? "#adb5bd" : "#666",
                 borderRadius: "50%",
                 width: "40px",
@@ -1320,7 +1335,7 @@ a {
                 fontSize: "1.2em",
                 transition: "all 0.2s ease",
                 border: isDarkMode()
-                  ? "1px solid #423110ff"
+                  ? "1px solid #421017ff"
                   : "1px solid #e9ecef",
                 zIndex: 1000,
               }}
@@ -1329,12 +1344,12 @@ a {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = isDarkMode()
-                  ? "#5f4e38ff"
+                  ? "#5f383dff"
                   : "#e9ecef";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = isDarkMode()
-                  ? "#69573eff"
+                  ? "#40292cff"
                   : "#f8f9fa";
               }}
             >
@@ -1356,7 +1371,7 @@ a {
               <Text
                 style={{
                   textAlign: "center",
-                  color: isDarkMode() ? "#adb5bd" : "#ada07dff",
+                  color: isDarkMode() ? "#adb5bd" : "#ad7d7dff",
                   fontSize: "1.1rem",
                   marginBottom: "2em",
                 }}
@@ -1367,9 +1382,9 @@ a {
                 <Grid.Col span={{ base: 12, md: 6 }}>
                   <Card
                     style={{
-                      backgroundColor: isDarkMode() ? "#5f4e38ff" : "white",
+                      backgroundColor: isDarkMode() ? "#5f383dff" : "white",
                       border: isDarkMode()
-                        ? "1px solid #423110ff"
+                        ? "1px solid #421017ff"
                         : "1px solid #e9ecef",
                       boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                       height: "100%",
@@ -1454,7 +1469,7 @@ a {
                                 >
                                   {game.name}
                                 </Text>
-                                <Text size="sm" style={{ color: "#ada07dff" }}>
+                                <Text size="sm" style={{ color: "#ad7d7dff" }}>
                                   {game.size} GB
                                 </Text>
                               </div>
@@ -1477,7 +1492,7 @@ a {
                           variant="subtle"
                           size="sm"
                           onClick={() => setShowAllGames(!showAllGames)}
-                          style={{ color: "#ada07dff" }}
+                          style={{ color: "#ad7d7dff" }}
                         >
                           {showAllGames ? "Show less" : "Show more games"}
                         </Button>
@@ -1488,9 +1503,9 @@ a {
                 <Grid.Col span={{ base: 12, md: 6 }}>
                   <Card
                     style={{
-                      backgroundColor: isDarkMode() ? "#5f4e38ff" : "white",
+                      backgroundColor: isDarkMode() ? "#5f383dff" : "white",
                       border: isDarkMode()
-                        ? "1px solid #423110ff"
+                        ? "1px solid #421017ff"
                         : "1px solid #e9ecef",
                       boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                       height: "100%",
@@ -1568,7 +1583,7 @@ a {
                               >
                                 {stream.quality}
                               </Text>
-                              <Text size="sm" style={{ color: "#ada07dff" }}>
+                              <Text size="sm" style={{ color: "#ad7d7dff" }}>
                                 {stream.description}
                               </Text>
                             </div>
@@ -1580,7 +1595,7 @@ a {
                               >
                                 {canStream ? "✓ Smooth" : "⚠ May buffer"}
                               </Text>
-                              <Text size="sm" style={{ color: "#ada07dff" }}>
+                              <Text size="sm" style={{ color: "#ad7d7dff" }}>
                                 Optimal: {stream.requirement} Mbps
                               </Text>
                             </div>
@@ -1593,9 +1608,9 @@ a {
                 <Grid.Col span={{ base: 12, md: 6 }}>
                   <Card
                     style={{
-                      backgroundColor: isDarkMode() ? "#5f4e38ff" : "white",
+                      backgroundColor: isDarkMode() ? "#5f383dff" : "white",
                       border: isDarkMode()
-                        ? "1px solid #423110ff"
+                        ? "1px solid #421017ff"
                         : "1px solid #e9ecef",
                       boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                       height: "100%",
@@ -1624,7 +1639,7 @@ a {
                     <Text
                       style={{
                         textAlign: "center",
-                        color: isDarkMode() ? "#adb5bd" : "#ada07dff",
+                        color: isDarkMode() ? "#adb5bd" : "#ad7d7dff",
                         fontSize: "0.9rem",
                         marginBottom: "1em",
                       }}
@@ -1683,7 +1698,7 @@ a {
                               >
                                 {activity.activity}
                               </Text>
-                              <Text size="sm" style={{ color: "#ada07dff" }}>
+                              <Text size="sm" style={{ color: "#ad7d7dff" }}>
                                 {activity.description}
                               </Text>
                             </div>
@@ -1695,7 +1710,7 @@ a {
                               >
                                 {canDo ? "✓ Smooth" : "⚠ May buffer"}
                               </Text>
-                              <Text size="sm" style={{ color: "#ada07dff" }}>
+                              <Text size="sm" style={{ color: "#ad7d7dff" }}>
                                 Optimal: {activity.requirement} Mbps
                               </Text>
                             </div>
@@ -1708,9 +1723,9 @@ a {
                 <Grid.Col span={{ base: 12, md: 6 }}>
                   <Card
                     style={{
-                      backgroundColor: isDarkMode() ? "#5f4e38ff" : "white",
+                      backgroundColor: isDarkMode() ? "#5f383dff" : "white",
                       border: isDarkMode()
-                        ? "1px solid #423110ff"
+                        ? "1px solid #421017ff"
                         : "1px solid #e9ecef",
                       boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                       height: "100%",
@@ -1739,7 +1754,7 @@ a {
                     <Text
                       style={{
                         textAlign: "center",
-                        color: isDarkMode() ? "#adb5bd" : "#ada07dff",
+                        color: isDarkMode() ? "#adb5bd" : "#ad7d7dff",
                         fontSize: "0.9rem",
                         marginBottom: "1em",
                       }}
@@ -1798,7 +1813,7 @@ a {
                               >
                                 {activity.activity}
                               </Text>
-                              <Text size="sm" style={{ color: "#ada07dff" }}>
+                              <Text size="sm" style={{ color: "#ad7d7dff" }}>
                                 {activity.description}
                               </Text>
                             </div>
@@ -1810,7 +1825,7 @@ a {
                               >
                                 {canDo ? "✓ Smooth" : "⚠ May lag"}
                               </Text>
-                              <Text size="sm" style={{ color: "#ada07dff" }}>
+                              <Text size="sm" style={{ color: "#ad7d7dff" }}>
                                 Optimal: {activity.requirement} Mbps upload
                               </Text>
                             </div>
@@ -1823,9 +1838,9 @@ a {
                 <Grid.Col span={{ base: 12, md: 6 }}>
                   <Card
                     style={{
-                      backgroundColor: isDarkMode() ? "#5f4e38ff" : "white",
+                      backgroundColor: isDarkMode() ? "#5f383dff" : "white",
                       border: isDarkMode()
-                        ? "1px solid #423110ff"
+                        ? "1px solid #421017ff"
                         : "1px solid #e9ecef",
                       boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                       height: "100%",
@@ -1908,9 +1923,9 @@ a {
                 <Grid.Col span={{ base: 12, md: 6 }}>
                   <Card
                     style={{
-                      backgroundColor: isDarkMode() ? "#5f4e38ff" : "white",
+                      backgroundColor: isDarkMode() ? "#5f383dff" : "white",
                       border: isDarkMode()
-                        ? "1px solid #423110ff"
+                        ? "1px solid #421017ff"
                         : "1px solid #e9ecef",
                       boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                       height: "100%",
@@ -1939,7 +1954,7 @@ a {
                     <Text
                       style={{
                         textAlign: "center",
-                        color: isDarkMode() ? "#adb5bd" : "#ada07dff",
+                        color: isDarkMode() ? "#adb5bd" : "#ad7d7dff",
                         fontSize: "0.9rem",
                         marginBottom: "1em",
                       }}
@@ -2003,7 +2018,7 @@ a {
                               >
                                 {gameType.game}
                               </Text>
-                              <Text size="sm" style={{ color: "#ada07dff" }}>
+                              <Text size="sm" style={{ color: "#ad7d7dff" }}>
                                 {gameType.description}
                               </Text>
                             </div>
@@ -2019,7 +2034,7 @@ a {
                                   ? "✓ Excellent"
                                   : "⚠ High latency"}
                               </Text>
-                              <Text size="sm" style={{ color: "#ada07dff" }}>
+                              <Text size="sm" style={{ color: "#ad7d7dff" }}>
                                 Target: &lt;{gameType.requirement}ms
                               </Text>
                             </div>
@@ -2204,8 +2219,8 @@ a {
             height: "90vh",
             overflowY: "auto",
             display: showInfo ? "block" : "none",
-            backgroundColor: isDarkMode() ? "#403b34ff" : "#f8f9fa",
-            border: isDarkMode() ? "1px solid #423110ff" : "1px solid #e9ecef",
+            backgroundColor: isDarkMode() ? "#403437ff" : "#f8f9fa",
+            border: isDarkMode() ? "1px solid #421017ff" : "1px solid #e9ecef",
             boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
           }}
           radius="lg"
@@ -2227,7 +2242,7 @@ a {
                 top: "6.5%",
                 left: "6.5%",
                 cursor: "pointer",
-                backgroundColor: isDarkMode() ? "#403b34ff" : "#f8f9fa",
+                backgroundColor: isDarkMode() ? "#403437ff" : "#f8f9fa",
                 color: isDarkMode() ? "#adb5bd" : "#666",
                 borderRadius: "50%",
                 width: "40px",
@@ -2238,19 +2253,19 @@ a {
                 fontSize: "1.2em",
                 transition: "all 0.2s ease",
                 border: isDarkMode()
-                  ? "1px solid #423110ff"
+                  ? "1px solid #421017ff"
                   : "1px solid #e9ecef",
                 zIndex: 1000,
               }}
               onClick={() => setShowInfo(false)}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = isDarkMode()
-                  ? "#5f4e38ff"
+                  ? "#5f383dff"
                   : "#e9ecef";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = isDarkMode()
-                  ? "#69573eff"
+                  ? "#40292cff"
                   : "#f8f9fa";
               }}
             >
@@ -2282,9 +2297,9 @@ a {
                 <Grid.Col span={{ base: 12, md: 6 }}>
                   <Card
                     style={{
-                      backgroundColor: isDarkMode() ? "#5f4e38ff" : "white",
+                      backgroundColor: isDarkMode() ? "#5f383dff" : "white",
                       border: isDarkMode()
-                        ? "1px solid #423110ff"
+                        ? "1px solid #421017ff"
                         : "1px solid #e9ecef",
                       boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                       height: "100%",
@@ -2338,9 +2353,9 @@ a {
                 <Grid.Col span={{ base: 12, md: 6 }}>
                   <Card
                     style={{
-                      backgroundColor: isDarkMode() ? "#5f4e38ff" : "white",
+                      backgroundColor: isDarkMode() ? "#5f383dff" : "white",
                       border: isDarkMode()
-                        ? "1px solid #423110ff"
+                        ? "1px solid #421017ff"
                         : "1px solid #e9ecef",
                       boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                       height: "100%",
@@ -2432,9 +2447,9 @@ a {
                 <Grid.Col span={12}>
                   <Card
                     style={{
-                      backgroundColor: isDarkMode() ? "#877153ff" : "#f8f9fa",
+                      backgroundColor: isDarkMode() ? "#4d2c37ff" : "#f8f9fa",
                       border: isDarkMode()
-                        ? "1px solid #423110ff"
+                        ? "1px solid #421017ff"
                         : "1px solid #e9ecef",
                       boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                     }}
@@ -2477,7 +2492,7 @@ a {
                             verticalAlign: "middle",
                           }}
                         />{" "}
-                        by BenJS • Version 0.0.16-beta
+                        by BenJS • Version 0.0.17-beta
                       </Text>
                     </Center>
                     <Text

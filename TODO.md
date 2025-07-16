@@ -1,10 +1,10 @@
 - [x] Speedtest
 - [x] Sexiness
-- [ ] Move end info somewhere nicer
-- [ ] Testing Animations
-- [ ] Advanced Stats
-- [ ] Title
+- [x] Move end info somewhere nicer
+- [x] Testing Animations
+- [x] Advanced Stats
+- [x] Title
 - [ ] Embed
 - [ ] PWA
-- [ ] Icon
+- [x] Icon
 - [ ] Theme colours
