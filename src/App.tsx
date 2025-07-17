@@ -2675,7 +2675,7 @@ a {
                   )}
                   <Center>
                     <a
-                      href="https://benjs.uk/qwkspd"
+                      href="https://github.com/barxilly/BenJSSpeedTest/releases/download/v1.0.1/qwkspd-1.0.1.apk"
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{ textDecoration: "none", marginBottom: "1em", marginTop: "1em" }}
