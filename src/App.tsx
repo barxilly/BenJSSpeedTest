@@ -30,6 +30,7 @@ import { FaInfoCircle } from "react-icons/fa";
 import { RiNetflixFill as SiNetflix } from "react-icons/ri";
 import { MdExpandMore } from "react-icons/md";
 import { BsFillHeartFill } from "react-icons/bs";
+import { Capacitor } from "@capacitor/core";
 function App() {
   const theme = createTheme({
     fontFamily: '"Rubik", sans-serif',
@@ -54,6 +55,9 @@ function App() {
     } else {
       return "0bps";
     }
+  }
+  function isRunningInCapacitor() {
+    return Capacitor.isNativePlatform();
   }
   function calculateDistance(
     lat1: number,
@@ -134,7 +138,7 @@ function App() {
     ping: 0,
   });
   const [unchangedCount, setUnchangedCount] = useState(0);
-  const [intervalId, setIntervalId] = useState<number | null>(null);
+  const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval> | null>(null);
   const [showAdv, setShowAdv] = useState(false);
   const [showUses, setShowUses] = useState(false);
   const [showAllGames, setShowAllGames] = useState(false);
@@ -2196,8 +2200,8 @@ a {
         <FaInfoCircle
           style={{
             position: "fixed",
-            bottom: "15px",
-            right: "15px",
+            bottom: isRunningInCapacitor()? "30px": "15px",
+            right: isRunningInCapacitor()? "30px": "15px",
             opacity: 0.4,
             cursor: "pointer",
           }}
