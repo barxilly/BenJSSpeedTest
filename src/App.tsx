@@ -2496,7 +2496,7 @@ a {
                             verticalAlign: "middle",
                           }}
                         />{" "}
-                        by BenJS • Version 0.0.17-beta
+                        by BenJS • Version 1.0.0
                       </Text>
                     </Center>
                     <Text
