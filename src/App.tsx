@@ -28,7 +28,8 @@ import { BiSolidCoffeeTogo, BiVideo } from "react-icons/bi";
 import { FaGun } from "react-icons/fa6";
 import { FaInfoCircle } from "react-icons/fa";
 import { RiNetflixFill as SiNetflix } from "react-icons/ri";
-import { MdExpandMore } from "react-icons/md";
+import { isPWA, isInstallPromptAvailable, showInstallPrompt } from "./pwa";
+import { MdExpandMore, MdInstallMobile } from "react-icons/md";
 import { BsFillHeartFill } from "react-icons/bs";
 import { Capacitor } from "@capacitor/core";
 function App() {
@@ -138,12 +139,36 @@ function App() {
     ping: 0,
   });
   const [unchangedCount, setUnchangedCount] = useState(0);
-  const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval> | null>(null);
+  const [intervalId, setIntervalId] = useState<ReturnType<
+    typeof setInterval
+  > | null>(null);
   const [showAdv, setShowAdv] = useState(false);
   const [showUses, setShowUses] = useState(false);
   const [showAllGames, setShowAllGames] = useState(false);
   const [showDebug, setShowDebug] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const [showAppUpsell, setShowAppUpsell] = useState(false);
+  const [canInstallPWA, setCanInstallPWA] = useState(false);
+  
+  useEffect(() => {
+    // Check PWA install availability periodically
+    const checkPWAInstall = () => {
+      setCanInstallPWA(isInstallPromptAvailable() && !isPWA());
+    };
+    
+    checkPWAInstall();
+    const interval = setInterval(checkPWAInstall, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
+  
+  const handlePWAInstall = async () => {
+    const installed = await showInstallPrompt();
+    if (installed) {
+      setCanInstallPWA(false);
+    }
+  };
+  
   useEffect(() => {
     return () => {
       if (intervalId) {
@@ -1091,13 +1116,19 @@ a {
                     >
                       <Text
                         size="lg"
-                        style={{ color:  isDarkMode() ? "#adb5bd" : "#666",
-                          fontWeight: 500 }}
+                        style={{
+                          color: isDarkMode() ? "#adb5bd" : "#666",
+                          fontWeight: 500,
+                        }}
                       >
                         Download Speed
                       </Text>
                       <div style={{ textAlign: "right" }}>
-                        <Text size="xl" fw={600} style={{ color: isDarkMode() ? "#fff" : "#333" }}>
+                        <Text
+                          size="xl"
+                          fw={600}
+                          style={{ color: isDarkMode() ? "#fff" : "#333" }}
+                        >
                           {frmbts(down)}
                         </Text>
                         <Text size="sm" style={{ color: "#ad7d7dff" }}>
@@ -1115,13 +1146,19 @@ a {
                     >
                       <Text
                         size="lg"
-                        style={{ color: isDarkMode() ? "#adb5bd" : "#666",
-                          fontWeight: 500 }}
+                        style={{
+                          color: isDarkMode() ? "#adb5bd" : "#666",
+                          fontWeight: 500,
+                        }}
                       >
                         Upload Speed
                       </Text>
                       <div style={{ textAlign: "right" }}>
-                        <Text size="xl" fw={600} style={{ color: isDarkMode() ? "#fff" : "#333" }}>
+                        <Text
+                          size="xl"
+                          fw={600}
+                          style={{ color: isDarkMode() ? "#fff" : "#333" }}
+                        >
                           {frmbts(up)}
                         </Text>
                         <Text size="sm" style={{ color: "#ad7d7dff" }}>
@@ -2200,8 +2237,8 @@ a {
         <FaInfoCircle
           style={{
             position: "fixed",
-            bottom: isRunningInCapacitor()? "30px": "15px",
-            right: isRunningInCapacitor()? "30px": "15px",
+            bottom: isRunningInCapacitor() ? "30px" : "15px",
+            right: isRunningInCapacitor() ? "30px" : "15px",
             opacity: 0.4,
             cursor: "pointer",
           }}
@@ -2496,7 +2533,7 @@ a {
                             verticalAlign: "middle",
                           }}
                         />{" "}
-                        by BenJS • Version 1.0.0
+                        by BenJS • Version 1.0.1
                       </Text>
                     </Center>
                     <Text
@@ -2518,6 +2555,180 @@ a {
             </Stack>
           </Card>
         </Card>
+        {/* App Button and Card */}
+        {!isRunningInCapacitor() && navigator.userAgent?.includes("Android") ? (
+          <>
+            <MdInstallMobile
+              style={{
+                position: "fixed",
+                bottom: isRunningInCapacitor() ? "30px" : "15px",
+                left: isRunningInCapacitor() ? "30px" : "15px",
+                opacity: 0.4,
+                cursor: "pointer",
+              }}
+              onClick={() => setShowAppUpsell(true)}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = "0.7";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = "0.4";
+              }}
+              size="2em"
+            />{" "}
+            <Card
+              style={{
+                position: "absolute",
+                top: "5%",
+                left: "5%",
+                width: "90vw",
+                height: "90vh",
+                overflowY: "auto",
+                display: showAppUpsell ? "block" : "none",
+                backgroundColor: isDarkMode() ? "#403437ff" : "#f8f9fa",
+                border: isDarkMode()
+                  ? "1px solid #421017ff"
+                  : "1px solid #e9ecef",
+                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+              }}
+              radius="lg"
+            >
+              <Card
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  position: "relative",
+                  background: "transparent",
+                  border: "none",
+                  boxShadow: "none",
+                  overflowY: "auto",
+                }}
+              >
+                <div
+                  style={{
+                    position: "fixed",
+                    top: "6.5%",
+                    left: "6.5%",
+                    cursor: "pointer",
+                    backgroundColor: isDarkMode() ? "#403437ff" : "#f8f9fa",
+                    color: isDarkMode() ? "#adb5bd" : "#666",
+                    borderRadius: "50%",
+                    width: "40px",
+                    height: "40px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "1.2em",
+                    transition: "all 0.2s ease",
+                    border: isDarkMode()
+                      ? "1px solid #421017ff"
+                      : "1px solid #e9ecef",
+                    zIndex: 1000,
+                  }}
+                  onClick={() => setShowAppUpsell(false)}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = isDarkMode()
+                      ? "#5f383dff"
+                      : "#e9ecef";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = isDarkMode()
+                      ? "#40292cff"
+                      : "#f8f9fa";
+                  }}
+                >
+                  <RxCross2 />
+                </div>
+                <Stack
+                  style={{ padding: isSmolPhone() ? "0em" : "2em" }}
+                  gap="0"
+                >
+                  <Title
+                    order={1}
+                    style={{
+                      textAlign: "center",
+                      fontSize: "2.5rem",
+                      fontWeight: 800,
+                      color: isDarkMode() ? "#fff" : "#333",
+                    }}
+                  >
+                    Install
+                  </Title>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: isDarkMode() ? "#adb5bd" : "#666",
+                      fontSize: "1.1rem",
+                      marginBottom: "1em",
+                    }}
+                  >
+                    {canInstallPWA ? "Install as PWA or download APK:" : "Only available on Android for now."}
+                  </Text>
+                  {canInstallPWA && (
+                    <Center style={{ marginBottom: "1em" }}>
+                      <Image
+                        src="https://user-images.githubusercontent.com/3104648/28971167-ef90a94c-7922-11e7-998a-8f38b4e61cea.png"
+                        w="10em"
+                        alt="Install PWA Icon"
+                        onClick={handlePWAInstall}
+                      />
+                    </Center>
+                  )}
+                  <Center>
+                    <a
+                      href="https://benjs.uk/qwkspd"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ textDecoration: "none", marginBottom: "1em", marginTop: "1em" }}
+                    >
+                      <Image
+                        src="https://www.one-line.com/sites/g/files/lnzjqr776/files/styles/crop_freeform/public/APK-Badge.png?itok=K836bPDk"
+                        w="10em"
+                        alt="Download QwkSpd APK"
+                      />
+                    </a>
+                  </Center>
+                  <Space h="md" />
+                  <Card
+                    style={{
+                      backgroundColor: isDarkMode() ? "#4d2c37ff" : "#f8f9fa",
+                      border: isDarkMode()
+                        ? "1px solid #421017ff"
+                        : "1px solid #e9ecef",
+                      boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                    }}
+                    radius="lg"
+                    p="lg"
+                  >
+                    <Center>
+                      <Text style={{ textAlign: "center", fontSize: "0.9rem", color: isDarkMode() ? "#adb5bd" : "#666" }}>
+                        {canInstallPWA 
+                          ? "If you prefer a native app experience or want to help get this on the Play Store and App Store:"
+                          : "If you don't like sketchy apks and want to help me get this app on to the Play Store and App Store:"
+                        }
+                      </Text>
+                    </Center>
+                    <br></br>
+                    <Center mb="sm">
+                      <a
+                        href="https://ko-fi.com/sillysbs"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Image
+                          src="https://storage.ko-fi.com/cdn/brandasset/v2/support_me_on_kofi_dark.png"
+                          w="12em"
+                          alt="Support me on Ko-fi"
+                        />
+                      </a>
+                    </Center>
+                  </Card>
+                </Stack>
+              </Card>
+            </Card>
+          </>
+        ) : (
+          <></>
+        )}
       </MantineProvider>
     </div>
   );

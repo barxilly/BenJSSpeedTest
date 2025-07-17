@@ -1,0 +1,20 @@
+{
+  "name": "QwkSpd",
+  "short_name": "QwkSpd",
+  "description": "A simple, fast, and easy to use speed test for your internet connection. Powered by Cloudflare.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#482f2fff",
+  "theme_color": "#683747ff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/fav.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["utilities", "productivity"],
+  "lang": "en-GB"
+}
