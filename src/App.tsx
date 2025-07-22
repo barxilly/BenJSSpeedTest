@@ -149,6 +149,7 @@ function App() {
   const [showInfo, setShowInfo] = useState(false);
   const [showAppUpsell, setShowAppUpsell] = useState(false);
   const [canInstallPWA, setCanInstallPWA] = useState(false);
+  const [secTest, setSecTest] = useState(false);
   
   useEffect(() => {
     // Check PWA install availability periodically
@@ -277,7 +278,7 @@ function App() {
       style={{
         background: isDarkMode()
           ? "#482f2fff"
-          : "linear-gradient(rgb(254, 243, 234), rgb(245, 241, 238))",
+          : "linear-gradient(rgba(254, 240, 234, 1), rgb(245, 241, 238))",
         height: "100vh",
         width: "100vw",
         maxHeight: "100vh",
@@ -432,6 +433,20 @@ a {
                             document
                             .getElementById("dc")
                             ?.classList.remove("dc");*/
+                            setDown(0);
+                            setUp(0);
+                            setPing(0);
+                            setJitter(0);
+                            setSpeed(0);
+                            setIsTesting(false);
+                            setNobutt(false);
+                            setUnchangedCount(0);
+                            setPreviousValues({ down: 0, up: 0, ping: 0 });
+                            setInts(0);
+                            setSecTest(true);
+                            document
+                              .getElementById("test-button")!
+                              .click();
                             }
                           : () => {}
                       }
@@ -559,7 +574,19 @@ a {
                       </Stack>
                     </Card>
                   </Center>
-                  <Space h="sm" />
+                  {!isTesting && speed > 0 ?<><Space h="sm" />
+                  <Center>
+                    <Text
+                      style={{
+                        color: isDarkMode() ? "#ad7d7dff" : "#c1b7aeff",
+                        textAlign: "center",
+                        fontSize: "0.8em",
+                      }}>
+                        Click the speed circle to test again
+                      </Text>
+                  </Center>
+                  </> : <><Space h="sm" /></>}
+                  
                   <Card
                     style={{
                       width: "fit-content",
@@ -865,7 +892,7 @@ a {
                     };
                     setIsTesting(await banana.isRunning);
                     const id = setInterval(() => {
-                      if (!nobutt) {
+                      if (!nobutt && !secTest) {
                         (
                           document.getElementById(
                             "speed-display"
@@ -2533,7 +2560,7 @@ a {
                             verticalAlign: "middle",
                           }}
                         />{" "}
-                        by BenJS • Version 1.0.1
+                        by BenJS • Version 1.0.3
                       </Text>
                     </Center>
                     <Text
@@ -2581,7 +2608,7 @@ a {
                 top: "5%",
                 left: "5%",
                 width: "90vw",
-                height: "90vh",
+                height: "80vh",
                 overflowY: "auto",
                 display: showAppUpsell ? "block" : "none",
                 backgroundColor: isDarkMode() ? "#403437ff" : "#f8f9fa",
@@ -2675,7 +2702,7 @@ a {
                   )}
                   <Center>
                     <a
-                      href="https://github.com/barxilly/BenJSSpeedTest/releases/download/v1.0.1/qwkspd-1.0.1.apk"
+                      href="https://github.com/barxilly/BenJSSpeedTest/releases/download/v1.0.3/qwkspd-1.0.3.apk"
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{ textDecoration: "none", marginBottom: "1em", marginTop: "1em" }}
@@ -2707,7 +2734,7 @@ a {
                         }
                       </Text>
                     </Center>
-                    <br></br>
+                    <Space h="md" />
                     <Center mb="sm">
                       <a
                         href="https://ko-fi.com/sillysbs"
