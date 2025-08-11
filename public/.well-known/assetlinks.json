@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "uk.benjs.speed",
+      "sha256_cert_fingerprints": [
+        "F9:47:E2:D6:93:73:8B:9E:CA:1B:3D:68:27:1C:03:E8:86:22:CA:E9:FF:87:78:C8:AF:8C:51:BC:B6:AD:FB:9F"
+      ]
+    }
+  }
+]

@@ -1,0 +1,667 @@
+{
+    "detecting": {
+        "eng": "Detecting...",
+        "hi": "जांच रहे हैं...",
+        "nl": "Detecteren..."
+    },
+    "location.unable": {
+        "eng": "Unable to determine nearest server",
+        "hi": "नजदीकी सर्वर निर्धारित करने में असमर्थ",
+        "nl": "Kan dichtstbijzijnde server niet bepalen"
+    },
+    "desc": {
+        "eng": "Powered by ",
+        "hi": "द्वारा संचालित ",
+        "nl": "Mogelijk gemaakt door "
+    },
+    "start": {
+        "eng": "Start",
+        "hi": "शुरू करें",
+        "nl": "Start"
+    },
+    "switch.to.hindi": {
+        "eng": "Switch to Hindi",
+        "hi": "हिंदी में स्विच करें",
+        "nl": "Schakel naar Hindi"
+    },
+    "switch.to.english": {
+        "eng": "Switch to English",
+        "hi": "अंग्रेजी में स्विच करें",
+        "nl": "Schakel naar Engels"
+    },
+    "click.to.test.again": {
+        "eng": "Click the speed circle to test again",
+        "hi": "दोबारा टेस्ट करने के लिए स्पीड सर्कल पर क्लिक करें",
+        "nl": "Klik op de snelheidscirkel om opnieuw te testen"
+    },
+    "advanced.stats": {
+        "eng": "Advanced Stats",
+        "hi": "उन्नत आंकड़े",
+        "nl": "Geavanceerde statistieken"
+    },
+    "download.speed": {
+        "eng": "Download Speed",
+        "hi": "डाउनलोड स्पीड",
+        "nl": "Downloadsnelheid"
+    },
+    "upload.speed": {
+        "eng": "Upload Speed",
+        "hi": "अपलोड स्पीड",
+        "nl": "Uploadsnelheid"
+    },
+    "ping": {
+        "eng": "Ping",
+        "hi": "पिंग",
+        "nl": "Ping"
+    },
+    "jitter": {
+        "eng": "Jitter",
+        "hi": "जिटर",
+        "nl": "Jitter"
+    },
+    "network.performance": {
+        "eng": "Network Performance",
+        "hi": "नेटवर्क प्रदर्शन",
+        "nl": "Netwerkprestaties"
+    },
+    "location.details": {
+        "eng": "Location Details",
+        "hi": "स्थान विवरण",
+        "nl": "Locatiedetails"
+    },
+    "your.location": {
+        "eng": "Your Location",
+        "hi": "आपका स्थान",
+        "nl": "Uw locatie"
+    },
+    "cloudflare.server": {
+        "eng": "Cloudflare Server",
+        "hi": "क्लाउडफ्लेयर सर्वर",
+        "nl": "Cloudflare-server"
+    },
+    "what.can.you.do": {
+        "eng": "What Can You Do?",
+        "hi": "आप क्या कर सकते हैं?",
+        "nl": "Wat kunt u doen?"
+    },
+    "estimated.download.times": {
+        "eng": "Estimated download times for popular content",
+        "hi": "लोकप्रिय सामग्री के लिए अनुमानित डाउनलोड समय",
+        "nl": "Geschatte downloadtijden voor populaire inhoud"
+    },
+    "game.downloads": {
+        "eng": "Game Downloads",
+        "hi": "गेम डाउनलोड",
+        "nl": "Game-downloads"
+    },
+    "file.transfer.times": {
+        "eng": "File Transfer Times",
+        "hi": "फाइल ट्रांसफर समय",
+        "nl": "Bestandsoverdrachtentijden"
+    },
+    "streaming.performance": {
+        "eng": "Streaming Performance",
+        "hi": "स्ट्रीमिंग प्रदर्शन",
+        "nl": "Streamingprestaties"
+    },
+    "online.gaming": {
+        "eng": "Online Gaming",
+        "hi": "ऑनलाइन गेमिंग",
+        "nl": "Online gamen"
+    },
+    "show.less": {
+        "eng": "Show less",
+        "hi": "कम दिखाएं",
+        "nl": "Minder tonen"
+    },
+    "show.more.games": {
+        "eng": "Show more games",
+        "hi": "और गेम्स दिखाएं",
+        "nl": "Meer games tonen"
+    },
+    "test.your.speed.first": {
+        "eng": "Test your speed first",
+        "hi": "पहले अपनी स्पीड टेस्ट करें",
+        "nl": "Test eerst uw snelheid"
+    },
+    "seconds": {
+        "eng": "seconds",
+        "hi": "सेकंड",
+        "nl": "seconden"
+    },
+    "minutes": {
+        "eng": "minutes",
+        "hi": "मिनट",
+        "nl": "minuten"
+    },
+    "hours": {
+        "eng": "hours",
+        "hi": "घंटे",
+        "nl": "uren"
+    },
+    "days": {
+        "eng": "days",
+        "hi": "दिन",
+        "nl": "dagen"
+    },
+    "excellent": {
+        "eng": "✓ Excellent",
+        "hi": "✓ उत्कृष्ट",
+        "nl": "✓ Uitstekend"
+    },
+    "smooth": {
+        "eng": "✓ Smooth",
+        "hi": "✓ स्मूथ",
+        "nl": "✓ Soepel"
+    },
+    "may.buffer": {
+        "eng": "⚠ May buffer",
+        "hi": "⚠ बफर हो सकता है",
+        "nl": "⚠ Kan bufferen"
+    },
+    "may.lag": {
+        "eng": "⚠ May lag",
+        "hi": "⚠ लैग हो सकता है",
+        "nl": "⚠ Kan vertragen"
+    },
+    "high.latency": {
+        "eng": "⚠ High latency",
+        "hi": "⚠ उच्च लेटेंसी",
+        "nl": "⚠ Hoge latentie"
+    },
+    "test.ping.first": {
+        "eng": "Test ping first",
+        "hi": "पहले पिंग टेस्ट करें",
+        "nl": "Test eerst ping"
+    },
+    "optimal": {
+        "eng": "Optimal",
+        "hi": "इष्टतम",
+        "nl": "Optimaal"
+    },
+    "target": {
+        "eng": "Target",
+        "hi": "लक्ष्य",
+        "nl": "Doel"
+    },
+    "my.speed.seems.off": {
+        "eng": "My Speed Seems Off?",
+        "hi": "मेरी स्पीड गलत लग रही है?",
+        "nl": "Mijn snelheid lijkt verkeerd?"
+    },
+    "speed.explanation": {
+        "eng": "QwkSpd will likely give different speeds than other tests like Speedtest or Fast. This is because QwkSpd uses Cloudflare's servers rather than dedicated speed test servers. While those other tests are more speed-accurate, this test will be more accurate to IRL usage, as most of the web goes through Cloudflare's servers.",
+        "hi": "QwkSpd अन्य टेस्ट जैसे Speedtest या Fast से अलग स्पीड देगा। यह इसलिए है क्योंकि QwkSpd समर्पित स्पीड टेस्ट सर्वर के बजाय Cloudflare के सर्वर का उपयोग करता है। जबकि वे अन्य टेस्ट अधिक स्पीड-सटीक हैं, यह टेस्ट वास्तविक जीवन के उपयोग के लिए अधिक सटीक होगा, क्योंकि अधिकांश वेब Cloudflare के सर्वर से होकर गुजरता है।",
+        "nl": "QwkSpd zal waarschijnlijk andere snelheden geven dan andere tests zoals Speedtest of Fast. Dit komt omdat QwkSpd Cloudflare's servers gebruikt in plaats van toegewijde snelheidstest servers. Hoewel die andere tests nauwkeuriger zijn qua snelheid, zal deze test nauwkeuriger zijn voor werkelijk gebruik, omdat het grootste deel van het web door Cloudflare's servers gaat."
+    },
+    "distance.explanation": {
+        "eng": "Also, see the distance of your nearest Cloudflare server below, as that can affect your speed.",
+        "hi": "इसके अलावा, नीचे अपने निकटतम Cloudflare सर्वर की दूरी देखें, क्योंकि यह आपकी स्पीड को प्रभावित कर सकता है।",
+        "nl": "Zie ook de afstand tot uw dichtstbijzijnde Cloudflare-server hieronder, omdat dit uw snelheid kan beïnvloeden."
+    },
+    "about.this.project": {
+        "eng": "About This Project",
+        "hi": "इस प्रोजेक्ट के बारे में",
+        "nl": "Over dit project"
+    },
+    "project.description": {
+        "eng": "QwkSpd is my attempt at a speedtest that's fast, accurate to everyday use, and provides information you can actually use.",
+        "hi": "QwkSpd एक स्पीडटेस्ट बनाने की मेरी कोशिश है जो तेज़, रोजमर्रा के उपयोग के लिए सटीक है, और ऐसी जानकारी प्रदान करता है जिसका आप वास्तव में उपयोग कर सकते हैं।",
+        "nl": "QwkSpd is mijn poging om een snelheidstest te maken die snel is, nauwkeurig voor dagelijks gebruik, en informatie biedt die je daadwerkelijk kunt gebruiken."
+    },
+    "contact.info": {
+        "eng": "If you have any issues feel free to contact me on Slack at @Barxilly or email me at",
+        "hi": "यदि आपको कोई समस्या है तो बेझिझक मुझसे Slack पर @Barxilly पर संपर्क करें या मुझे ईमेल करें",
+        "nl": "Als je problemen hebt, neem dan gerust contact met me op via Slack op @Barxilly of stuur me een e-mail op"
+    },
+    "credits.acknowledgments": {
+        "eng": "Credits & Acknowledgments",
+        "hi": "श्रेय और स्वीकृतियां",
+        "nl": "Credits en erkenningen"
+    },
+    "powered.by.cloudflare": {
+        "eng": "Powered by Cloudflare",
+        "hi": "Cloudflare द्वारा संचालित",
+        "nl": "Mogelijk gemaakt door Cloudflare"
+    },
+    "cloudflare.description": {
+        "eng": "Speed testing infrastructure provided by Cloudflare's global network, ensuring accurate and reliable measurements from servers closest to you.",
+        "hi": "Cloudflare के वैश्विक नेटवर्क द्वारा प्रदान की गई स्पीड टेस्टिंग इंफ्रास्ट्रक्चर, आपके निकटतम सर्वर से सटीक और विश्वसनीय माप सुनिश्चित करती है।",
+        "nl": "Snelheidstestinfrastructuur geleverd door Cloudflare's wereldwijde netwerk, wat nauwkeurige en betrouwbare metingen garandeert van servers die het dichtst bij je zijn."
+    },
+    "made.with.love": {
+        "eng": "Made with",
+        "hi": "के साथ बनाया गया",
+        "nl": "Gemaakt met"
+    },
+    "by.benjs": {
+        "eng": "by Ben J.S.",
+        "hi": "Ben J.S. द्वारा",
+        "nl": "door Ben J.S."
+    },
+    "version": {
+        "eng": "Version",
+        "hi": "संस्करण",
+        "nl": "Versie"
+    },
+    "built.in.2025": {
+        "eng": "c.2025",
+        "hi": "c.2025",
+        "nl": "c.2025"
+    },
+    "open.source": {
+        "eng": "Open Source",
+        "hi": "ओपन सोर्स",
+        "nl": "Open Source"
+    },
+    "install": {
+        "eng": "Install",
+        "hi": "इंस्टॉल करें",
+        "nl": "Installeren"
+    },
+    "join.google.play.beta": {
+        "eng": "Join Google Play beta:",
+        "hi": "Google Play बीटा में शामिल हों:",
+        "nl": "Doe mee aan Google Play bèta:"
+    },
+    "join.google.groups": {
+        "eng": "Join the Google Groups",
+        "hi": "Google Groups में शामिल हों",
+        "nl": "Sluit je aan bij de Google Groups"
+    },
+    "become.a.tester": {
+        "eng": "Become A Tester",
+        "hi": "एक टेस्टर बनें",
+        "nl": "Word een tester"
+    },
+    "install.as.pwa": {
+        "eng": "Install as PWA or download APK:",
+        "hi": "PWA के रूप में इंस्टॉल करें या APK डाउनलोड करें:",
+        "nl": "Installeer als PWA of download APK:"
+    },
+    "only.android": {
+        "eng": "Only available on Android for now.",
+        "hi": "फिलहाल केवल Android पर उपलब्ध है।",
+        "nl": "Momenteel alleen beschikbaar op Android."
+    },
+    "apps.available": {
+        "eng": "The app is now available for free download on the Play Store! Plus, you can join the Google Play beta program to get early access to new features.",
+        "hi": "ऐप अब Play Store पर मुफ्त डाउनलोड के लिए उपलब्ध है! इसके अलावा, आप नई सुविधाओं तक जल्दी पहुंच पाने के लिए Google Play बीटा प्रोग्राम में शामिल हो सकते हैं।",
+        "nl": "De app is nu gratis beschikbaar voor download in de Play Store! Bovendien kun je deelnemen aan het Google Play bètaprogramma om vroege toegang te krijgen tot nieuwe functies."
+    },
+    "debug.menu": {
+        "eng": "🐛 Debug Menu",
+        "hi": "🐛 डिबग मेन्यू",
+        "nl": "🐛 Debug Menu"
+    },
+    "manually.set.values": {
+        "eng": "Manually set speed test values (Cmd+G to toggle)",
+        "hi": "स्पीड टेस्ट वैल्यू मैन्युअल रूप से सेट करें (टॉगल करने के लिए Cmd+G)",
+        "nl": "Snelheidstestwaarden handmatig instellen (Cmd+G om te schakelen)"
+    },
+    "download.speed.bps": {
+        "eng": "Download Speed (bps)",
+        "hi": "डाउनलोड स्पीड (bps)",
+        "nl": "Downloadsnelheid (bps)"
+    },
+    "upload.speed.bps": {
+        "eng": "Upload Speed (bps)",
+        "hi": "अपलोड स्पीड (bps)",
+        "nl": "Uploadsnelheid (bps)"
+    },
+    "ping.ms": {
+        "eng": "Ping (ms)",
+        "hi": "पिंग (ms)",
+        "nl": "Ping (ms)"
+    },
+    "jitter.ms": {
+        "eng": "Jitter (ms)",
+        "hi": "जिटर (ms)",
+        "nl": "Jitter (ms)"
+    },
+    "stop.testing.animation": {
+        "eng": "Stop Testing Animation",
+        "hi": "टेस्टिंग एनीमेशन रोकें",
+        "nl": "Stop testanimatie"
+    },
+    "start.testing.animation": {
+        "eng": "Start Testing Animation",
+        "hi": "टेस्टिंग एनीमेशन शुरू करें",
+        "nl": "Start testanimatie"
+    },
+    "reset.all.values": {
+        "eng": "Reset All Values",
+        "hi": "सभी वैल्यू रीसेट करें",
+        "nl": "Alle waarden resetten"
+    },
+    "4k.movie": {
+        "eng": "4K Movie (25 GB)",
+        "hi": "4K मूवी (25 GB)",
+        "nl": "4K-film (25 GB)"
+    },
+    "hd.movie": {
+        "eng": "HD Movie (8 GB)",
+        "hi": "HD मूवी (8 GB)",
+        "nl": "HD-film (8 GB)"
+    },
+    "music.album": {
+        "eng": "Music Album (100 MB)",
+        "hi": "म्यूजिक एल्बम (100 MB)",
+        "nl": "Muziekalbum (100 MB)"
+    },
+    "high.res.photo": {
+        "eng": "High-res Photo (10 MB)",
+        "hi": "हाई-रेस फोटो (10 MB)",
+        "nl": "Hoge resolutie foto (10 MB)"
+    },
+    "document": {
+        "eng": "Document (1 MB)",
+        "hi": "डॉक्यूमेंट (1 MB)",
+        "nl": "Document (1 MB)"
+    },
+    "gaming.ping.explanation": {
+        "eng": "Lower ping means less delay in your inputs being registered in-game",
+        "hi": "कम पिंग का मतलब है कि गेम में आपके इनपुट रजिस्टर होने में कम देरी",
+        "nl": "Lagere ping betekent minder vertraging bij het registreren van je invoer in de game"
+    },
+    "social.media": {
+        "eng": "Social Media",
+        "hi": "सोशल मीडिया",
+        "nl": "Sociale media"
+    },
+    "video.calling": {
+        "eng": "Video Calling",
+        "hi": "वीडियो कॉलिंग",
+        "nl": "Videobellen"
+    },
+    "live.streaming": {
+        "eng": "Live Streaming",
+        "hi": "लाइव स्ट्रीमिंग",
+        "nl": "Live streaming"
+    },
+    "file.sharing": {
+        "eng": "File Sharing",
+        "hi": "फाइल शेयरिंग",
+        "nl": "Bestanden delen"
+    },
+    "video.chat": {
+        "eng": "Video Chat",
+        "hi": "वीडियो चैट",
+        "nl": "Videochat"
+    },
+    "streaming.1080p": {
+        "eng": "1080p Streaming",
+        "hi": "1080p स्ट्रीमिंग",
+        "nl": "1080p Streaming"
+    },
+    "social.media.upload": {
+        "eng": "Social media posts with video",
+        "hi": "वीडियो के साथ सोशल मीडिया पोस्ट",
+        "nl": "Sociale media posts met video"
+    },
+    "video.calling.desc": {
+        "eng": "HD video calls (Zoom, Teams)",
+        "hi": "HD वीडियो कॉल (Zoom, Teams)",
+        "nl": "HD-videogesprekken (Zoom, Teams)"
+    },
+    "live.streaming.desc": {
+        "eng": "Streaming to Twitch/YouTube",
+        "hi": "Twitch/YouTube पर स्ट्रीमिंग",
+        "nl": "Streamen naar Twitch/YouTube"
+    },
+    "file.sharing.desc": {
+        "eng": "Large file uploads",
+        "hi": "बड़ी फाइल अपलोड",
+        "nl": "Grote bestanden uploaden"
+    },
+    "competitive.fps": {
+        "eng": "Competitive FPS",
+        "hi": "प्रतिस्पर्धी FPS",
+        "nl": "Competitieve FPS"
+    },
+    "moba.games": {
+        "eng": "MOBA Games",
+        "hi": "MOBA गेम्स",
+        "nl": "MOBA-games"
+    },
+    "casual.gaming": {
+        "eng": "Casual Gaming",
+        "hi": "कैजुअल गेमिंग",
+        "nl": "Casual gaming"
+    },
+    "mmo.games": {
+        "eng": "MMO Games",
+        "hi": "MMO गेम्स",
+        "nl": "MMO-games"
+    },
+    "competitive.fps.desc": {
+        "eng": "CS2, Valorant, Apex",
+        "hi": "CS2, Valorant, Apex",
+        "nl": "CS2, Valorant, Apex"
+    },
+    "moba.games.desc": {
+        "eng": "League of Legends, Dota 2",
+        "hi": "League of Legends, Dota 2",
+        "nl": "League of Legends, Dota 2"
+    },
+    "casual.gaming.desc": {
+        "eng": "Minecraft, Among Us",
+        "hi": "Minecraft, Among Us",
+        "nl": "Minecraft, Among Us"
+    },
+    "mmo.games.desc": {
+        "eng": "WoW, Final Fantasy XIV",
+        "hi": "WoW, Final Fantasy XIV",
+        "nl": "WoW, Final Fantasy XIV"
+    },
+    "4k.ultra.hd": {
+        "eng": "4K Ultra HD",
+        "hi": "4K अल्ट्रा HD",
+        "nl": "4K Ultra HD"
+    },
+    "4k.hdr": {
+        "eng": "4K HDR",
+        "hi": "4K HDR",
+        "nl": "4K HDR"
+    },
+    "1080p.hd": {
+        "eng": "1080p HD",
+        "hi": "1080p HD",
+        "nl": "1080p HD"
+    },
+    "720p.hd": {
+        "eng": "720p HD",
+        "hi": "720p HD",
+        "nl": "720p HD"
+    },
+    "480p.sd": {
+        "eng": "480p SD",
+        "hi": "480p SD",
+        "nl": "480p SD"
+    },
+    "netflix.prime.desc": {
+        "eng": "Netflix, Prime Video",
+        "hi": "Netflix, Prime Video",
+        "nl": "Netflix, Prime Video"
+    },
+    "youtube.4k.desc": {
+        "eng": "YouTube 4K videos",
+        "hi": "YouTube 4K वीडियो",
+        "nl": "YouTube 4K-video's"
+    },
+    "standard.hd.desc": {
+        "eng": "Standard HD streaming",
+        "hi": "स्टैंडर्ड HD स्ट्रीमिंग",
+        "nl": "Standaard HD-streaming"
+    },
+    "basic.streaming.desc": {
+        "eng": "Basic quality streaming",
+        "hi": "बेसिक क्वालिटी स्ट्रीमिंग",
+        "nl": "Basis kwaliteit streaming"
+    },
+    "low.quality.desc": {
+        "eng": "Low quality/mobile",
+        "hi": "कम गुणवत्ता/मोबाइल",
+        "nl": "Lage kwaliteit/mobiel"
+    },
+    "youtube.tiktok.reels.desc": {
+        "eng": "YouTube, TikTok, Instagram Reels",
+        "hi": "YouTube, TikTok, Instagram Reels",
+        "nl": "YouTube, TikTok, Instagram Reels"
+    },
+    "social.media.videos.desc": {
+        "eng": "Social media videos",
+        "hi": "सोशल मीडिया वीडियो",
+        "nl": "Sociale media video's"
+    },
+    "instagram.pinterest.desc": {
+        "eng": "Instagram, Pinterest feeds",
+        "hi": "Instagram, Pinterest फीड्स",
+        "nl": "Instagram, Pinterest feeds"
+    },
+    "twitter.facebook.reddit.desc": {
+        "eng": "Twitter, Facebook, Reddit",
+        "hi": "Twitter, Facebook, Reddit",
+        "nl": "Twitter, Facebook, Reddit"
+    },
+    "general.internet.desc": {
+        "eng": "General internet use",
+        "hi": "सामान्य इंटरनेट उपयोग",
+        "nl": "Algemeen internetgebruik"
+    },
+    "youtube.tiktok.creation.desc": {
+        "eng": "YouTube, TikTok content creation",
+        "hi": "YouTube, TikTok कंटेंट क्रिएशन",
+        "nl": "YouTube, TikTok content creatie"
+    },
+    "instagram.facebook.videos.desc": {
+        "eng": "Instagram, Facebook videos",
+        "hi": "Instagram, Facebook वीडियो",
+        "nl": "Instagram, Facebook video's"
+    },
+    "zoom.teams.discord.desc": {
+        "eng": "Zoom, Teams, Discord",
+        "hi": "Zoom, Teams, Discord",
+        "nl": "Zoom, Teams, Discord"
+    },
+    "instagram.cloud.backup.desc": {
+        "eng": "Instagram posts, cloud backup",
+        "hi": "Instagram पोस्ट, क्लाउड बैकअप",
+        "nl": "Instagram posts, cloud backup"
+    },
+    "twitch.youtube.live.desc": {
+        "eng": "Twitch, YouTube Live",
+        "hi": "Twitch, YouTube Live",
+        "nl": "Twitch, YouTube Live"
+    },
+    "download.placeholder": {
+        "eng": "e.g., 100000000 (100 Mbps)",
+        "hi": "उदा., 100000000 (100 Mbps)",
+        "nl": "bijv., 100000000 (100 Mbps)"
+    },
+    "upload.placeholder": {
+        "eng": "e.g., 50000000 (50 Mbps)",
+        "hi": "उदा., 50000000 (50 Mbps)",
+        "nl": "bijv., 50000000 (50 Mbps)"
+    },
+    "ping.placeholder": {
+        "eng": "e.g., 15",
+        "hi": "उदा., 15",
+        "nl": "bijv., 15"
+    },
+    "jitter.placeholder": {
+        "eng": "e.g., 2",
+        "hi": "उदा., 2",
+        "nl": "bijv., 2"
+    },
+    "upload.suffix": {
+        "eng": "upload",
+        "hi": "अपलोड",
+        "nl": "upload"
+    },
+    "social.media.browsing": {
+        "eng": "Social Media Browsing",
+        "hi": "सोशल मीडिया ब्राउज़िंग",
+        "nl": "Sociale media browsen"
+    },
+    "content.creation.upload": {
+        "eng": "Content Creation & Upload",
+        "hi": "कंटेंट निर्माण और अपलोड",
+        "nl": "Content creatie en upload"
+    },
+    "upload.speed.dependency": {
+        "eng": "These activities primarily depend on your upload speed",
+        "hi": "ये गतिविधियां मुख्यतः आपकी अपलोड स्पीड पर निर्भर करती हैं",
+        "nl": "Deze activiteiten zijn hoofdzakelijk afhankelijk van uw uploadsnelheid"
+    },
+    "download.speed.dependency": {
+        "eng": "These activities primarily depend on your download speed",
+        "hi": "ये गतिविधियां मुख्यतः आपकी डाउनलोड स्पीड पर निर्भर करती हैं",
+        "nl": "Deze activiteiten zijn hoofdzakelijk afhankelijk van uw downloadsnelheid"
+    },
+    "4k.video.upload": {
+        "eng": "4K Video Upload",
+        "hi": "4K वीडियो अपलोड",
+        "nl": "4K-video upload"
+    },
+    "1080p.video.upload": {
+        "eng": "1080p Video Upload",
+        "hi": "1080p वीडियो अपलोड",
+        "nl": "1080p-video upload"
+    },
+    "hd.video.calls": {
+        "eng": "HD Video Calls",
+        "hi": "HD वीडियो कॉल",
+        "nl": "HD-videogesprekken"
+    },
+    "photo.upload": {
+        "eng": "Photo Upload",
+        "hi": "फोटो अपलोड",
+        "nl": "Foto upload"
+    },
+    "open.source.description": {
+        "eng": "This project is open source, and made using other open",
+        "hi": "यह प्रोजेक्ट ओपन सोर्स है और अन्य ओपन",
+        "nl": "Dit project is open source en gemaakt met andere open"
+    },
+    "source.libraries.tech": {
+        "eng": "source libraries and technologies.",
+        "hi": "सोर्स लाइब्रेरीज़ और टेक्नोलॉजीज़ का उपयोग करके बनाया गया है।",
+        "nl": "source bibliotheken en technologieën."
+    },
+    "4k.video.streaming": {
+        "eng": "4K Video Streaming",
+        "hi": "4K वीडियो स्ट्रीमिंग",
+        "nl": "4K-videostreaming"
+    },
+    "1080p.video.streaming": {
+        "eng": "1080p Video Streaming", 
+        "hi": "1080p वीडियो स्ट्रीमिंग",
+        "nl": "1080p-videostreaming"
+    },
+    "by": {
+        "eng": "By",
+        "hi": "द्वारा",
+        "nl": "Door"
+    },
+    "advanced.statistics": {
+        "eng": "Advanced Statistics",
+        "hi": "उन्नत सांख्यिकी",
+        "nl": "Geavanceerde statistieken"
+    },
+    "detailed.insights": {
+        "eng": "Detailed insights into your network performance",
+        "hi": "आपके नेटवर्क प्रदर्शन की विस्तृत जानकारी",
+        "nl": "Gedetailleerde inzichten in uw netwerkprestaties"
+    },
+    "join.the": {
+        "eng": "Join the",
+        "hi": "में शामिल हों",
+        "nl": "Sluit je aan bij de"
+    },
+    "support.app.development": {
+        "eng": "Support the app's development by buying me a coffee!",
+        "hi": "मुझे एक कॉफी खरीदकर ऐप के विकास का समर्थन करें!",
+        "nl": "Ondersteun de ontwikkeling van de app door me een koffie te kopen!"
+    }
+}

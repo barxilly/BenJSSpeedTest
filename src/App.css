@@ -9,7 +9,7 @@ body {
 }
 
 .shrinkaway {
-  animation: becomewhitecircle 0.5s forwards;
+  animation: becomewhitecircle 0.3s forwards;
 }
 
 .growappear {
@@ -21,10 +21,8 @@ body {
 
 @keyframes shrinkaway {
   0% {
-    width: 100%;
   }
   100% {
-    width: 0;
     opacity: 0;
   }
 }
