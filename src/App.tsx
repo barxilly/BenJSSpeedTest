@@ -235,7 +235,7 @@ function App() {
   const [themeRefresh, setThemeRefresh] = useState(0);
   const [customSize, setCustomSize] = useState(0);
 
-  console.log(canInstallPWA)
+  console.log(canInstallPWA);
 
   // Handle back button for closing popups
   const handleBackButton = useCallback(() => {
@@ -276,7 +276,6 @@ function App() {
 
     return () => clearInterval(themeUpdateInterval);
   }, []);
-
 
   useEffect(() => {
     return () => {
@@ -371,14 +370,19 @@ function App() {
     fetchData();
   }, [userLocation]);
   function isSmolPhone() {
-    return (isPhone() && window.innerWidth < 520 && window.innerHeight < 800) || (window.innerWidth < 520&& window.innerHeight < 800);
+    return (
+      (isPhone() && window.innerWidth < 520 && window.innerHeight < 800) ||
+      (window.innerWidth < 520 && window.innerHeight < 800)
+    );
   }
 
   function isPhone() {
     return (
       /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(
         navigator.userAgent
-      ) || isRunningInCapacitor() || window.innerWidth < 768
+      ) ||
+      isRunningInCapacitor() ||
+      window.innerWidth < 768
     );
   }
   console.log(previousValues);
@@ -447,7 +451,11 @@ function App() {
                       background: ${
                         isDarkMode() ? "#683747ff" : "#fbf8f5ff"
                       } !important;
-                      ${isDarkMode() ? "border: 2px solid rgba(255, 255, 255, 0.24);" : ""}
+                      ${
+                        isDarkMode()
+                          ? "border: 2px solid rgba(255, 255, 255, 0.24);"
+                          : ""
+                      }
 }
 
 @keyframes becomewhitesquircle {
@@ -490,7 +498,7 @@ a {
           <Stack
             style={{
               height: isSmolPhone() ? "85vh" : isPhone() ? "67.5vh" : "65vh",
-              userSelect:"none"
+              userSelect: "none",
             }}
           >
             <Title
@@ -549,10 +557,12 @@ a {
                       position: "relative",
                       userSelect: "none",
                       justifySelf: "center",
-                     boxShadow: isDarkMode()
-                      ? "0 2px 4px rgba(0, 0, 0, 0.1), 0px 5px 10px -5px rgba(255,255,255,0.24) inset"
-                      : "0 2px 4px rgba(0, 0, 0, 0.1), 0px 20px 10px -5px rgba(255,255,255,1) inset",
-border: isDarkMode() ? "2px solid rgba(255, 255, 255, 0.24)" : undefined,
+                      boxShadow: isDarkMode()
+                        ? "0 2px 4px rgba(0, 0, 0, 0.1), 0px 5px 10px -5px rgba(255,255,255,0.24) inset"
+                        : "0 2px 4px rgba(0, 0, 0, 0.1), 0px 20px 10px -5px rgba(255,255,255,1) inset",
+                      border: isDarkMode()
+                        ? "2px solid rgba(255, 255, 255, 0.24)"
+                        : undefined,
                       background: isDarkMode() ? "#683747ff" : "#fbf8f5ff",
                       animation: isTesting ? "borderpulse 3s infinite" : "",
                       cursor: speed > 0 && !isTesting ? "pointer" : "default",
@@ -749,7 +759,9 @@ border: isDarkMode() ? "2px solid rgba(255, 255, 255, 0.24)" : undefined,
                       : "0 2px 4px rgba(0, 0, 0, 0.1), 0px 20px 10px -5px rgba(255,255,255,1) inset",
                     background: isDarkMode() ? "#683747ff" : "#fbf8f5ff",
                     animation: isTesting ? "borderpulse 3s infinite" : "",
-                    border: isDarkMode() ? "2px solid rgba(255, 255, 255, 0.24)" : undefined,
+                    border: isDarkMode()
+                      ? "2px solid rgba(255, 255, 255, 0.24)"
+                      : undefined,
                   }}
                   radius="xl"
                 >
@@ -1041,163 +1053,170 @@ border: isDarkMode() ? "2px solid rgba(255, 255, 255, 0.24)" : undefined,
                     mode: "no-cors",
                   })
                     .then(async () => {
-                    
-                  if (isTesting) return;
-                  (
-                    document.getElementById("test-button") as HTMLElement
-                  )?.classList?.add("shrinkaway");
-                  setSpeed(0);
-                  setUnchangedCount(0);
-                  setPreviousValues({ down: 0, up: 0, ping: 0 });
-                  setInts(0);
-                  // If URL has ?server=fast than use Fast.com instead
-                  if (window.location.search.includes("?server=fast")) {
-                    const fastTest = new FastSpeedTest();
-                    setIsTesting(true);
-                    try {
-                      const testResult = await fastTest.runTest();
-                      console.log("Fast.com test result:", testResult);
-                      setDown(testResult.download);
-                      setUp(testResult.upload);
-                      setPing(testResult.latency);
-                      setJitter(testResult.jitter);
-                      setSpeed(
-                        Math.round((testResult.download / 1000000) * 1000) /
-                          1000
-                      );
-                    } catch (error) {
-                      console.error("Fast.com test failed:", error);
-                    } finally {
-                      setIsTesting(false);
-                    }
-                  } else {
-                    const banana = new SpeedTest();
-                    banana.onFinish = (results) =>
-                      console.log(
-                        (results.getSummary().download as number) / 1000000
-                      );
-                    banana.onRunningChange = (running) => {
-                      console.log(`Running: ${running}`);
-                      setIsTesting(running);
-                      if (!running) {
-                        console.log("Test ended, clearing interval");
-                        if (intervalId) {
-                          clearInterval(intervalId);
-                          setIntervalId(null);
-                        }
-                      }
-                    };
-                    setIsTesting(await banana.isRunning);
-                    let hasTriggeredDisplay = false;
-                    const id = setInterval(() => {
-                      const newDown = banana.results.getSummary()
-                        .download as number;
-                      const newUp = banana.results.getSummary()
-                        .upload as number;
-                      const newPing = banana.results.getSummary()
-                        .latency as number;
-                      const newJitter =
-                        (banana.results.getSummary().jitter as number) || 0;
-                      const newSpeedMbps =
-                        Math.round((newDown / 1000000) * 1000) / 1000;
-
-                      // Update state values
-                      setDown(newDown);
-                      setUp(newUp);
-                      setPing(newPing);
-                      setSpeed(newSpeedMbps);
-                      setJitter(newJitter);
-
-                      // Trigger display animation once when we have meaningful data
-                      if (
-                        !hasTriggeredDisplay &&
-                        !nobutt &&
-                        !secTest &&
-                        newSpeedMbps > 0
-                      ) {
-                        (
-                          document.getElementById(
-                            "speed-display"
-                          ) as HTMLElement
-                        )?.classList?.add("growappear");
-                        hasTriggeredDisplay = true;
-                      }
-
-                      // Set button state when we have data
-                      if (newSpeedMbps > 0) {
-                        setNobutt(true);
-                      }
-
-                      document.getElementById("htmlTitle")!.innerHTML = `QwkSpd - ${frmbts(newDown,true)}`;
-
-                      setInts((ints) => {
-                        let newInts = ints + 1;
-                        console.log(`Interval ${newInts}`);
-                        // Test completion: reached max intervals with upload data
-                        if (newInts >= 205 && newUp > 0) {
-                          // Reduced from 150 for faster completion
-                          console.log(
-                            "Reached max intervals with upload data, stopping test"
+                      if (isTesting) return;
+                      (
+                        document.getElementById("test-button") as HTMLElement
+                      )?.classList?.add("shrinkaway");
+                      setSpeed(0);
+                      setUnchangedCount(0);
+                      setPreviousValues({ down: 0, up: 0, ping: 0 });
+                      setInts(0);
+                      // If URL has ?server=fast than use Fast.com instead
+                      if (window.location.search.includes("?server=fast")) {
+                        const fastTest = new FastSpeedTest();
+                        setIsTesting(true);
+                        try {
+                          const testResult = await fastTest.runTest();
+                          console.log("Fast.com test result:", testResult);
+                          setDown(testResult.download);
+                          setUp(testResult.upload);
+                          setPing(testResult.latency);
+                          setJitter(testResult.jitter);
+                          setSpeed(
+                            Math.round((testResult.download / 1000000) * 1000) /
+                              1000
                           );
+                        } catch (error) {
+                          console.error("Fast.com test failed:", error);
+                        } finally {
                           setIsTesting(false);
-                          clearInterval(id);
-                          setIntervalId(null);
                         }
-                        // Don't reset counter - keep counting total intervals
-                        return newInts;
-                      });
+                      } else {
+                        const banana = new SpeedTest();
+                        banana.onFinish = (results) =>
+                          console.log(
+                            (results.getSummary().download as number) / 1000000
+                          );
+                        banana.onRunningChange = (running) => {
+                          console.log(`Running: ${running}`);
+                          setIsTesting(running);
+                          if (!running) {
+                            console.log("Test ended, clearing interval");
+                            if (intervalId) {
+                              clearInterval(intervalId);
+                              setIntervalId(null);
+                            }
+                          }
+                        };
+                        setIsTesting(await banana.isRunning);
+                        let hasTriggeredDisplay = false;
+                        const id = setInterval(() => {
+                          const newDown = banana.results.getSummary()
+                            .download as number;
+                          const newUp = banana.results.getSummary()
+                            .upload as number;
+                          const newPing = banana.results.getSummary()
+                            .latency as number;
+                          const newJitter =
+                            (banana.results.getSummary().jitter as number) || 0;
+                          const newSpeedMbps =
+                            Math.round((newDown / 1000000) * 1000) / 1000;
 
-                      setPreviousValues((prev) => {
-                        // Use tolerance for floating point comparison
-                        const tolerance = 0.0000001; // 1% tolerance for speed changes
-                        const downUnchanged =
-                          Math.abs(prev.down - newDown) < prev.down * tolerance;
-                        const upUnchanged =
-                          Math.abs(prev.up - newUp) < prev.up * tolerance;
-                        const pingUnchanged = Math.abs(prev.ping - newPing) < 1; // 1ms tolerance
+                          // Update state values
+                          setDown(newDown);
+                          setUp(newUp);
+                          setPing(newPing);
+                          setSpeed(newSpeedMbps);
+                          setJitter(newJitter);
 
-                        if (
-                          downUnchanged &&
-                          upUnchanged &&
-                          pingUnchanged &&
-                          newDown > 0 &&
-                          newUp > 0 &&
-                          newPing > 0
-                        ) {
-                          setUnchangedCount((count) => {
-                            const newCount = count + 1;
-                            console.log(`Unchanged count: ${newCount}/75`); // Reduced threshold
-                            if (newCount >= 75) {
-                              // 800 intervals = 10 seconds of stable results
+                          // Trigger display animation once when we have meaningful data
+                          if (
+                            !hasTriggeredDisplay &&
+                            !nobutt &&
+                            !secTest &&
+                            newSpeedMbps > 0
+                          ) {
+                            (
+                              document.getElementById(
+                                "speed-display"
+                              ) as HTMLElement
+                            )?.classList?.add("growappear");
+                            hasTriggeredDisplay = true;
+                          }
+
+                          // Set button state when we have data
+                          if (newSpeedMbps > 0) {
+                            setNobutt(true);
+                          }
+
+                          document.getElementById(
+                            "htmlTitle"
+                          )!.innerHTML = `QwkSpd - ${frmbts(newDown, true)}`;
+
+                          setInts((ints) => {
+                            let newInts = ints + 1;
+                            console.log(`Interval ${newInts}`);
+                            // Test completion: reached max intervals with upload data
+                            if (newInts >= 205 && newUp > 0) {
+                              // Reduced from 150 for faster completion
                               console.log(
-                                "Test completed - values stable for 10 seconds"
+                                "Reached max intervals with upload data, stopping test"
                               );
                               setIsTesting(false);
                               clearInterval(id);
                               setIntervalId(null);
                             }
-                            return newCount;
+                            // Don't reset counter - keep counting total intervals
+                            return newInts;
                           });
-                        } else {
-                          setUnchangedCount(0);
-                          console.log(
-                            "Values changed significantly, resetting stability counter"
-                          );
-                        }
-                        return { down: newDown, up: newUp, ping: newPing };
-                      });
-                      console.log(banana.results.getSummary());
-                      console.log(banana.results);
-                    }, 250); // Increased frequency for better responsiveness
-                    setIntervalId(id);}
-                  })
-                  .catch((error) => {
-                    (e.target as HTMLElement).innerHTML = `<svg viewBox="-3 -3 39 39" fill="${isDarkMode() ? "#fff" : "#333"}" aria-hidden="true">
+
+                          setPreviousValues((prev) => {
+                            // Use tolerance for floating point comparison
+                            const tolerance = 0.0000001; // 1% tolerance for speed changes
+                            const downUnchanged =
+                              Math.abs(prev.down - newDown) <
+                              prev.down * tolerance;
+                            const upUnchanged =
+                              Math.abs(prev.up - newUp) < prev.up * tolerance;
+                            const pingUnchanged =
+                              Math.abs(prev.ping - newPing) < 1; // 1ms tolerance
+
+                            if (
+                              downUnchanged &&
+                              upUnchanged &&
+                              pingUnchanged &&
+                              newDown > 0 &&
+                              newUp > 0 &&
+                              newPing > 0
+                            ) {
+                              setUnchangedCount((count) => {
+                                const newCount = count + 1;
+                                console.log(`Unchanged count: ${newCount}/75`); // Reduced threshold
+                                if (newCount >= 75) {
+                                  // 800 intervals = 10 seconds of stable results
+                                  console.log(
+                                    "Test completed - values stable for 10 seconds"
+                                  );
+                                  setIsTesting(false);
+                                  clearInterval(id);
+                                  setIntervalId(null);
+                                }
+                                return newCount;
+                              });
+                            } else {
+                              setUnchangedCount(0);
+                              console.log(
+                                "Values changed significantly, resetting stability counter"
+                              );
+                            }
+                            return { down: newDown, up: newUp, ping: newPing };
+                          });
+                          console.log(banana.results.getSummary());
+                          console.log(banana.results);
+                        }, 250); // Increased frequency for better responsiveness
+                        setIntervalId(id);
+                      }
+                    })
+                    .catch((error) => {
+                      (
+                        e.target as HTMLElement
+                      ).innerHTML = `<svg viewBox="-3 -3 39 39" fill="${
+                        isDarkMode() ? "#fff" : "#333"
+                      }" aria-hidden="true">
   <path fill-rule="evenodd" clip-rule="evenodd" d="M2.47 2.47a.75.75 0 0 1 1.06 0l8.407 8.407a1.125 1.125 0 0 1 1.186 1.186l1.462 1.461a3.001 3.001 0 0 0-.464-3.645.75.75 0 1 1 1.061-1.061 4.501 4.501 0 0 1 .486 5.79l1.072 1.072a6.001 6.001 0 0 0-.497-7.923.75.75 0 0 1 1.06-1.06 7.501 7.501 0 0 1 .505 10.05l1.064 1.065a9 9 0 0 0-.508-12.176.75.75 0 0 1 1.06-1.06c3.923 3.922 4.093 10.175.512 14.3l1.594 1.594a.75.75 0 1 1-1.06 1.06l-2.106-2.105-2.121-2.122h-.001l-4.705-4.706a.747.747 0 0 1-.127-.126L2.47 3.53a.75.75 0 0 1 0-1.061Zm1.189 4.422a.75.75 0 0 1 .326 1.01 9.004 9.004 0 0 0 1.651 10.462.75.75 0 1 1-1.06 1.06C1.27 16.12.63 11.165 2.648 7.219a.75.75 0 0 1 1.01-.326ZM5.84 9.134a.75.75 0 0 1 .472.95 6 6 0 0 0 1.444 6.159.75.75 0 0 1-1.06 1.06A7.5 7.5 0 0 1 4.89 9.606a.75.75 0 0 1 .95-.472Zm2.341 2.653a.75.75 0 0 1 .848.638c.088.62.37 1.218.849 1.696a.75.75 0 0 1-1.061 1.061 4.483 4.483 0 0 1-1.273-2.546.75.75 0 0 1 .637-.848Z"/>
 </svg> Retry`;
-console.log(error)
-                  });
-                
+                      console.log(error);
+                    });
                 }}
                 style={{
                   display: speed > 0 ? "none" : "block",
@@ -1235,7 +1254,11 @@ console.log(error)
             top: "5%",
             left: "5%",
             width: "90vw",
-            height: isPhone()?"85vh":"90vh",
+            height: isPhone()
+              ? isRunningInCapacitor()
+                ? "90vh"
+                : "85vh"
+              : "90vh",
             overflowY: "auto",
             display: showAdv ? "block" : "none",
             backgroundColor: isDarkMode() ? "#403437ff" : "white",
@@ -1281,7 +1304,10 @@ console.log(error)
                     ? "1px solid #421017ff"
                     : "1px solid #e9ecef",
                 }}
-                onClick={() => {setShowAdv(false); setShowUses(true);}}
+                onClick={() => {
+                  setShowAdv(false);
+                  setShowUses(true);
+                }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = isDarkMode()
                     ? "#5f383dff"
@@ -1609,7 +1635,11 @@ console.log(error)
             top: "5%",
             left: "5%",
             width: "90vw",
-            height: isPhone()?"85vh":"90vh",
+            height: isPhone()
+              ? isRunningInCapacitor()
+                ? "90vh"
+                : "85vh"
+              : "90vh",
             overflowY: "auto",
             display: showUses ? "block" : "none",
             backgroundColor: isDarkMode() ? "#403437ff" : "white",
@@ -1727,55 +1757,74 @@ console.log(error)
                       {strings["game.downloads"][language] || "Game Downloads"}
                     </Title>
                     <Stack gap="lg">
-                       <div
-                              key={0}
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                padding: "1em 0",
-                                borderBottom: "1px solid #f1f3f4",
-                              }}
-                            >
-                              <div>
-                                <TextInput
-                                  size="lg"
-                                  style={{
-                                    color: isDarkMode() ? "white" : "#333",
-                                    fontWeight: 500,
-                                  }}
-                                  variant="unstyled"
-                                  placeholder="Custom (GB)"
-                                  value={customSize > 0 ? customSize + "gb": ""}
-                                  onChange={(e) => {
-                                    const valueStr = e.target.value.replace("gb", "").replace("GB", "");
-                                    const valueNum = Number(valueStr);
-                                    setCustomSize(!isNaN(valueNum) && valueNum < 1000000 ? valueNum : customSize);
-                                  }}
-                                  onKeyDown={(e) => {
-                                    if (e.key === "Backspace") {
-                                      e.preventDefault();
-                                      setCustomSize(0);
-                                    }
-                                  }}
-                               />
-                              </div>
-                              <Text
-                                size="lg"
-                                fw={600}
-                                style={{
-                                  color: isDarkMode() ? "#ccc" : "#333",
-                                }}
-                              >
-                                {down > 0
-                                  ? customSize>0? Math.round((customSize * 8 * 1000000000) / down) < 60
-                                    ? `${Math.round((customSize * 8 * 1000000000) / down)} seconds`
-                                    : Math.round((customSize * 8 * 1000000000) / down / 60) < 60
-                                    ? `${Math.round((customSize * 8 * 1000000000) / down / 60)} minutes`
-                                    : `${Math.round((customSize * 8 * 1000000000) / down / 3600)} hours`
-                                  :"": strings["test.your.speed.first"][language] || "Test your speed first"}
-                              </Text>
-                            </div>
+                      <div
+                        key={0}
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          padding: "1em 0",
+                          borderBottom: "1px solid #f1f3f4",
+                        }}
+                      >
+                        <div>
+                          <TextInput
+                            size="lg"
+                            style={{
+                              color: isDarkMode() ? "white" : "#333",
+                              fontWeight: 500,
+                            }}
+                            variant="unstyled"
+                            placeholder="Custom (GB)"
+                            value={customSize > 0 ? customSize + "gb" : ""}
+                            onChange={(e) => {
+                              const valueStr = e.target.value
+                                .replace("gb", "")
+                                .replace("GB", "");
+                              const valueNum = Number(valueStr);
+                              setCustomSize(
+                                !isNaN(valueNum) && valueNum < 1000000
+                                  ? valueNum
+                                  : customSize
+                              );
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Backspace") {
+                                e.preventDefault();
+                                setCustomSize(0);
+                              }
+                            }}
+                          />
+                        </div>
+                        <Text
+                          size="lg"
+                          fw={600}
+                          style={{
+                            color: isDarkMode() ? "#ccc" : "#333",
+                          }}
+                        >
+                          {down > 0
+                            ? customSize > 0
+                              ? Math.round(
+                                  (customSize * 8 * 1000000000) / down
+                                ) < 60
+                                ? `${Math.round(
+                                    (customSize * 8 * 1000000000) / down
+                                  )} seconds`
+                                : Math.round(
+                                    (customSize * 8 * 1000000000) / down / 60
+                                  ) < 60
+                                ? `${Math.round(
+                                    (customSize * 8 * 1000000000) / down / 60
+                                  )} minutes`
+                                : `${Math.round(
+                                    (customSize * 8 * 1000000000) / down / 3600
+                                  )} hours`
+                              : ""
+                            : strings["test.your.speed.first"][language] ||
+                              "Test your speed first"}
+                        </Text>
+                      </div>
                       {[
                         { name: "Starfield", size: 125 },
                         { name: "Baldur's Gate 3", size: 120 },
@@ -2728,7 +2777,11 @@ console.log(error)
             top: "5%",
             left: "5%",
             width: "90vw",
-            height: isPhone()?"85vh":"90vh",
+            height: isPhone()
+              ? isRunningInCapacitor()
+                ? "90vh"
+                : "85vh"
+              : "90vh",
             overflowY: "auto",
             display: showInfo ? "block" : "none",
             backgroundColor: isDarkMode() ? "#403437ff" : "#f8f9fa",
@@ -3028,8 +3081,8 @@ console.log(error)
                       {strings["built.in.2025"][language] || "Built in 2025"} •{" "}
                       <a href="https://github.com/barxilly/BenJSSpeedTest">
                         {strings["open.source"][language] || "Open Source"}
-                      </a> •{" "}
-                      1.0.8
+                      </a>{" "}
+                      • 1.0.8
                     </Text>
                     <Center style={{ marginTop: "1em" }}>
                       <Menu shadow="md" width={200}>
@@ -3127,7 +3180,7 @@ console.log(error)
                 top: "5%",
                 left: "5%",
                 width: "90vw",
-                height: isPhone()?"85vh":"90vh",
+                height: isPhone() ? "85vh" : "90vh",
                 overflowY: "auto",
                 display: showAppUpsell ? "block" : "none",
                 backgroundColor: isDarkMode() ? "#403437ff" : "#f8f9fa",
@@ -3150,48 +3203,52 @@ console.log(error)
                 }}
               >
                 <div
-              style={{
-                position: "fixed",
-                top: "5%",
-                left: "5%",
-                padding: "0.7em",
-                zIndex: 1000,
-              }}
-            >
-              <div
-                style={{
-                  cursor: "pointer",
-                  backgroundColor: isDarkMode() ? "#403437ff" : "#f8f9fa",
-                  color: isDarkMode() ? "#adb5bd" : "#666",
-                  borderRadius: "50%",
-                  width: "40px",
-                  height: "40px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "1.2em",
-                  transition: "all 0.2s ease",
-                  border: isDarkMode()
-                    ? "1px solid #421017ff"
-                    : "1px solid #e9ecef",
-                }}
-                onClick={() => setShowAppUpsell(false)}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = isDarkMode()
-                    ? "#5f383dff"
-                    : "#e9ecef";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = isDarkMode()
-                    ? "#40292cff"
-                    : "#f8f9fa";
-                }}
-              >
-                <RxCross2 />
-              </div>
-            </div>
+                  style={{
+                    position: "fixed",
+                    top: "5%",
+                    left: "5%",
+                    padding: "0.7em",
+                    zIndex: 1000,
+                  }}
+                >
+                  <div
+                    style={{
+                      cursor: "pointer",
+                      backgroundColor: isDarkMode() ? "#403437ff" : "#f8f9fa",
+                      color: isDarkMode() ? "#adb5bd" : "#666",
+                      borderRadius: "50%",
+                      width: "40px",
+                      height: "40px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "1.2em",
+                      transition: "all 0.2s ease",
+                      border: isDarkMode()
+                        ? "1px solid #421017ff"
+                        : "1px solid #e9ecef",
+                    }}
+                    onClick={() => setShowAppUpsell(false)}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = isDarkMode()
+                        ? "#5f383dff"
+                        : "#e9ecef";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = isDarkMode()
+                        ? "#40292cff"
+                        : "#f8f9fa";
+                    }}
+                  >
+                    <RxCross2 />
+                  </div>
+                </div>
                 <Stack
-                  style={{ padding: isSmolPhone() ? "0em" : "2em",position:"relative",height:"100%" }}
+                  style={{
+                    padding: isSmolPhone() ? "0em" : "2em",
+                    position: "relative",
+                    height: "100%",
+                  }}
                   gap="0"
                 >
                   <Title
@@ -3245,12 +3302,21 @@ console.log(error)
                     </li>
                     <li></li>
                   </ol>
-                  <Space h="0" /><Center>
-                  <Image src="/play.png"style={{
-                    width:"12em"
-                  }}
-                  onClick={() => window.open("https://play.google.com/store/apps/details?id=uk.benjs.speed", "_blank")}
-                  /></Center>
+                  <Space h="0" />
+                  <Center>
+                    <Image
+                      src="/play.png"
+                      style={{
+                        width: "12em",
+                      }}
+                      onClick={() =>
+                        window.open(
+                          "https://play.google.com/store/apps/details?id=uk.benjs.speed",
+                          "_blank"
+                        )
+                      }
+                    />
+                  </Center>
                   <Card
                     style={{
                       backgroundColor: isDarkMode() ? "#4d2c37ff" : "#f8f9fa",
@@ -3258,7 +3324,7 @@ console.log(error)
                         ? "1px solid #421017ff"
                         : "1px solid #e9ecef",
                       boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-                      position:"absolute",
+                      position: "absolute",
                       bottom: "1em",
                     }}
                     radius="lg"
